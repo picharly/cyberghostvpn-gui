@@ -2,12 +2,16 @@ package main
 
 import (
 	"cyberghostvpn-gui/about"
+	"cyberghostvpn-gui/cg"
+	"cyberghostvpn-gui/locales"
 	"cyberghostvpn-gui/logger"
-	"cyberghostvpn-gui/ui"
 )
 
 func main() {
-	// Initiliazing logger
+	// Define locale
+	locales.Init()
+
+	// Initiliaze logger
 	//logger.AddLoggerUIWriter(ui.GetLogWriter(), cfg.GetTimeFormat())
 	logger.LoggerInit(nil)
 	if about.DevelopmentMode {
@@ -16,6 +20,12 @@ func main() {
 		logger.SetLogLevel("info")
 	}
 
+	// Test
+	// Commande à exécuter avec sudo
+	cg.TestSudo()
+
+	//time.Sleep(time.Minute)
+
 	// Start UI
-	ui.GetMainWindow().ShowAndRun()
+	//ui.GetMainWindow().ShowAndRun()
 }
