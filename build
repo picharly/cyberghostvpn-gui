@@ -1,0 +1,149 @@
+#!/bin/bash
+
+# Project name to define file name
+projectName=controlit-cli
+
+# Regular build tool does not work for Windows
+# GOOS=windows GOARCH=amd64 go build
+#fyne-cross windows -arch=amd64  -app-id jdas-ui.jtekt.com -icon Icon.png
+showHelp() {
+  echo -e "\n\nYou must choose for which operating system you want to build."
+  echo -e "\n\t-l,--linux          \tLinux X86_64/AMD64"
+  echo -e "\t-m,--macos          \tMacOS (darwin) X86_64/AMD64"
+  echo -e "\t-w,--windows        \tMicrosoft Windows X86_64/AMD64"
+  echo -e "\nExtra:\n\t-32,--i386          \tBuild also 32-bits binaries"
+  echo -e "\t-arm,--arm          \tBuild also for ARM architecture"
+  echo -e "\t-nc,--no-compression\tDo not create compressed archives"
+  echo -e "\n"
+  exit 1
+}
+
+# Check arguments
+buildLinux=0
+buildMacOS=0
+buildWindows=0
+build32bits=0
+buildARM=0
+useCompression=1
+noArgs=1
+for var in "$@"
+do
+    if [ "$var" == "-l" ] || [ "$var" == "--linux" ] || [ "$var" == "-a" ] || [ "$var" == "--all" ]; then
+      buildLinux=1
+      noArgs=0
+    fi
+    if [ "$var" == "-m" ] || [ "$var" == "--macos" ] || [ "$var" == "-a" ] || [ "$var" == "--all" ]; then
+      buildMacOS=1
+      noArgs=0
+    fi
+    if [ "$var" == "-w" ] || [ "$var" == "--windows" ] || [ "$var" == "-a" ] || [ "$var" == "--all" ]; then
+      buildWindows=1
+      noArgs=0
+    fi
+    if [ "$var" == "-32" ] || [ "$var" == "--i386" ]; then
+      build32bits=1
+    fi
+    if [ "$var" == "-arm" ] || [ "$var" == "--arm" ]; then
+      buildARM=1
+    fi
+    if [ "$var" == "-nc" ] || [ "$var" == "--no-compression" ]; then
+      useCompression=0
+    fi
+    if [ "$var" == "-h" ] || [ "$var" == "--help" ]; then
+      showHelp
+    fi
+done
+
+if [ $noArgs -eq 1 ]; then
+  showHelp
+fi
+
+# Clean bin folder
+if ! [ -d bin ]; then
+  mkdir bin
+fi
+
+rm bin/* &> /dev/null
+
+# Get current version
+version=$(grep "const AppVersion =" about/app.go)
+version=${version//const/}
+version=${version//AppVersion/}
+version=${version//\"/}
+version=${version//\=/}
+version=${version// /}
+if ! [ "$version" == "" ]; then
+  version="_${version}"
+else
+  version="_latest"
+fi
+
+# Build function
+buildCmd() {
+  BINFILE=${projectName}_${1}_${2}${version}
+  GOOS=${1} GOARCH=${2} go build -o bin/${BINFILE}
+  if [ "$?" -eq 0 ]; then
+    echo "Compression..."
+    lrzip -f -z bin/${BINFILE}
+    return 0
+  fi
+  return 1
+}
+
+build() {
+  argOS=""
+  argArch=amd64
+  if [ "$1" == "" ]; then
+    echo -e "\n Script error! Missing Go OS value.\n"
+  else
+    if [ "$1" == "linux" ]; then
+      argOS=linux
+    elif [ "$1" == "macos" ]; then
+      argOS=darwin
+    elif [ "$1" == "windows" ]; then
+      argOS=windows
+    fi
+    
+    if ! [ "$argOS" == "" ]; then
+      echo -e "\nBuilding $1 64-bits executable file..."
+      buildCmd $argOS $argArch
+      echo "Test: $?"
+      if [ "$?" -eq 0 ]; then
+                
+        if [ ${build32bits} -eq 1 ]; then
+          argArch=386
+          echo -e "\nBuilding $1 32-bits executable file..."
+          buildCmd $argOS $argArch
+        fi
+
+        if [ ${buildARM} -eq 1 ]; then
+          argArch=arm64
+          echo -e "\nBuilding $1 ARM 64-bits executable file..."
+          buildCmd $argOS $argArch
+
+          if [ ${build32bits} -eq 1 ]; then
+            argArch=arm
+            echo -e "\nBuilding $1 ARM 32-bits executable file..."
+            buildCmd $argOS $argArch
+          fi
+
+        fi
+      fi
+    fi
+  fi
+}
+
+# Linux build
+if [ $buildLinux -eq 1 ]; then
+  build linux
+fi
+
+# MacOs build
+if [ $buildMacOS -eq 1 ]; then
+  build macos
+fi
+
+# Windows build
+if [ $buildWindows -eq 1 ]; then
+  build windows
+fi
