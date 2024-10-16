@@ -28,7 +28,7 @@ updateTemplate.sh
 bin/
 bin/*
 bin
-controlit-cli
+cyberghostvpn-gui
 
 # Logs
 *.log

@@ -1,0 +1,30 @@
+{
+	// LOCALE: en
+	// TRANSLATION: English
+	// CODE: en
+
+	"messages": [
+		// _GENERIC
+		{ "id": "gen0", "other": "Save" },
+		{ "id": "gen1", "other": "Cancel" },
+		{ "id": "gen2", "other": "Add" },
+		{ "id": "gen3", "other": "Edit" },
+		{ "id": "gen4", "other": "Delete" },
+		{ "id": "gen5", "other": "Update" },
+		{ "id": "gen6", "other": "Confirm" },
+		{ "id": "gen7", "other": "Ok" },
+		{ "id": "gen8", "other": "File" },
+		{ "id": "gen9", "other": "Connect" },
+		{ "id": "gen10", "other": "Loading {{.Object}}" },
+		{ "id": "gen11", "other": "Yes" },
+		{ "id": "gen12", "other": "No" },
+		// STATUS BOX
+		{ "id": "sta0", "other": "Status:" },
+		{ "id": "sta1", "other": "connected" },
+		{ "id": "sta2", "other": "disconnected" },
+		{ "id": "sta3", "other": "connecting..." },
+		{ "id": "sta4", "other": "disconnecting..." },
+		{ "id": "sta5", "other": "not installed" },
+		{ "id": "sta6", "other": "unknown" }
+	]
+}
