@@ -2,9 +2,9 @@ package main
 
 import (
 	"cyberghostvpn-gui/about"
-	"cyberghostvpn-gui/cg"
 	"cyberghostvpn-gui/locales"
 	"cyberghostvpn-gui/logger"
+	"cyberghostvpn-gui/ui"
 )
 
 func main() {
@@ -22,10 +22,10 @@ func main() {
 
 	// Test
 	// Commande à exécuter avec sudo
-	cg.TestSudo()
+	//cg.TestSudo()
 
 	//time.Sleep(time.Minute)
 
 	// Start UI
-	//ui.GetMainWindow().ShowAndRun()
+	ui.GetMainWindow().ShowAndRun()
 }

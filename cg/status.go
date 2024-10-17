@@ -1,6 +1,9 @@
 package cg
 
-import "cyberghostvpn-gui/tools"
+import (
+	"cyberghostvpn-gui/tools"
+	"fmt"
+)
 
 var currentState Status
 
@@ -43,6 +46,7 @@ func GetCurrentState() Status {
 
 func refreshStatus() string {
 	out, err := tools.ExecuteCommand("cyberghostvpn --status", true)
+	fmt.Printf("Out: %s\n", out)
 	if err == nil && len(out) > 0 {
 		return out[0]
 	}
