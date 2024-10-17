@@ -33,6 +33,9 @@ func getStatusBox() *fyne.Container {
 		hBox := layout.NewHBoxLayout()
 		statusContainer := container.New(hBox, textDefStatus, textStatus)
 
+		// Update Status
+		updateStatus()
+
 		// Create Status Box
 		statusBox = container.New(mainBox, getCyberGhostLogo(), statusContainer)
 	}
