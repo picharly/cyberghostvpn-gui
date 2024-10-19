@@ -4,12 +4,17 @@ import (
 	"cyberghostvpn-gui/about"
 	"cyberghostvpn-gui/locales"
 	"cyberghostvpn-gui/logger"
+	"cyberghostvpn-gui/settings"
 	"cyberghostvpn-gui/ui"
 )
 
 func main() {
-	// Define locale
-	locales.Init()
+	// Read settings & load locale
+	if cfg, err := settings.GetCurrentSettings(); err == nil && len(cfg.Language) > 0 {
+		locales.Init(cfg.Language)
+	} else {
+		locales.Init("")
+	}
 
 	// Initiliaze logger
 	//logger.AddLoggerUIWriter(ui.GetLogWriter(), cfg.GetTimeFormat())

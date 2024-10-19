@@ -31,29 +31,11 @@ type Variable struct {
 	Value interface{}
 }
 
-func Init() {
-	if loc == nil {
-		load(getLanguageTag(getSystemLocale()))
-	}
-}
-
-// Get language tag from string name
-func getLanguageTag(name string) language.Tag {
-	switch name {
-	case "en":
-		return language.English
-	case "en_GB":
-		return language.BritishEnglish
-	case "en_US":
-		return language.AmericanEnglish
-	// case "fr", "fr_FR":
-	// 	return language.French
-	default:
-		return language.English
-	}
-}
-
-func getSystemLocale() string {
+// GetSystemLocale returns the current system locale, first by reading the LANG,
+// then LC_ALL and finally LC_CTYPE environment variables. If none of those
+// variables are set, the OS name is returned. If the returned locale ends with
+// a dot, it is removed.
+func GetSystemLocale() string {
 	locale := os.Getenv("LANG")
 	if locale == "" {
 		locale = os.Getenv("LC_ALL")
@@ -70,6 +52,33 @@ func getSystemLocale() string {
 	}
 
 	return locale
+}
+
+func Init(locale string) {
+	if loc == nil {
+		if len(locale) > 0 {
+			load(getLanguageTag(locale))
+		} else {
+			load(getLanguageTag(GetSystemLocale()))
+		}
+	}
+}
+
+// Get language tag from string name
+func getLanguageTag(name string) language.Tag {
+	switch name {
+	case "en":
+		return language.English
+	case "en_GB":
+		return language.BritishEnglish
+	case "en_US":
+		return language.AmericanEnglish
+	// case "fr", "fr_FR":
+	// 	return language.French
+	default:
+		logger.Warnf("cannot load locale '%s': unavailable language", name)
+		return language.English
+	}
 }
 
 // load a language in memory
