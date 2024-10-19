@@ -18,13 +18,15 @@
 		{ "id": "gen10", "other": "Loading {{.Object}}" },
 		{ "id": "gen11", "other": "Yes" },
 		{ "id": "gen12", "other": "No" },
-		// STATUS BOX
-		{ "id": "sta0", "other": "Status:" },
-		{ "id": "sta1", "other": "connected" },
-		{ "id": "sta2", "other": "disconnected" },
-		{ "id": "sta3", "other": "connecting..." },
-		{ "id": "sta4", "other": "disconnecting..." },
-		{ "id": "sta5", "other": "not installed" },
-		{ "id": "sta6", "other": "unknown" }
+		// INFO BOX
+		{ "id": "inf0", "other": "Version:" },
+		{ "id": "inf1", "other": "Status:" },
+		{ "id": "inf2", "other": "connected" },
+		{ "id": "inf3", "other": "disconnected" },
+		{ "id": "inf4", "other": "connecting..." },
+		{ "id": "inf5", "other": "disconnecting..." },
+		{ "id": "inf6", "other": "not installed" },
+		{ "id": "inf7", "other": "unknown" },
+		{ "id": "inf8", "other": "Network:" }
 	]
 }
