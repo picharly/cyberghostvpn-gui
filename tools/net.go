@@ -8,7 +8,6 @@ package tools
 import (
 	"fmt"
 	"net"
-	"strings"
 )
 
 // GetLocalIPAddresses returns a list of all local IP addresses.
@@ -19,7 +18,7 @@ import (
 // The function will return an error if any error occurs while trying to read
 // the network interfaces or their IP addresses. If the error is not nil, but
 // at least one IP address has been found, the error will be set to nil.
-func GetLocalIPAddresses() ([]*net.IP, error) {
+func GetLocalIPAddresses(filters ...net.Flags) ([]*net.IP, error) {
 	var ipAddr []*net.IP
 	var lastError error
 
@@ -31,6 +30,21 @@ func GetLocalIPAddresses() ([]*net.IP, error) {
 
 	// Iterate network interfaces
 	for _, i := range ifaces {
+
+		// Filtering
+		if len(filters) > 0 {
+			filter := false
+			for _, f := range filters {
+				if i.Flags&f == 0 {
+					filter = true
+					break
+				}
+			}
+			if filter {
+				continue
+			}
+		}
+
 		addrs, err := i.Addrs()
 		if err != nil {
 			lastError = fmt.Errorf("failed to read ip addresse from interface '%s': %v", i.Name, err)
@@ -46,9 +60,10 @@ func GetLocalIPAddresses() ([]*net.IP, error) {
 				ip = v.IP
 			}
 			// Ignore local IP address
-			if ip != nil && !strings.HasPrefix(ip.String(), "127") && !strings.EqualFold(ip.String(), "::1") {
-				ipAddr = append(ipAddr, &ip)
+			if ip != nil && ip.IsLoopback() {
+				continue
 			}
+			ipAddr = append(ipAddr, &ip)
 		}
 	}
 

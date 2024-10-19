@@ -41,5 +41,5 @@ func getMainContent() *fyne.Container {
 	text2 := canvas.NewText("2", color.White)
 	text3 := canvas.NewText("3", color.White)
 	vBox := layout.NewVBoxLayout()
-	return container.New(vBox, getStatusBox(), text2, text3)
+	return container.New(vBox, getInfoBox(), text2, text3)
 }

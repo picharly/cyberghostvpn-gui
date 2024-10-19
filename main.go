@@ -20,11 +20,14 @@ func main() {
 		logger.SetLogLevel("info")
 	}
 
-	// Test
-	// Commande à exécuter avec sudo
-	//cg.TestSudo()
-
-	//time.Sleep(time.Minute)
+	// test ip
+	// ips, err := tools.GetLocalIPAddresses(net.FlagPointToPoint)
+	// if err == nil && len(ips) > 0 {
+	// 	for _, ip := range ips {
+	// 		fmt.Printf("IP: %s\n", ip.String())
+	// 	}
+	// }
+	// time.Sleep(time.Minute)
 
 	// Start UI
 	ui.GetMainWindow().ShowAndRun()

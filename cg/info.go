@@ -2,7 +2,7 @@ package cg
 
 import (
 	"cyberghostvpn-gui/tools"
-	"fmt"
+	"strings"
 )
 
 var currentState Status
@@ -44,9 +44,16 @@ func GetCurrentState() Status {
 	return currentState
 }
 
+func GetVersion() string {
+	out, err := tools.ExecuteCommand("cyberghostvpn --help | grep -i \"cyberghost -\"", true)
+	if err == nil && len(out) > 0 {
+		return strings.ReplaceAll(strings.Replace(out[0], "cyberghost -", "", 1), " ", "")
+	}
+	return ""
+}
+
 func refreshStatus() string {
 	out, err := tools.ExecuteCommand("cyberghostvpn --status", true)
-	fmt.Printf("Out: %s\n", out)
 	if err == nil && len(out) > 0 {
 		return out[0]
 	}
