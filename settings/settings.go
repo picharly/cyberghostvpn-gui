@@ -13,10 +13,12 @@ var currentSettings *settings // Instanciating new Settings
 var noSettings = true
 
 type settings struct {
-	Language  string    `json:"language"`
-	StartTray bool      `json:"start_tray"`
-	TrayIcon  bool      `json:"tray_icon"`
-	Profiles  []Profile `json:"profiles"`
+	HideOnTray  bool      `json:"hide_on_tray"`
+	Language    string    `json:"language"`
+	LastProfile []Profile `json:"last_profile"`
+	StartTray   bool      `json:"start_tray"`
+	TrayIcon    bool      `json:"tray_icon"`
+	Profiles    []Profile `json:"profiles"`
 }
 
 type Profile struct {
@@ -63,6 +65,7 @@ func WriteCurrentSettings() error {
 	return nil
 }
 
+// isSettingsFileExists checks if settings file exists on the file system.
 func isSettingsFileExists() bool {
 	if _, err := os.Stat(settingsFile); err != nil {
 		return false
