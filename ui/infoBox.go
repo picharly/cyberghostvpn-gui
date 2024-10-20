@@ -8,7 +8,6 @@ import (
 	"cyberghostvpn-gui/resources"
 	"cyberghostvpn-gui/tools"
 	"fmt"
-	"image/color"
 	"net"
 	"time"
 
@@ -30,15 +29,12 @@ var textStatus *canvas.Text
 func getInfoBox() *fyne.Container {
 
 	if infoBox == nil {
-		// Layout
-		mainBox := layout.NewHBoxLayout()
-
 		// App Title
 		textTitle := canvas.NewText(fmt.Sprintf("%s - v%s", about.AppName, about.AppVersion), resources.ColorYellow)
 		textTitle.TextStyle.Bold = true
 
 		// Version
-		textDefVersion := canvas.NewText(locales.Text("inf0"), color.White)
+		textDefVersion := canvas.NewText(locales.Text("inf0"), resources.ColorWhite)
 		var textVersion *canvas.Text
 		version := cg.GetVersion()
 		if tools.StringContainsNumber(version) {
@@ -50,14 +46,14 @@ func getInfoBox() *fyne.Container {
 		versionContainer := container.New(versionBox, textDefVersion, textVersion)
 
 		// Status
-		textDefStatus := canvas.NewText(locales.Text("inf1"), color.White)
-		textStatus = canvas.NewText(locales.Text("inf7"), color.White)
+		textDefStatus := canvas.NewText(locales.Text("inf1"), resources.ColorWhite)
+		textStatus = canvas.NewText(locales.Text("inf7"), resources.ColorWhite)
 		statusBox := layout.NewHBoxLayout()
 		statusContainer := container.New(statusBox, textDefStatus, textStatus)
 
 		// Network
-		textDefNet := canvas.NewText(locales.Text("inf8"), color.White)
-		textNet = canvas.NewText("", color.White)
+		textDefNet := canvas.NewText(locales.Text("inf8"), resources.ColorWhite)
+		textNet = canvas.NewText("", resources.ColorWhite)
 		netBox := layout.NewHBoxLayout()
 		netContainer := container.New(netBox, textDefNet, textNet)
 		updateNetwork()
@@ -66,7 +62,7 @@ func getInfoBox() *fyne.Container {
 		updateStatus()
 
 		// Create Status Box
-		infoBox = container.New(mainBox, getCyberGhostLogo(), container.NewVBox(layout.NewSpacer(), textTitle, versionContainer, statusContainer, netContainer, layout.NewSpacer()))
+		infoBox = container.NewHBox(getCyberGhostLogo(), layout.NewSpacer(), container.NewVBox(layout.NewSpacer(), textTitle, versionContainer, statusContainer, netContainer, layout.NewSpacer()))
 	}
 
 	// Enable refresh
@@ -131,7 +127,7 @@ func updateStatus() {
 		textStatus.Color = resources.ColorRed
 	default:
 		textStatus.Text = locales.Text("inf7")
-		textStatus.Color = color.White
+		textStatus.Color = resources.ColorWhite
 	}
 
 	textStatus.Refresh()
