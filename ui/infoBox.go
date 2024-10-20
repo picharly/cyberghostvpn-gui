@@ -95,9 +95,11 @@ func updateNetwork() {
 		} else if len(ip) > 0 {
 			textNet.Text = ip[0].String()
 			textNet.Color = resources.ColorGreen
+			getApp().SetIcon(resources.GetCyberGhostIcon())
 		} else {
-			textNet.Text = locales.Text("inf3")
+			textNet.Text = "-" //locales.Text("inf3")
 			textNet.Color = resources.ColorRed
+			getApp().SetIcon(resources.GetCyberGhostIconWhite())
 		}
 
 		textNet.Refresh()
