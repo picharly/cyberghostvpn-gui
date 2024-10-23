@@ -60,7 +60,7 @@ func WriteCurrentSettings() error {
 	}
 	err = os.WriteFile(settingsFile, output, os.FileMode(int(0777)))
 	if err != nil {
-		return fmt.Errorf("unable to create/overwrite file '%s'. Error: %s", settingsFile, err.Error())
+		return fmt.Errorf("%s: %v", locales.Text("err.set0", locales.Variable{Name: "FileName", Value: settingsFile}), err)
 	}
 	return nil
 }
@@ -86,12 +86,12 @@ func readSettings() error {
 		}
 		file, err := os.Open(settingsFile)
 		if err != nil {
-			return fmt.Errorf("settings file '%s' does not exist or is unreachable: %v", settingsFile, err)
+			return fmt.Errorf("%s: %v", locales.Text("err.set1", locales.Variable{Name: "FileName", Value: settingsFile}), err)
 		}
 		decoder := json.NewDecoder(file)
 		err = decoder.Decode(&currentSettings)
 		if err != nil {
-			return fmt.Errorf("cannot decode settings file '%s'", settingsFile)
+			return fmt.Errorf("%s: %v", locales.Text("err.set2", locales.Variable{Name: "FileName", Value: settingsFile}), err)
 		}
 		noSettings = false
 	}

@@ -1,7 +1,6 @@
 package logger
 
 import (
-	"cyberghostvpn-gui/tools"
 	"fmt"
 	"io"
 	"os"
@@ -111,7 +110,7 @@ func SetLogLevel(level string) {
 // If no settings has been set, these default settings will be applied
 func checkLoggerConfig() LoggerOptions {
 	if currentLoggerConfig == nil {
-		if tools.IsFileExists("./logs/last.log") {
+		if _, err := os.Stat("./logs/last.log"); os.IsExist(err) {
 			os.Rename("./logs/last.log", "./logs/previous.log")
 		}
 		fileDir := "./logs/"
