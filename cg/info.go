@@ -2,6 +2,7 @@ package cg
 
 import (
 	"cyberghostvpn-gui/tools"
+	"fmt"
 	"strings"
 )
 
@@ -27,7 +28,7 @@ const (
 
 func GetCurrentState() Status {
 
-	if !tools.IsCommandExists("cyberghostvpn") {
+	if !tools.IsCommandExists(string(CG_EXECUTABLE)) {
 		currentState = NotInstalled
 	} else {
 		newStatus := refreshStatus()
@@ -45,7 +46,7 @@ func GetCurrentState() Status {
 }
 
 func GetVersion() string {
-	out, err := tools.ExecuteCommand("cyberghostvpn --help | grep -i \"cyberghost -\"", true)
+	out, err := tools.ExecuteCommand(fmt.Sprintf("%s %s | grep -i \"cyberghost -\"", CG_EXECUTABLE, CG_OTHER_HELP), true)
 	if err == nil && len(out) > 0 {
 		return strings.ReplaceAll(strings.Replace(out[0], "cyberghost -", "", 1), " ", "")
 	}
@@ -53,7 +54,7 @@ func GetVersion() string {
 }
 
 func refreshStatus() string {
-	out, err := tools.ExecuteCommand("cyberghostvpn --status", true)
+	out, err := tools.ExecuteCommand(fmt.Sprintf("%s %s", CG_EXECUTABLE, CG_OTHER_STATUS), true)
 	if err == nil && len(out) > 0 {
 		return out[0]
 	}
