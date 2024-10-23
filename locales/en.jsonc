@@ -18,6 +18,9 @@
 		{ "id": "gen10", "other": "Loading {{.Object}}" },
 		{ "id": "gen11", "other": "Yes" },
 		{ "id": "gen12", "other": "No" },
+		// CG
+		{ "id": "cg0", "other": "VPN connection found." },
+		{ "id": "cg1", "other": "No VPN connections found." },
 		// INFO BOX
 		{ "id": "inf0", "other": "Version:" },
 		{ "id": "inf1", "other": "Status:" },
@@ -27,6 +30,15 @@
 		{ "id": "inf5", "other": "disconnecting..." },
 		{ "id": "inf6", "other": "not installed" },
 		{ "id": "inf7", "other": "unknown" },
-		{ "id": "inf8", "other": "Network:" }
+		{ "id": "inf8", "other": "Network:" },
+		// SETTINGS
+		// SETTINGS ERRORS
+		{ "id": "err.set0", "other": "unable to create/overwrite file '{{.FileName}}'. Error: " },
+		{ "id": "err.set1", "other": "settings file '{{.FileName}}' does not exist or is unreachable: " },
+		{ "id": "err.set2", "other": "cannot decode settings file '{{.FileName}}': " },
+		// TOOLS
+		// TOOLS ERRORS
+		{ "id": "err.too0", "other": "this method is currently only supported on Linux systems" },
+		{ "id": "err.too1", "other": "command execution failed: " }
 	]
 }

@@ -3,11 +3,10 @@ package tools
 import (
 	"bufio"
 	"context"
+	"cyberghostvpn-gui/locales"
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
-	"os/user"
 	"runtime"
 	"strings"
 
@@ -37,15 +36,6 @@ func IsFileExists(name string) bool {
 		}
 	}
 	return false
-}
-
-// IsRoot returns true if the program is running as root user.
-func IsRoot() bool {
-	currentUser, err := user.Current()
-	if err != nil {
-		log.Fatalf("[isRoot] Unable to get current user: %s", err)
-	}
-	return currentUser.Username == "root"
 }
 
 // IsServiceRunning checks if a service is running.
@@ -118,12 +108,12 @@ func RunCommandWithGksudo(command string, args ...string) (string, error) {
 			sudoCmd = exec.Command("pkexec", append([]string{command}, args...)...)
 		}
 	} else {
-		return "", fmt.Errorf("this method is currently only supported on Linux systems")
+		return "", fmt.Errorf(locales.Text("err.too0"))
 	}
 
 	output, err := sudoCmd.CombinedOutput()
 	if err != nil {
-		return "", fmt.Errorf("command execution failed: %w", err)
+		return "", fmt.Errorf("%s: %w", locales.Text("err.too1"), err)
 	}
 
 	return string(output), nil
