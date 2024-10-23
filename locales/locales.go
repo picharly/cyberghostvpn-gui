@@ -2,8 +2,12 @@ package locales
 
 import (
 	"cyberghostvpn-gui/logger"
+	"embed"
+	"encoding/json"
 	"fmt"
+	"io/fs"
 	"os"
+	"path/filepath"
 	"runtime"
 	"strings"
 
@@ -16,19 +20,47 @@ import (
 
 // Language files
 
+//go:embed *.jsonc
+var langFS embed.FS
+
 //go:embed en.jsonc
 var locale_en []byte
 
 // //go:embed fr.jsonc
 var locale_fr []byte
 
-var defaultLanguage = language.AmericanEnglish
+var availableLanguages = []lang{}
+var currentLanguage lang
+var defaultLanguage = language.English
 var bundle *i18n.Bundle
 var loc *i18n.Localizer
+
+type lang struct {
+	Name string
+	Code string
+	Tag  language.Tag
+}
+
+type Message struct {
+	ID    string `json:"id"`
+	Other string `json:"other"`
+}
+
+type Data struct {
+	Messages []Message `json:"messages"`
+}
 
 type Variable struct {
 	Name  string
 	Value interface{}
+}
+
+func GetCurrentLocale() lang {
+	return currentLanguage
+}
+
+func GetLocales() []lang {
+	return availableLanguages
 }
 
 // GetSystemLocale returns the current system locale, first by reading the LANG,
@@ -56,27 +88,31 @@ func GetSystemLocale() string {
 
 func Init(locale string) {
 	if loc == nil {
+		// Load all available languages
+		loadLocales()
+
+		// Load the default/configured language
 		if len(locale) > 0 {
 			load(getLanguageTag(locale))
+			setCurrentLocale(locale)
 		} else {
 			load(getLanguageTag(GetSystemLocale()))
+			setCurrentLocale(GetSystemLocale())
 		}
 	}
 }
 
 // Get language tag from string name
 func getLanguageTag(name string) language.Tag {
+	setCurrentLocale(name)
 	switch name {
-	case "en":
+	case "en", "en_GB", "en_US":
 		return language.English
-	case "en_GB":
-		return language.BritishEnglish
-	case "en_US":
-		return language.AmericanEnglish
 	// case "fr", "fr_FR":
 	// 	return language.French
 	default:
 		logger.Warnf("cannot load locale '%s': unavailable language", name)
+		setCurrentLocale("en")
 		return language.English
 	}
 }
@@ -94,10 +130,60 @@ func load(language language.Tag) {
 	// logger.Infof("loaded locale %v", language)
 }
 
+func loadLocales() {
+	files, err := langFS.ReadDir(".")
+	if err != nil {
+		return
+	}
+
+	// Iterate over the files and print their names
+	availableLanguages = make([]lang, 0)
+	for _, file := range files {
+		if !file.IsDir() {
+			jsonData, err := fs.ReadFile(langFS, filepath.Join(".", file.Name()))
+			if err != nil {
+				continue
+			}
+			f := lang{}
+			stdJson, err := standardizeJSON(jsonData)
+			if err != nil {
+				continue
+			}
+
+			var data Data
+			err = json.Unmarshal(stdJson, &data)
+			if err != nil {
+				continue
+			}
+
+			for _, message := range data.Messages {
+				if message.ID == "name" {
+					f.Name = message.Other
+				} else if message.ID == "code" {
+					f.Code = message.Other
+				}
+			}
+
+			if len(f.Name) > 0 {
+				availableLanguages = append(availableLanguages, f)
+			}
+		}
+	}
+}
+
 // newVariable creates a new Variable from a name and a value.
 // The variable will be used to replace placeholders in localized strings.
 func newVariable(name string, value interface{}) Variable {
 	return Variable{Name: name, Value: value}
+}
+
+func setCurrentLocale(locale string) {
+	for _, l := range availableLanguages {
+		if strings.EqualFold(l.Code, locale) || strings.EqualFold(l.Name+"_", locale) {
+			currentLanguage = l
+			break
+		}
+	}
 }
 
 // Text returns the translated string for the given id and optional variables.

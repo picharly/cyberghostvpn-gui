@@ -2,6 +2,7 @@ package main
 
 import (
 	"cyberghostvpn-gui/about"
+	"cyberghostvpn-gui/cg"
 	"cyberghostvpn-gui/locales"
 	"cyberghostvpn-gui/logger"
 	"cyberghostvpn-gui/settings"
@@ -15,7 +16,8 @@ import (
 // commented-out code for testing local IP addresses.
 func main() {
 	// Read settings & load locale
-	if cfg, err := settings.GetCurrentSettings(); err == nil && len(cfg.Language) > 0 {
+	cfg, err := settings.GetCurrentSettings()
+	if err == nil && len(cfg.Language) > 0 {
 		locales.Init(cfg.Language)
 	} else {
 		locales.Init("")
@@ -30,15 +32,25 @@ func main() {
 		logger.SetLogLevel("info")
 	}
 
-	// test ip
-	// ips, err := tools.GetLocalIPAddresses(net.FlagPointToPoint)
-	// if err == nil && len(ips) > 0 {
-	// 	for _, ip := range ips {
-	// 		fmt.Printf("IP: %s\n", ip.String())
+	// Load countries
+	cg.GetCountries(cg.CG_SERVER_TYPE_TRAFFIC)
+
+	// countries := cg.GetCountries(cg.CG_SERVER_TYPE_TRAFFIC)
+	// if countries != nil {
+	// 	for _, c := range *countries {
+	// 		fmt.Printf("%v | %s | %s\n", c.Id, c.Name, c.Code)
 	// 	}
+	// }
+	// for _, l := range locales.GetLocales() {
+	// 	fmt.Printf("%s (%s)\n", l.Name, l.Code)
 	// }
 	// time.Sleep(time.Minute)
 
 	// Start UI
-	ui.GetMainWindow().ShowAndRun()
+	if cfg.HideOnStart {
+		ui.GetMainWindow().Hide()
+		ui.GetApp().Run()
+	} else {
+		ui.GetMainWindow().ShowAndRun()
+	}
 }

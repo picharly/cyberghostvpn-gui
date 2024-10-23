@@ -1,26 +1,32 @@
 package resources
 
 import (
-	_ "embed"
+	"embed"
 
 	"fyne.io/fyne/v2"
 )
 
-//go:embed cyberghostvpn_logo.png
+//go:embed pictures/cyberghostvpn_logo.png
 var CyberGhostLogoPng []byte
+
+// Flags
+// Source: https://github.com/lipis/flag-icons
+//
+//go:embed flags/*.svg
+var srcFlags embed.FS
 
 // Icons
 //
-//go:embed cyberghostvpn_icon_original.png
+//go:embed icons/cyberghostvpn_icon_original.png
 var CyberGhostIconOriginal []byte
 
-//go:embed cyberghostvpn_icon_red.png
+//go:embed icons/cyberghostvpn_icon_red.png
 var CyberGhostIconRed []byte
 
-//go:embed cyberghostvpn_icon_transparent.png
+//go:embed icons/cyberghostvpn_icon_transparent.png
 var CyberGhostIconTransparent []byte
 
-//go:embed cyberghostvpn_icon_white.png
+//go:embed icons/cyberghostvpn_icon_white.png
 var CyberGhostIconWhite []byte
 
 func GetCyberGhostIcon() fyne.Resource {

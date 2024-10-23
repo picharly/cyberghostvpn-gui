@@ -2,6 +2,7 @@ package settings
 
 import (
 	"cyberghostvpn-gui/locales"
+	"cyberghostvpn-gui/resources"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -13,24 +14,13 @@ var currentSettings *settings // Instanciating new Settings
 var noSettings = true
 
 type settings struct {
-	HideOnTray  bool      `json:"hide_on_tray"`
-	Language    string    `json:"language"`
-	LastProfile []Profile `json:"last_profile"`
-	StartTray   bool      `json:"start_tray"`
-	TrayIcon    bool      `json:"tray_icon"`
-	Profiles    []Profile `json:"profiles"`
-}
-
-type Profile struct {
-	City             string `json:"city"`
-	CountryCode      string `json:"country_code"`
-	Name             string `json:"name"`
-	ServiceType      string `json:"service_type"`
-	StreamingService string `json:"streaming_service"`
-	TCP              bool   `json:"tcp"`
-	Torrent          bool   `json:"torrent"`
-	Traffic          bool   `json:"traffic"`
-	WireGuard        bool   `json:"wireguard"`
+	Countries   []resources.Country `json:"countries"`
+	HideOnClose bool                `json:"hide_on_close"`
+	Language    string              `json:"language"`
+	LastProfile []Profile           `json:"last_profile"`
+	HideOnStart bool                `json:"hide_on_startup"`
+	TrayIcon    bool                `json:"tray_icon"`
+	Profiles    []Profile           `json:"profiles"`
 }
 
 // Get current settings

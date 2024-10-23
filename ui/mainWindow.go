@@ -5,7 +5,6 @@ import (
 	"cyberghostvpn-gui/resources"
 	"cyberghostvpn-gui/settings"
 	"fmt"
-	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
@@ -13,6 +12,7 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/driver/desktop"
 	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/theme"
 )
 
 var mainApp fyne.App
@@ -20,10 +20,19 @@ var mainWindow fyne.Window
 
 /* Public Functions */
 
+func GetApp() fyne.App {
+	if mainApp == nil {
+		mainApp = app.NewWithID("com.github.picharly.cyberghostvpn-gui")
+		mainApp.Settings().SetTheme(&resources.DarkTheme{Theme: theme.DefaultTheme()})
+		mainApp.SetIcon(resources.GetCyberGhostIcon())
+	}
+	return mainApp
+}
+
 func GetMainWindow() fyne.Window {
 
 	if mainWindow == nil {
-		mainWindow = getApp().NewWindow(fmt.Sprintf("%s - v%s", about.AppName, about.AppVersion))
+		mainWindow = GetApp().NewWindow(fmt.Sprintf("%s - v%s", about.AppName, about.AppVersion))
 		mainWindow.SetFixedSize(true)
 		mainWindow.SetContent(getMainContent())
 
@@ -33,13 +42,6 @@ func GetMainWindow() fyne.Window {
 			setTrayIcon(mainWindow)
 		}
 
-		// Hide on tray
-		if cfg.StartTray {
-			go func(window fyne.Window) {
-				time.Sleep(time.Millisecond * 10)
-				mainWindow.Hide()
-			}(mainWindow)
-		}
 	}
 
 	return mainWindow
@@ -47,26 +49,18 @@ func GetMainWindow() fyne.Window {
 
 /* Private Functions */
 
-func getApp() fyne.App {
-	if mainApp == nil {
-		mainApp = app.New()
-		mainApp.SetIcon(resources.GetCyberGhostIcon())
-	}
-	return mainApp
-}
-
 func getMainContent() *fyne.Container {
 	text2 := canvas.NewText("2", resources.ColorWhite)
 	text3 := canvas.NewText("3", resources.ColorWhite)
 	vBox := layout.NewVBoxLayout()
-	return container.New(vBox, getInfoBox(), text2, text3)
+	return container.New(vBox, getInfoBox(), getTabs(), text2, text3)
 }
 
 func setTrayIcon(window fyne.Window) {
 	if window == nil {
 		return
 	}
-	if desk, ok := getApp().(desktop.App); ok {
+	if desk, ok := GetApp().(desktop.App); ok {
 		m := fyne.NewMenu(about.AppName,
 			fyne.NewMenuItem("Hide", func() { window.Hide() }),
 			fyne.NewMenuItem("Show", func() { window.Show() }),
@@ -74,10 +68,12 @@ func setTrayIcon(window fyne.Window) {
 		desk.SetSystemTrayMenu(m)
 	}
 
-	cfg, _ := settings.GetCurrentSettings()
-	if cfg.HideOnTray {
-		window.SetCloseIntercept(func() {
+	window.SetCloseIntercept(func() {
+		cfg, _ := settings.GetCurrentSettings()
+		if cfg.HideOnClose {
 			window.Hide()
-		})
-	}
+		} else {
+			GetApp().Quit()
+		}
+	})
 }

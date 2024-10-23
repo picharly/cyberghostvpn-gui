@@ -4,6 +4,8 @@
 	// CODE: en
 
 	"messages": [
+		{ "id": "name", "other": "English" },
+		{ "id": "code", "other": "en" },
 		// _GENERIC
 		{ "id": "gen0", "other": "Save" },
 		{ "id": "gen1", "other": "Cancel" },
@@ -18,10 +20,22 @@
 		{ "id": "gen10", "other": "Loading {{.Object}}" },
 		{ "id": "gen11", "other": "Yes" },
 		{ "id": "gen12", "other": "No" },
+		{ "id": "gen13", "other": "Loading" },
 		// CG
 		{ "id": "cg0", "other": "VPN connection found." },
 		{ "id": "cg1", "other": "No VPN connections found." },
-		// INFO BOX
+		// CONNECTION
+		{ "id": "con0", "other": "Connection" },
+		{ "id": "con1", "other": "Profile" },
+		{ "id": "con2", "other": "Default" },
+		{ "id": "con3", "other": "New" },
+		{ "id": "con4", "other": "VPN protocol" },
+		{ "id": "con5", "other": "Service" },
+		{ "id": "con6", "other": "Network protocol" },
+		{ "id": "con7", "other": "Country" },
+		{ "id": "con8", "other": "City" },
+		{ "id": "con9", "other": "Server" },
+		// INFO
 		{ "id": "inf0", "other": "Version:" },
 		{ "id": "inf1", "other": "Status:" },
 		{ "id": "inf2", "other": "connected" },
@@ -31,7 +45,15 @@
 		{ "id": "inf6", "other": "not installed" },
 		{ "id": "inf7", "other": "unknown" },
 		{ "id": "inf8", "other": "Network:" },
+		// RESOURCES ERRORS
+		{ "id": "err.res0", "other": "unable to read flag files: " },
+		{ "id": "err.res1", "other": "unable to load file '{{.FileName}}'. Error: " },
 		// SETTINGS
+		{ "id": "set0", "other": "Settings" },
+		{ "id": "set1", "other": "Language" },
+		{ "id": "set2", "other": "Enable tray icon" },
+		{ "id": "set3", "other": "Hide on startup" },
+		{ "id": "set4", "other": "Hide on close" },
 		// SETTINGS ERRORS
 		{ "id": "err.set0", "other": "unable to create/overwrite file '{{.FileName}}'. Error: " },
 		{ "id": "err.set1", "other": "settings file '{{.FileName}}' does not exist or is unreachable: " },
