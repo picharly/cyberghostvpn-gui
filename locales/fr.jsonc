@@ -1,0 +1,66 @@
+{
+    // LOCALE: fr
+    // TRANSLATION: Français
+    // CODE: fr
+
+    "messages": [
+        { "id": "name", "other": "Français" },
+        { "id": "code", "other": "fr" },
+        // _GENERIC
+        { "id": "gen0", "other": "Enregistrer" },
+        { "id": "gen1", "other": "Annuler" },
+        { "id": "gen2", "other": "Ajouter" },
+        { "id": "gen3", "other": "Modifier" },
+        { "id": "gen4", "other": "Supprimer" },
+        { "id": "gen5", "other": "Mettre à jour" },
+        { "id": "gen6", "other": "Confirmer" },
+        { "id": "gen7", "other": "Ok" },
+        { "id": "gen8", "other": "Fichier" },
+        { "id": "gen9", "other": "Connecter" },
+        { "id": "gen10", "other": "Chargement de {{.Object}}" },
+        { "id": "gen11", "other": "Oui" },
+        { "id": "gen12", "other": "Non" },
+        { "id": "gen13", "other": "Chargement" },
+        // CG
+        { "id": "cg0", "other": "Connexion VPN trouvée." },
+        { "id": "cg1", "other": "Aucune connexion VPN trouvée." },
+        // CONNECTION
+        { "id": "con0", "other": "Connexion" },
+        { "id": "con1", "other": "Profil" },
+        { "id": "con2", "other": "Par défaut" },
+        { "id": "con3", "other": "Nouveau" },
+        { "id": "con4", "other": "Protocole VPN" },
+        { "id": "con5", "other": "Service" },
+        { "id": "con6", "other": "Protocole réseau" },
+        { "id": "con7", "other": "Pays" },
+        { "id": "con8", "other": "Ville" },
+        { "id": "con9", "other": "Serveur" },
+        // INFO
+        { "id": "inf0", "other": "Version :" },
+        { "id": "inf1", "other": "Statut :" },
+        { "id": "inf2", "other": "connecté" },
+        { "id": "inf3", "other": "déconnecté" },
+        { "id": "inf4", "other": "connexion en cours..." },
+        { "id": "inf5", "other": "déconnexion en cours..." },
+        { "id": "inf6", "other": "non installé" },
+        { "id": "inf7", "other": "inconnu" },
+        { "id": "inf8", "other": "Réseau :" },
+        // RESOURCES ERRORS
+        { "id": "err.res0", "other": "impossible de lire les fichiers de drapeau : " },
+        { "id": "err.res1", "other": "impossible de charger le fichier '{{.FileName}}'. Erreur : " },
+        // SETTINGS
+        { "id": "set0", "other": "Paramètres" },
+        { "id": "set1", "other": "Langue" },
+        { "id": "set2", "other": "Activer l'icône de la barre d'état" },
+        { "id": "set3", "other": "Masquer au démarrage" },
+        { "id": "set4", "other": "Masquer à la fermeture" },
+        // SETTINGS ERRORS
+        { "id": "err.set0", "other": "impossible de créer/écraser le fichier '{{.FileName}}'. Erreur : " },
+        { "id": "err.set1", "other": "le fichier de paramètres '{{.FileName}}' n'existe pas ou est inaccessible : " },
+        { "id": "err.set2", "other": "impossible de décoder le fichier de paramètres '{{.FileName}}' : " },
+        // TOOLS
+        // TOOLS ERRORS
+        { "id": "err.too0", "other": "cette méthode n'est actuellement prise en charge que sur les systèmes Linux" },
+        { "id": "err.too1", "other": "l'exécution de la commande a échoué : " }
+    ]
+}

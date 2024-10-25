@@ -23,22 +23,17 @@ import (
 //go:embed *.jsonc
 var langFS embed.FS
 
-//go:embed en.jsonc
-var locale_en []byte
-
-// //go:embed fr.jsonc
-var locale_fr []byte
-
 var availableLanguages = []lang{}
+var bundle *i18n.Bundle
 var currentLanguage lang
 var defaultLanguage = language.English
-var bundle *i18n.Bundle
 var loc *i18n.Localizer
 
 type lang struct {
-	Name string
-	Code string
-	Tag  language.Tag
+	Name       string
+	Code       string
+	Dictionary []byte
+	Tag        language.Tag
 }
 
 type Message struct {
@@ -55,10 +50,12 @@ type Variable struct {
 	Value interface{}
 }
 
+// GetCurrentLocale returns the current language in use.
 func GetCurrentLocale() lang {
 	return currentLanguage
 }
 
+// GetLocales returns a list of all available languages that can be used with the locales.Init() function.
 func GetLocales() []lang {
 	return availableLanguages
 }
@@ -86,50 +83,59 @@ func GetSystemLocale() string {
 	return locale
 }
 
+// Init loads the default/configured language and starts the translation trigger. If the locale string is empty, it will
+// use the system locale. If the locale string is not empty, it will load the language with the given locale. If the
+// locale string is not found, it will load the default language.
 func Init(locale string) {
-	if loc == nil {
+	if len(availableLanguages) == 0 {
 		// Load all available languages
 		loadLocales()
-
-		// Load the default/configured language
-		if len(locale) > 0 {
-			load(getLanguageTag(locale))
-			setCurrentLocale(locale)
-		} else {
-			load(getLanguageTag(GetSystemLocale()))
-			setCurrentLocale(GetSystemLocale())
-		}
 	}
+
+	// Load the default/configured language
+	if len(locale) > 0 {
+		load(getLanguageTag(locale))
+		setCurrentLocale(locale)
+	} else {
+		load(getLanguageTag(GetSystemLocale()))
+		setCurrentLocale(GetSystemLocale())
+	}
+
+	// Start the translation trigger
+	GetTrigger().Start()
 }
 
 // Get language tag from string name
 func getLanguageTag(name string) language.Tag {
 	setCurrentLocale(name)
-	switch name {
-	case "en", "en_GB", "en_US":
-		return language.English
-	// case "fr", "fr_FR":
-	// 	return language.French
-	default:
-		logger.Warnf("cannot load locale '%s': unavailable language", name)
+	tag, err := language.Parse(name)
+	if err != nil {
+		logger.Warnf("cannot load locale '%s': %v", name, err)
 		setCurrentLocale("en")
 		return language.English
 	}
+	return tag
 }
 
 // load a language in memory
 func load(language language.Tag) {
-	if bundle == nil {
-		bundle = i18n.NewBundle(language)
-	}
+	bundle = i18n.NewBundle(language)
 	if err := loadLocale(language); err != nil {
 		logger.Errorf("cannot load locale %v: %v", language, err)
 		return
 	}
 	loc = i18n.NewLocalizer(bundle, language.String())
-	// logger.Infof("loaded locale %v", language)
 }
 
+// loadLocales loads all available languages
+//
+// It iterates over the language files in the embedded FS and loads their
+// content into memory. It then parses the JSON content of each file and
+// extracts the language name and code. If both fields are present, the
+// language is added to the list of available languages.
+//
+// It is called by init() and the list of available languages is used by
+// the load() function to determine which language to load.
 func loadLocales() {
 	files, err := langFS.ReadDir(".")
 	if err != nil {
@@ -144,7 +150,7 @@ func loadLocales() {
 			if err != nil {
 				continue
 			}
-			f := lang{}
+			newLang := lang{}
 			stdJson, err := standardizeJSON(jsonData)
 			if err != nil {
 				continue
@@ -158,14 +164,18 @@ func loadLocales() {
 
 			for _, message := range data.Messages {
 				if message.ID == "name" {
-					f.Name = message.Other
+					newLang.Name = message.Other
 				} else if message.ID == "code" {
-					f.Code = message.Other
+					newLang.Code = message.Other
 				}
 			}
 
-			if len(f.Name) > 0 {
-				availableLanguages = append(availableLanguages, f)
+			if len(newLang.Code) > 0 && len(newLang.Name) > 0 {
+				newLang.Dictionary = stdJson
+			}
+
+			if len(newLang.Name) > 0 {
+				availableLanguages = append(availableLanguages, newLang)
 			}
 		}
 	}
@@ -177,6 +187,11 @@ func newVariable(name string, value interface{}) Variable {
 	return Variable{Name: name, Value: value}
 }
 
+// setCurrentLocale sets the current language from the given locale string. If the
+// locale matches the code of a loaded language, it is set as the current language.
+// If the locale does not match the code of a loaded language, it is assumed to be
+// the name of a language and the locale is set based on the first matching language.
+// If no matching language is found, the current language is not changed.
 func setCurrentLocale(locale string) {
 	for _, l := range availableLanguages {
 		if strings.EqualFold(l.Code, locale) || strings.EqualFold(l.Name+"_", locale) {
@@ -186,81 +201,22 @@ func setCurrentLocale(locale string) {
 	}
 }
 
-// Text returns the translated string for the given id and optional variables.
-// The result is a string in the language previously loaded with the Load function.
-// If the language is not loaded, the default language is used.
-// If the id is not found, the string "{id}" is returned.
-// If a variable is not found, the string "{variableName}" is returned.
-func Text(id string, variables ...Variable) string {
-	return _text(id, 0, variables...)
-}
-
-// TextPlural returns the translated string for the given id and optional variables, using the
-// plural form based on the given pluralCount.
-// The result is a string in the language previously loaded with the Load function.
-// If the language is not loaded, the default language is used.
-// If the id is not found, the string "{id}" is returned.
-// If a variable is not found, the string "{variableName}" is returned.
-func TextPlural(id string, pluralCount int, variables ...Variable) string {
-	return _text(id, pluralCount, variables...)
-}
-
-// _text returns the translated string for the given id and optional variables, using the
-// plural form based on the given pluralCount.
-// The result is a string in the language previously loaded with the Load function.
-// If the language is not loaded, the default language is used.
-// If the id is not found, the string "{id}" is returned.
-// If a variable is not found, the string "{variableName}" is returned.
-func _text(id string, pluralCount int, variables ...Variable) string {
-	if loc == nil {
-		load(defaultLanguage)
-	}
-	if len(id) < 1 {
-		return "{EMPTY ID}"
-	}
-	id = "messages." + id
-	var mapVar map[string]interface{}
-	if len(variables) > 0 {
-		mapVar = make(map[string]interface{})
-		for _, variable := range variables {
-			if len(variable.Name) > 0 && variable.Value != nil {
-				mapVar[variable.Name] = variable.Value
-			}
-		}
-	}
-	var text string
-	var err error
-	if pluralCount > 1 {
-		text, err = loc.Localize(&i18n.LocalizeConfig{MessageID: id, TemplateData: mapVar, PluralCount: pluralCount})
-	} else {
-		text, err = loc.Localize(&i18n.LocalizeConfig{MessageID: id, TemplateData: mapVar})
-	}
-	if err != nil {
-		return fmt.Sprintf("{%s - %v}", id, err)
-	} else {
-		return text
-	}
-}
-
-// Load a locale from a JSON constant
+// loadLocale loads a language in memory
+// If the language is not loaded, returns an error
+// The language is identified by its locale string
+// If the language is loaded, the current language is set to the loaded language
 func loadLocale(lang language.Tag) error {
 	if bundle != nil {
 		var data []byte
-		var err error
-		switch lang {
-		case language.AmericanEnglish, language.English, language.BritishEnglish:
-			data, err = standardizeJSON(locale_en)
-			// data, err = standardizeJSON([]byte(locale_enUS))
-		case language.French:
-			data, err = standardizeJSON(locale_fr)
-		}
-		if err == nil {
-			if _, err := bundle.ParseMessageFileBytes(data, fmt.Sprintf("msg.%s.json", lang.String())); err != nil {
-				logger.Fatalf("cannot load locale %s: %v\n", lang.String(), err)
+		for _, l := range availableLanguages {
+			if l.Code == lang.String() {
+				data = l.Dictionary
+				break
 			}
+		}
 
-		} else {
-			return fmt.Errorf("cannot read data for language %s: %v", lang.String(), err)
+		if _, err := bundle.ParseMessageFileBytes(data, fmt.Sprintf("msg.%s.json", lang.String())); err != nil {
+			return fmt.Errorf("cannot load locale %s: %v", lang.String(), err)
 		}
 	}
 	return nil

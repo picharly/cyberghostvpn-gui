@@ -7,6 +7,7 @@ import (
 )
 
 var currentState Status
+var version string
 
 type Status int
 
@@ -46,9 +47,11 @@ func GetCurrentState() Status {
 }
 
 func GetVersion() string {
-	out, err := tools.ExecuteCommand(fmt.Sprintf("%s %s | grep -i \"cyberghost -\"", CG_EXECUTABLE, CG_OTHER_HELP), true)
-	if err == nil && len(out) > 0 {
-		return strings.ReplaceAll(strings.Replace(out[0], "cyberghost -", "", 1), " ", "")
+	if version == "" {
+		out, err := tools.ExecuteCommand(fmt.Sprintf("%s %s | grep -i \"cyberghost -\"", CG_EXECUTABLE, CG_OTHER_HELP), true)
+		if err == nil && len(out) > 0 {
+			return strings.ReplaceAll(strings.Replace(out[0], "cyberghost -", "", 1), " ", "")
+		}
 	}
 	return ""
 }
