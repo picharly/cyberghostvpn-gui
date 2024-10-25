@@ -45,6 +45,11 @@
 		{ "id": "inf6", "other": "not installed" },
 		{ "id": "inf7", "other": "unknown" },
 		{ "id": "inf8", "other": "Network:" },
+		// PROFILE
+		{ "id": "pro0", "other": "Save Profile" },
+		{ "id": "pro1", "other": "Name:" },
+		{ "id": "pro2", "other": "You must enter a name for the profile" },
+		{ "id": "pro3", "other": "Enter a name..." },
 		// RESOURCES ERRORS
 		{ "id": "err.res0", "other": "unable to read flag files: " },
 		{ "id": "err.res1", "other": "unable to load file '{{.FileName}}'. Error: " },

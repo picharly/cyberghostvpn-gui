@@ -11,7 +11,7 @@ import (
 
 var countries *[]resources.Country
 
-func GetCountries(serverType cgServerType) *[]resources.Country {
+func GetCountries(serverType CgServerType) *[]resources.Country {
 	if countries == nil || len(*countries) == 0 {
 		LoadCountries(serverType)
 	}
@@ -28,10 +28,10 @@ func GetCountry(name string) resources.Country {
 	return resources.Country{}
 }
 
-func LoadCountries(serverType cgServerType) error {
+func LoadCountries(serverType CgServerType) error {
 	array := make([]resources.Country, 0)
 
-	if out, err := tools.ExecuteCommand(getCGCommand(getOptionServerType(serverType), string(CG_OTHER_COUNTRY_CODE)), true); err != nil {
+	if out, err := tools.ExecuteCommand(getCGCommand(GetOptionServerType(string(serverType)), string(CG_OTHER_COUNTRY_CODE)), true); err != nil {
 		countries = &array
 		return err
 	} else {

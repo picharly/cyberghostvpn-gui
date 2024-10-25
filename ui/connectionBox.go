@@ -1,8 +1,6 @@
 package ui
 
 import (
-	"cyberghostvpn-gui/resources"
-
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
@@ -11,10 +9,17 @@ import (
 var connectionBox *fyne.Container
 var firstLoad = true
 
-var selectedCountry resources.Country
-var selectedCity resources.City
-var selectedServer resources.Server
-
+// getConnectionBox generates the connection box UI component.
+//
+// The first time it is called, the UI components are created and the
+// connectionBox variable is set.  On subsequent calls, the value of
+// connectionBox is returned immediately.
+//
+// The connection box is a vertical box containing the following
+// components: the profile text and form, the VPN service text and form,
+// the server type text and form, the connection protocol text and form,
+// the country text and form, the city text and form, and the server
+// instance text and form.
 func getConnectionBox() *fyne.Container {
 	if connectionBox == nil {
 

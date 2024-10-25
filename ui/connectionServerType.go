@@ -10,40 +10,50 @@ import (
 var lblServerType *widget.Label
 var selectServerType *widget.Select
 
+// getServerTypeComponents returns a Label and a Select widget to select
+// the server type for CyberGhost. The Select widget is populated with
+// the three server types: traffic, streaming, torrent. The Select widget
+// is also connected to a function that updates the countries when a
+// server type is changed. The function to update the countries is
+// triggered by the locales trigger.
 func getServerTypeComponents() (*widget.Label, *widget.Select) {
 	if lblServerType == nil || selectServerType == nil {
 		lblServerType = widget.NewLabel(locales.Text("con5"))
-		selectServerType = widget.NewSelect([]string{string(cg.CG_SERVER_TYPE_TRAFFIC), string(cg.CG_SERVER_TYPE_STREAMING), string(cg.CG_SERVER_TYPE_TORRENT)}, func(s string) {
+		serverTypes := make([]string, 0)
+		for k, _ := range cg.ServerTypeOptions {
+			serverTypes = append(serverTypes, k)
+		}
+		selectServerType = widget.NewSelect(serverTypes, func(s string) {
 			if !firstLoad {
+
+				// Reset current selection
 				selectServerInstance.SetOptions([]string{""})
 				selectServerInstance.SetSelected("")
+				selectServerInstance.Disable()
 				selectCity.SetOptions([]string{""})
 				selectCity.SetSelected("")
-				countries := make([]string, 0)
-				countries = append(countries, "")
-				sel := cg.CG_SERVER_TYPE_TRAFFIC
-				switch s {
-				case string(cg.CG_SERVER_TYPE_TRAFFIC):
-					sel = cg.CG_SERVER_TYPE_TRAFFIC
-				case string(cg.CG_SERVER_TYPE_STREAMING):
-					sel = cg.CG_SERVER_TYPE_STREAMING
-				case string(cg.CG_SERVER_TYPE_TORRENT):
-					sel = cg.CG_SERVER_TYPE_TORRENT
-				}
-				for _, c := range *cg.GetCountries(sel) {
-					countries = append(countries, c.Name)
-				}
-				selectCountry.SetOptions(countries)
-				selectCountry.Selected = ""
+				selectCity.Disable()
+
+				// Get new selection
+				cg.SetSelectedServerType(s)
+
+				// Update countries
+				go updateCountries(cg.GetServerType(s))
 			}
 		})
-		selectServerType.SetSelected(string(cg.CG_SERVER_TYPE_TRAFFIC))
+
+		// Default option
+		defaultOption := cg.CG_SERVER_TYPE_TRAFFIC
+		selectServerType.SetSelected(string(defaultOption))
+		cg.SetSelectedServerType(string(defaultOption))
+
 		// Add update method to current trigger
 		locales.GetTrigger().AddMethod(updateLanguageServerType)
 	}
 	return lblServerType, selectServerType
 }
 
+// updateLanguageServerType updates the label of the server type select with the current language
 func updateLanguageServerType() {
 	lblServerType.SetText(locales.Text("con5"))
 }

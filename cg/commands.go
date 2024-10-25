@@ -31,23 +31,23 @@ const (
 type cgServiceType string
 
 const (
-	CG_SERVICE_TYPE_OPENVPN   cgServiceType = "openvpn"
-	CG_SERVICE_TYPE_WIREGUARD cgServiceType = "wireguard"
+	CG_SERVICE_TYPE_OPENVPN   cgServiceType = "OpenVPN"
+	CG_SERVICE_TYPE_WIREGUARD cgServiceType = "WireGuard"
 )
 
-type cgServerType string
+type CgServerType string
 
 const (
-	CG_SERVER_TYPE_TRAFFIC   cgServerType = "traffic"
-	CG_SERVER_TYPE_STREAMING cgServerType = "streaming"
-	CG_SERVER_TYPE_TORRENT   cgServerType = "torrent"
+	CG_SERVER_TYPE_TRAFFIC   CgServerType = "Traffic"
+	CG_SERVER_TYPE_STREAMING CgServerType = "Streaming"
+	CG_SERVER_TYPE_TORRENT   CgServerType = "Torrent"
 )
 
 type cgConnection string
 
 const (
-	CG_CONNECTION_UDP cgConnection = "udp"
-	CG_CONNECTION_TCP cgConnection = "tcp"
+	CG_CONNECTION_UDP cgConnection = "UDP"
+	CG_CONNECTION_TCP cgConnection = "TCP"
 )
 
 func getCGCommand(options ...string) string {
@@ -56,17 +56,4 @@ func getCGCommand(options ...string) string {
 		cmd += strings.Join(options, " ")
 	}
 	return cmd
-}
-
-func getOptionServerType(serverType cgServerType) string {
-	switch serverType {
-	case CG_SERVER_TYPE_TRAFFIC:
-		return string(CG_SERVERTYPES_TRAFFIC)
-	case CG_SERVER_TYPE_STREAMING:
-		return string(CG_SERVERTYPES_STREAMING)
-	case CG_SERVER_TYPE_TORRENT:
-		return string(CG_SERVERTYPES_TORRENT)
-	default:
-		return string(CG_SERVERTYPES_TRAFFIC)
-	}
 }
