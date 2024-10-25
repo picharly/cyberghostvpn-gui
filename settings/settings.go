@@ -17,7 +17,7 @@ type settings struct {
 	Countries   []resources.Country `json:"countries"`
 	HideOnClose bool                `json:"hide_on_close"`
 	Language    string              `json:"language"`
-	LastProfile []Profile           `json:"last_profile"`
+	LastProfile Profile             `json:"last_profile"`
 	HideOnStart bool                `json:"hide_on_startup"`
 	TrayIcon    bool                `json:"tray_icon"`
 	Profiles    []Profile           `json:"profiles"`

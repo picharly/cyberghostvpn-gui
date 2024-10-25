@@ -10,18 +10,27 @@ import (
 
 var servers *[]resources.Server
 
-func GetServers(serverType cgServerType, countryCode string, cityName string) *[]resources.Server {
+func GetServers(serverType CgServerType, countryCode string, cityName string) *[]resources.Server {
 	LoadServers(serverType, countryCode, cityName)
 
 	return servers
 }
 
-func LoadServers(serverType cgServerType, countryCode string, cityName string) error {
+func GetServer(instance string) resources.Server {
+	for _, s := range *servers {
+		if s.Instance == instance {
+			return s
+		}
+	}
+	return resources.Server{}
+}
+
+func LoadServers(serverType CgServerType, countryCode string, cityName string) error {
 	array := make([]resources.Server, 0)
 
 	if out, err := tools.ExecuteCommand(
 		getCGCommand(
-			getOptionServerType(serverType),
+			GetOptionServerType(string(serverType)),
 			string(CG_OTHER_COUNTRY_CODE),
 			countryCode,
 			string(CG_OTHER_CITY),

@@ -10,7 +10,7 @@ import (
 
 var cities *[]resources.City
 
-func GetCities(serverType cgServerType, countryCode string) *[]resources.City {
+func GetCities(serverType CgServerType, countryCode string) *[]resources.City {
 	LoadCities(serverType, countryCode)
 
 	return cities
@@ -25,12 +25,12 @@ func GetCity(name string) resources.City {
 	return resources.City{}
 }
 
-func LoadCities(serverType cgServerType, countryCode string) error {
+func LoadCities(serverType CgServerType, countryCode string) error {
 	array := make([]resources.City, 0)
 
 	if out, err := tools.ExecuteCommand(
 		getCGCommand(
-			getOptionServerType(serverType),
+			GetOptionServerType(string(serverType)),
 			string(CG_OTHER_COUNTRY_CODE),
 			countryCode), true); err != nil {
 		cities = &array

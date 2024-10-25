@@ -22,14 +22,19 @@ func getCityComponents() (*widget.Label, *widget.Select) {
 				selectServerInstance.Disable()
 
 				if len(s) > 0 {
-					selectedCity = cg.GetCity(s)
-					if len(selectedCity.Name) > 0 {
-						go updateServerInstances(&selectedCountry, &selectedCity)
+					cg.SetSelectedCity(cg.GetCity(s))
+					if len(cg.SelectedCity.Name) > 0 {
+						go updateServerInstances(&cg.SelectedCountry, &cg.SelectedCity)
 					}
 				}
 			}
 		})
+
+		// Default
 		selectCity.SetSelected("")
+		if firstLoad {
+			selectCity.Disable()
+		}
 
 		// Add update method to current trigger
 		locales.GetTrigger().AddMethod(updateLanguageCity)

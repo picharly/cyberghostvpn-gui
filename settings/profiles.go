@@ -1,15 +1,18 @@
 package settings
 
 type Profile struct {
-	City             string `json:"city"`
-	CountryCode      string `json:"country_code"`
-	Name             string `json:"name"`
-	ServiceType      string `json:"service_type"`
-	StreamingService string `json:"streaming_service"`
-	TCP              bool   `json:"tcp"`
-	Torrent          bool   `json:"torrent"`
-	Traffic          bool   `json:"traffic"`
-	WireGuard        bool   `json:"wireguard"`
+	City        string `json:"city"`
+	CountryCode string `json:"country_code"`
+	Name        string `json:"name"`
+	Protocol    string `json:"protocol"`
+	ServiceType string `json:"service_type"`
+	Server      string `json:"server"`
+	ServerType  string `json:"server_type"`
+	VPNService  string `json:"vpn_service"`
+}
+
+func GetCurrentProfile() *Profile {
+	return &currentSettings.LastProfile
 }
 
 func GetProfiles() *[]Profile {

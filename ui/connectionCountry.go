@@ -27,9 +27,9 @@ func getCountryComponents() (*widget.Label, *widget.Select) {
 				selectCity.Disable()
 
 				if len(s) > 0 {
-					selectedCountry = cg.GetCountry(s)
-					if len(selectedCountry.Name) > 0 {
-						go updateCities(&selectedCountry)
+					cg.SetSelectedCountry(cg.GetCountry(s))
+					if len(cg.SelectedCountry.Name) > 0 {
+						go updateCities(&cg.SelectedCountry)
 					}
 				}
 			}
@@ -40,6 +40,17 @@ func getCountryComponents() (*widget.Label, *widget.Select) {
 		locales.GetTrigger().AddMethod(updateLanguageCountry)
 	}
 	return lblCountry, selectCountry
+}
+
+func updateCountries(serverType cg.CgServerType) {
+	countries := make([]string, 0)
+	countries = append(countries, "")
+	for _, c := range *cg.GetCountries(serverType) {
+		countries = append(countries, c.Name)
+	}
+	selectCountry.SetOptions(countries)
+	selectCountry.Selected = ""
+	selectCountry.Enable()
 }
 
 func updateLanguageCountry() {

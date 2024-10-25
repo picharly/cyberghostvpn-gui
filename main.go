@@ -35,17 +35,6 @@ func main() {
 	// Load countries
 	cg.GetCountries(cg.CG_SERVER_TYPE_TRAFFIC)
 
-	// countries := cg.GetCountries(cg.CG_SERVER_TYPE_TRAFFIC)
-	// if countries != nil {
-	// 	for _, c := range *countries {
-	// 		fmt.Printf("%v | %s | %s\n", c.Id, c.Name, c.Code)
-	// 	}
-	// }
-	// for _, l := range locales.GetLocales() {
-	// 	fmt.Printf("%s (%s)\n", l.Name, l.Code)
-	// }
-	// time.Sleep(time.Minute)
-
 	// Start UI
 	if cfg.HideOnStart {
 		ui.GetMainWindow().Hide()
