@@ -107,6 +107,7 @@ func refresh() {
 	for {
 		updateNetwork()
 		updateStatus()
+		updateConnectButtonStatus()
 
 		time.Sleep(time.Second * 1)
 	}

@@ -52,7 +52,10 @@ func getConnectionBox() *fyne.Container {
 			protocolText, protocolForm,
 			countryText, countryForm,
 			cityText, cityForm,
-			serverInstanceText, serverInstanceForm)
+			serverInstanceText, serverInstanceForm,
+			layout.NewSpacer(),
+			getConnectComponents(),
+		)
 
 		connectionBox = container.NewVBox(form)
 
