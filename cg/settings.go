@@ -9,7 +9,7 @@ var SelectedCountry resources.Country
 var SelectedCity resources.City
 var SelectedProtocol string
 var SelectedServer resources.Server
-var SelectedServerType string
+var SelectedServiceType string
 var SelectedVPNService string
 
 // Server Type Options
@@ -43,8 +43,42 @@ func GetOptionVPNService(vpnService string) string {
 	return string(CG_SERVICE_TYPE_OPENVPN)
 }
 
-func SaveProfile(name string) {
+func DeleteProfile(name string) {
+	ps := settings.GetProfiles()
+	for i, p := range *ps {
+		if p.Name == name {
+			*ps = append((*ps)[:i], (*ps)[i+1:]...)
+			settings.WriteCurrentSettings()
+			return
+		}
+	}
+}
 
+func SaveProfile(name string, previousName string) {
+	if len(name) > 0 {
+		p := *settings.GetCurrentProfile()
+		ps := settings.GetProfiles()
+
+		// Check if renamed or not
+		if len(previousName) < 1 {
+			previousName = name
+		}
+
+		// Update profile
+		for i, p := range *ps {
+			if p.Name == previousName {
+				p.Name = name
+				(*ps)[i] = p
+				settings.WriteCurrentSettings()
+				return
+			}
+		}
+
+		// Or create a new one
+		p.Name = name
+		*ps = append(*ps, p)
+		settings.WriteCurrentSettings()
+	}
 }
 
 func SetSelectedCountry(country resources.Country) {
@@ -71,10 +105,10 @@ func SetSelectedServer(server resources.Server) {
 	p.Server = server.Instance
 	settings.WriteCurrentSettings()
 }
-func SetSelectedServerType(serverType string) {
-	SelectedServerType = serverType
+func SetSelectedServiceType(serverType string) {
+	SelectedServiceType = serverType
 	p := settings.GetCurrentProfile()
-	p.ServerType = serverType
+	p.ServiceType = serverType
 	settings.WriteCurrentSettings()
 }
 func SetSelectedVPNService(vpnService string) {

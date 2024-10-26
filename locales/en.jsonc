@@ -50,6 +50,8 @@
 		{ "id": "pro1", "other": "Name:" },
 		{ "id": "pro2", "other": "You must enter a name for the profile" },
 		{ "id": "pro3", "other": "Enter a name..." },
+		{ "id": "pro4", "other": "Delete Profile" },
+		{ "id": "pro5", "other": "Do you really want to delete profile '{{.Name}}'?" },
 		// RESOURCES ERRORS
 		{ "id": "err.res0", "other": "unable to read flag files: " },
 		{ "id": "err.res1", "other": "unable to load file '{{.FileName}}'. Error: " },

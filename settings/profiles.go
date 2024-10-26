@@ -5,9 +5,8 @@ type Profile struct {
 	CountryCode string `json:"country_code"`
 	Name        string `json:"name"`
 	Protocol    string `json:"protocol"`
-	ServiceType string `json:"service_type"`
 	Server      string `json:"server"`
-	ServerType  string `json:"server_type"`
+	ServiceType string `json:"service_type"`
 	VPNService  string `json:"vpn_service"`
 }
 
