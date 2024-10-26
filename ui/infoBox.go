@@ -17,6 +17,7 @@ import (
 	"fyne.io/fyne/v2/layout"
 )
 
+var imgFlag *canvas.Image
 var infoBox *fyne.Container
 var textDefNet *canvas.Text
 var textDefStatus *canvas.Text
@@ -61,11 +62,32 @@ func getInfoBox() *fyne.Container {
 		netContainer := container.New(netBox, textDefNet, textNet)
 		updateNetwork()
 
+		// Country
+		imgFlag = canvas.NewImageFromResource(fyne.NewStaticResource("flag.png", resources.GetFlag("FR")))
+		imgW := 64
+		imgH := 48
+		imgFlag.SetMinSize(fyne.NewSize(float32(imgW), float32(imgH)))
+		imgContainer := container.New(layout.NewCenterLayout(), imgFlag)
+		imgContainer.Resize(fyne.NewSize(float32(imgW), float32(imgH)))
+		imgFlag.Translucency = 100
+
 		// Update Status
 		updateStatus()
 
 		// Create Status Box
-		infoBox = container.NewHBox(getCyberGhostLogo(), layout.NewSpacer(), container.NewVBox(layout.NewSpacer(), textTitle, versionContainer, statusContainer, netContainer, layout.NewSpacer()))
+		infoBox = container.NewHBox(
+			getCyberGhostLogo(),
+			layout.NewSpacer(),
+			container.NewVBox(
+				layout.NewSpacer(),
+				textTitle,
+				versionContainer,
+				statusContainer,
+				netContainer,
+				imgContainer,
+				layout.NewSpacer(),
+			),
+		)
 	}
 
 	// Enable refresh
@@ -88,6 +110,19 @@ func refresh() {
 
 		time.Sleep(time.Second * 1)
 	}
+}
+
+// setFlag sets the flag of the country with the given code in the main information box of the application.
+// If the given code is empty, the flag is hidden by setting its transparency to 100.
+// Otherwise, the flag is updated with the given code and its transparency is set to 0.
+func setFlag(countryCode string) {
+	if len(countryCode) < 1 {
+		imgFlag.Translucency = 100
+	} else {
+		imgFlag.Resource = fyne.NewStaticResource(countryCode+".svg", resources.GetFlag(countryCode))
+		imgFlag.Translucency = 0
+	}
+	imgFlag.Refresh()
 }
 
 // updatelanguageInfoBox is a function that updates the labels of the main

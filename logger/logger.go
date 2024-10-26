@@ -127,6 +127,11 @@ func checkLoggerConfig() LoggerOptions {
 			MaxBackups:    3,  // Max number of files to keep
 			MaxInDays:     1,  // Max number of days to write into a file
 		}
+
+		// Check if the log directory exists
+		if _, err := os.Stat(currentLoggerConfig.FileDirectory); os.IsNotExist(err) {
+			os.MkdirAll(currentLoggerConfig.FileDirectory, 0744)
+		}
 	}
 
 	return *currentLoggerConfig

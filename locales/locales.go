@@ -76,9 +76,16 @@ func GetSystemLocale() string {
 		locale = runtime.GOOS
 	}
 
-	if strings.Contains(locale, ".") {
-		locale = strings.Split(locale, ".")[0]
+	idx := strings.IndexFunc(locale, func(r rune) bool {
+		return !strings.ContainsRune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", r)
+	})
+	if idx != -1 {
+		locale = locale[:idx]
 	}
+
+	// if strings.Contains(locale, ".") {
+	// 	locale = strings.Split(locale, ".")[0]
+	// }
 
 	return locale
 }

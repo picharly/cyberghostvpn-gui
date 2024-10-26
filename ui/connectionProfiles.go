@@ -15,6 +15,10 @@ var containerProfiles *fyne.Container
 var lblProfile *widget.Label
 var selectProfile *widget.Select
 
+var loadingCountry string
+var loadingCity string
+var loadingServerInstance string
+
 // getConnectionProfilesComponents returns a label and a container that contains a select widget for selecting a profile,
 // a button to add a new profile and a button to delete the selected profile.
 // The returned label is the title of the select widget.
@@ -35,7 +39,6 @@ func getConnectionProfilesComponents() (*widget.Label, *fyne.Container) {
 			showPopupProfileDelete()
 		})
 		selectProfile = widget.NewSelect(profiles, func(s string) {
-			//TODO
 			if len(s) < 1 {
 				btnDelProfile.Disable()
 			} else {
@@ -50,6 +53,22 @@ func getConnectionProfilesComponents() (*widget.Label, *fyne.Container) {
 		selectProfile.OnChanged = func(s string) {
 			if len(s) > 0 && strings.Compare(s, locales.Text("con2")) != 0 {
 				btnDelProfile.Enable()
+				p := settings.GetProfile(s)
+				if p != nil {
+					// Set value to load
+					loadingCountry = p.CountryName
+					loadingCity = p.City
+					loadingServerInstance = p.Server
+
+					// Show progress popup
+					showPopupLoadingProfile()
+
+					// Apply profile settings
+					selectServerType.SetSelected(p.ServiceType)
+					selectService.SetSelected(p.VPNService)
+					selectConnection.SetSelected(p.Protocol)
+					selectCountry.SetSelected(p.CountryName)
+				}
 			} else {
 				btnDelProfile.Disable()
 			}

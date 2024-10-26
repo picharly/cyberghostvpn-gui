@@ -85,6 +85,7 @@ func SetSelectedCountry(country resources.Country) {
 	SelectedCountry = country
 	p := settings.GetCurrentProfile()
 	p.CountryCode = country.Code
+	p.CountryName = country.Name
 	settings.WriteCurrentSettings()
 }
 func SetSelectedCity(city resources.City) {
