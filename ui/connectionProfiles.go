@@ -11,6 +11,8 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+var btnDelProfile *widget.Button
+var btnSaveProfile *widget.Button
 var containerProfiles *fyne.Container
 var lblProfile *widget.Label
 var selectProfile *widget.Select
@@ -25,9 +27,6 @@ var loadingServerInstance string
 // The select widget is loaded with the names of all the profiles that are defined in the settings.
 func getConnectionProfilesComponents() (*widget.Label, *fyne.Container) {
 	if lblProfile == nil || selectProfile == nil || containerProfiles == nil {
-
-		var btnDelProfile *widget.Button
-		var btnSaveProfile *widget.Button
 
 		lblProfile = widget.NewLabel(locales.Text("con1"))
 		profiles := make([]string, 0)
