@@ -50,10 +50,19 @@ func updateLanguageServerInstance() {
 func updateServerInstances(selCountry *resources.Country, selCity *resources.City) {
 	srv := make([]string, 0)
 	srv = append(srv, "")
+	selection := ""
 	for _, c := range *cg.GetServers(cg.CG_SERVER_TYPE_TRAFFIC, selCountry.Code, selCity.Name) {
 		srv = append(srv, fmt.Sprintf("%s (%s)", c.Instance, c.Load))
+		if len(loadingServerInstance) > 0 && c.Instance == loadingServerInstance {
+			selection = fmt.Sprintf("%s (%s)", c.Instance, c.Load)
+		}
 	}
 	selectServerInstance.SetOptions(srv)
-	selectServerInstance.SetSelected("")
+	if len(selection) > 0 {
+		selectServerInstance.SetSelected(selection)
+	} else {
+		selectServerInstance.SetSelected("")
+	}
+	loadingServerInstance = ""
 	selectServerInstance.Enable()
 }

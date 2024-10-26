@@ -49,7 +49,12 @@ func updateCities(selCountry *resources.Country) {
 		cities = append(cities, c.Name)
 	}
 	selectCity.SetOptions(cities)
-	selectCity.SetSelected("")
+	if len(loadingCity) > 0 {
+		selectCity.SetSelected(loadingCity)
+	} else {
+		selectCity.SetSelected("")
+	}
+	loadingCity = ""
 	selectCity.Enable()
 }
 

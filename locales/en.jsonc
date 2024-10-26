@@ -52,6 +52,9 @@
 		{ "id": "pro3", "other": "Enter a name..." },
 		{ "id": "pro4", "other": "Delete Profile" },
 		{ "id": "pro5", "other": "Do you really want to delete profile '{{.Name}}'?" },
+		{ "id": "pro6", "other": "Loading Country '{{.Name}}'..." },
+		{ "id": "pro7", "other": "Loading City '{{.Name}}'..." },
+		{ "id": "pro8", "other": "Loading Server '{{.Name}}'..." },
 		// RESOURCES ERRORS
 		{ "id": "err.res0", "other": "unable to read flag files: " },
 		{ "id": "err.res1", "other": "unable to load file '{{.FileName}}'. Error: " },

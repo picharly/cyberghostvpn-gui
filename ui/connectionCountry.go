@@ -32,9 +32,19 @@ func getCountryComponents() (*widget.Label, *widget.Select) {
 						go updateCities(&cg.SelectedCountry)
 					}
 				}
+
+				// Show flag
+				if len(selectCountry.Selected) > 0 {
+					setFlag(cg.GetCountry(selectCountry.Selected).Code)
+				}
 			}
 		})
-		selectCountry.SetSelected("")
+		if len(loadingCountry) > 0 {
+			selectCountry.SetSelected(loadingCountry)
+		} else {
+			selectCountry.SetSelected("")
+		}
+		loadingCountry = ""
 
 		// Add update method to current trigger
 		locales.GetTrigger().AddMethod(updateLanguageCountry)
