@@ -35,7 +35,7 @@ func getServerTypeComponents() (*widget.Label, *widget.Select) {
 				selectCity.Disable()
 
 				// Get new selection
-				cg.SetSelectedServerType(s)
+				cg.SetSelectedServiceType(s)
 
 				// Update countries
 				go updateCountries(cg.GetServerType(s))
@@ -45,7 +45,7 @@ func getServerTypeComponents() (*widget.Label, *widget.Select) {
 		// Default option
 		defaultOption := cg.CG_SERVER_TYPE_TRAFFIC
 		selectServerType.SetSelected(string(defaultOption))
-		cg.SetSelectedServerType(string(defaultOption))
+		cg.SetSelectedServiceType(string(defaultOption))
 
 		// Add update method to current trigger
 		locales.GetTrigger().AddMethod(updateLanguageServerType)

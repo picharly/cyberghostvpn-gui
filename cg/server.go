@@ -18,6 +18,10 @@ func GetServers(serverType CgServerType, countryCode string, cityName string) *[
 
 func GetServer(instance string) resources.Server {
 	for _, s := range *servers {
+		if strings.Contains(strings.ToLower(instance), " ") {
+			split := strings.Split(instance, " ")
+			instance = split[0]
+		}
 		if s.Instance == instance {
 			return s
 		}

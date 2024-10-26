@@ -32,7 +32,7 @@ func getConnectionProfilesComponents() (*widget.Label, *fyne.Container) {
 			profiles = append(profiles, p.Name)
 		}
 		btnDelProfile = widget.NewButtonWithIcon("", theme.DeleteIcon(), func() {
-
+			showPopupProfileDelete()
 		})
 		selectProfile = widget.NewSelect(profiles, func(s string) {
 			//TODO
@@ -62,7 +62,20 @@ func getConnectionProfilesComponents() (*widget.Label, *fyne.Container) {
 	return lblProfile, containerProfiles
 }
 
-// updateLanguageProfiles updates the label of the select widget of the profiles component with the new text translated with the current language.
+// updateLanguageProfiles updates the label of the select widget of the profiles component with the new text
+// translated with the current language.
 func updateLanguageProfiles() {
 	lblProfile = widget.NewLabel(locales.Text("con1"))
+}
+
+// updateProfiles updates the options of the select widget of the profiles component with the names of the profiles
+// that are currently in the settings and selects the first option (empty string)
+func updateProfiles() {
+	profiles := make([]string, 0)
+	profiles = append(profiles, "")
+	for _, p := range *settings.GetProfiles() {
+		profiles = append(profiles, p.Name)
+	}
+	selectProfile.SetOptions(profiles)
+	selectProfile.SetSelected("")
 }
