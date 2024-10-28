@@ -32,6 +32,9 @@ func getConnectionBox() *fyne.Container {
 		// Selection of Server Type
 		serverTypeText, serverTypeForm := getServerTypeComponents()
 
+		// Streaming service
+		streamingText, streamingForm := getStreamingServiceComponents()
+
 		// Selection of Connection Protocol
 		protocolText, protocolForm := getConnectionProtocolComponents()
 
@@ -48,8 +51,9 @@ func getConnectionBox() *fyne.Container {
 		form := container.New(layout.NewFormLayout(),
 			profileText, profileForm,
 			vpnServiceText, vpnServiceForm,
-			serverTypeText, serverTypeForm,
 			protocolText, protocolForm,
+			serverTypeText, serverTypeForm,
+			streamingText, streamingForm,
 			countryText, countryForm,
 			cityText, cityForm,
 			serverInstanceText, serverInstanceForm,

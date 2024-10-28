@@ -36,6 +36,7 @@
 		{ "id": "con7", "other": "Country" },
 		{ "id": "con8", "other": "City" },
 		{ "id": "con9", "other": "Server" },
+		{ "id": "con10", "other": "Streaming Service" },
 		// INFO
 		{ "id": "inf0", "other": "Version:" },
 		{ "id": "inf1", "other": "Status:" },

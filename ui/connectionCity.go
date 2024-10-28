@@ -27,14 +27,14 @@ func getCityComponents() (*widget.Label, *widget.Select) {
 						go updateServerInstances(&cg.SelectedCountry, &cg.SelectedCity)
 					}
 				}
+			} else {
+				selectCity.Disable()
 			}
 		})
 
 		// Default
 		selectCity.SetSelected("")
-		if firstLoad {
-			selectCity.Disable()
-		}
+		selectCity.Disable()
 
 		// Add update method to current trigger
 		locales.GetTrigger().AddMethod(updateLanguageCity)
@@ -45,7 +45,7 @@ func getCityComponents() (*widget.Label, *widget.Select) {
 func updateCities(selCountry *resources.Country) {
 	cities := make([]string, 0)
 	cities = append(cities, "")
-	for _, c := range *cg.GetCities(cg.CG_SERVER_TYPE_TRAFFIC, selCountry.Code) {
+	for _, c := range *cg.GetCities(cg.CgServerType(selectServerType.Selected), selCountry.Code) {
 		cities = append(cities, c.Name)
 	}
 	selectCity.SetOptions(cities)

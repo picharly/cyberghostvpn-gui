@@ -1,14 +1,15 @@
 package settings
 
 type Profile struct {
-	City        string `json:"city"`
-	CountryCode string `json:"country_code"`
-	CountryName string `json:"country_name"`
-	Name        string `json:"name"`
-	Protocol    string `json:"protocol"`
-	Server      string `json:"server"`
-	ServiceType string `json:"service_type"`
-	VPNService  string `json:"vpn_service"`
+	City             string `json:"city"`
+	CountryCode      string `json:"country_code"`
+	CountryName      string `json:"country_name"`
+	Name             string `json:"name"`
+	Protocol         string `json:"protocol"`
+	Server           string `json:"server"`
+	ServiceType      string `json:"service_type"`
+	StreamingService string `json:"streaming_service"`
+	VPNService       string `json:"vpn_service"`
 }
 
 func GetCurrentProfile() *Profile {

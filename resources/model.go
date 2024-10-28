@@ -19,3 +19,9 @@ type Server struct {
 	Instance string `json:"instance"`
 	Load     string `json:"load"`
 }
+
+type StreamingService struct {
+	Id          int    `json:"id"`
+	Service     string `json:"service"`
+	CountryCode string `json:"country_code"`
+}
