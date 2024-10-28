@@ -27,10 +27,16 @@ func GetCity(name string) resources.City {
 
 func LoadCities(serverType CgServerType, countryCode string) error {
 	array := make([]resources.City, 0)
+	streaming := ""
+
+	if serverType == CG_SERVER_TYPE_STREAMING && len(SelectedStreamingService) > 0 {
+		streaming = `"` + SelectedStreamingService + `"`
+	}
 
 	if out, err := tools.ExecuteCommand(
 		getCGCommand(
 			GetOptionServerType(string(serverType)),
+			streaming,
 			string(CG_OTHER_COUNTRY_CODE),
 			countryCode), true); err != nil {
 		cities = &array

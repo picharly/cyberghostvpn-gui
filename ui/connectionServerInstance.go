@@ -51,7 +51,7 @@ func updateServerInstances(selCountry *resources.Country, selCity *resources.Cit
 	srv := make([]string, 0)
 	srv = append(srv, "")
 	selection := ""
-	for _, c := range *cg.GetServers(cg.CG_SERVER_TYPE_TRAFFIC, selCountry.Code, selCity.Name) {
+	for _, c := range *cg.GetServers(cg.CgServerType(selectServerType.Selected), selCountry.Code, selCity.Name) {
 		srv = append(srv, fmt.Sprintf("%s (%s)", c.Instance, c.Load))
 		if len(loadingServerInstance) > 0 && c.Instance == loadingServerInstance {
 			selection = fmt.Sprintf("%s (%s)", c.Instance, c.Load)

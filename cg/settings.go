@@ -10,6 +10,7 @@ var SelectedCity resources.City
 var SelectedProtocol string
 var SelectedServer resources.Server
 var SelectedServiceType string
+var SelectedStreamingService string
 var SelectedVPNService string
 
 // Server Type Options
@@ -116,6 +117,12 @@ func SetSelectedVPNService(vpnService string) {
 	GetOptionVPNService(vpnService)
 	p := settings.GetCurrentProfile()
 	p.VPNService = vpnService
+	settings.WriteCurrentSettings()
+}
+
+func SetSelectedStreamingService(streamingService string) {
+	p := settings.GetCurrentProfile()
+	p.StreamingService = streamingService
 	settings.WriteCurrentSettings()
 }
 
