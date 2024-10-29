@@ -14,13 +14,14 @@ var currentSettings *settings // Instanciating new Settings
 var noSettings = true
 
 type settings struct {
-	Countries   []resources.Country `json:"countries"`
-	HideOnClose bool                `json:"hide_on_close"`
-	Language    string              `json:"language"`
-	LastProfile Profile             `json:"last_profile"`
-	HideOnStart bool                `json:"hide_on_startup"`
-	TrayIcon    bool                `json:"tray_icon"`
-	Profiles    []Profile           `json:"profiles"`
+	Countries     []resources.Country `json:"countries"`
+	HideOnClose   bool                `json:"hide_on_close"`
+	Language      string              `json:"language"`
+	LastProfile   Profile             `json:"last_profile"`
+	HideOnStart   bool                `json:"hide_on_startup"`
+	StopVPNOnExit bool                `json:"stop_vpn_on_exit"`
+	TrayIcon      bool                `json:"tray_icon"`
+	Profiles      []Profile           `json:"profiles"`
 }
 
 // Get current settings

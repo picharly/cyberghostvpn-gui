@@ -3,6 +3,7 @@ package ui
 import (
 	"cyberghostvpn-gui/cg"
 	"cyberghostvpn-gui/locales"
+	"time"
 
 	"fyne.io/fyne/v2/widget"
 )
@@ -23,8 +24,9 @@ func getCountryComponents() (*widget.Label, *widget.Select) {
 				// Reset
 				selectServerInstance.SetOptions([]string{""})
 				selectServerInstance.SetSelected("")
+				//selectServerInstance.Disable()
 				selectCity.SetSelected("")
-				selectCity.Disable()
+				//selectCity.Disable()
 
 				if len(s) > 0 {
 					cg.SetSelectedCountry(cg.GetCountry(s))
@@ -50,6 +52,18 @@ func getCountryComponents() (*widget.Label, *widget.Select) {
 				selectCountry.Disable()
 			}
 		})
+
+		// Automatic Enable/Disable
+		go func(s *widget.Select) {
+			for {
+				if len(s.Options) < 2 {
+					s.Disable()
+				} else {
+					s.Enable()
+				}
+				time.Sleep(time.Millisecond * 100)
+			}
+		}(selectCountry)
 
 		if len(loadingCountry) > 0 {
 			selectCountry.SetSelected(loadingCountry)
