@@ -28,8 +28,8 @@ var VPNServiceOptions = map[string]string{
 
 func GetOptionServerType(serverType string) string {
 	for k, v := range ServerTypeOptions {
-		if v == serverType {
-			return k
+		if k == serverType {
+			return v
 		}
 	}
 	return string(CG_SERVER_TYPE_TRAFFIC)

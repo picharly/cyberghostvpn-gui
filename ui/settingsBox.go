@@ -13,9 +13,15 @@ import (
 var settingsBox *fyne.Container
 
 // Components with text
+var checkboxHideOnTray *widget.Check
+var checkboxStartOnTray *widget.Check
+var checkboxStopVPN *widget.Check
+var checkboxTrayIcon *widget.Check
+
 var lblHideOnTray *widget.Label
 var lblLanguage *widget.Label
 var lblStartOnTray *widget.Label
+var lblStopVPN *widget.Label
 var lblTrayIcon *widget.Label
 
 // getSettingsBox returns the settings box of the application, which contains
@@ -52,16 +58,34 @@ func getSettingsBox() *fyne.Container {
 
 		// Enable tray icon
 		lblTrayIcon = widget.NewLabel(locales.Text("set2"))
-		checkboxTrayIcon := widget.NewCheck("", func(b bool) {
+		checkboxTrayIcon = widget.NewCheck("", func(b bool) {
 			cfg, _ := settings.GetCurrentSettings()
 			cfg.TrayIcon = b
 			settings.WriteCurrentSettings()
+
+			// Update other components
+			if checkboxStartOnTray != nil {
+				if checkboxTrayIcon.Checked {
+					checkboxHideOnTray.Enable()
+					checkboxStartOnTray.Enable()
+				} else {
+					checkboxHideOnTray.Disable()
+					checkboxStartOnTray.Disable()
+				}
+			}
+
+			// Apply new settings
+			if b {
+				setTrayIcon(GetMainWindow())
+			} else {
+				setTrayIcon(nil)
+			}
 		})
 		checkboxTrayIcon.SetChecked(cfg.TrayIcon)
 
 		// Start on tray
 		lblStartOnTray = widget.NewLabel(locales.Text("set3"))
-		checkboxStartOnTray := widget.NewCheck("", func(b bool) {
+		checkboxStartOnTray = widget.NewCheck("", func(b bool) {
 			cfg, _ := settings.GetCurrentSettings()
 			cfg.HideOnStart = b
 			settings.WriteCurrentSettings()
@@ -70,12 +94,21 @@ func getSettingsBox() *fyne.Container {
 
 		// Hide on tray
 		lblHideOnTray = widget.NewLabel(locales.Text("set4"))
-		checkboxHideOnTray := widget.NewCheck("", func(b bool) {
+		checkboxHideOnTray = widget.NewCheck("", func(b bool) {
 			cfg, _ := settings.GetCurrentSettings()
 			cfg.HideOnClose = b
 			settings.WriteCurrentSettings()
 		})
 		checkboxHideOnTray.SetChecked(cfg.HideOnClose)
+
+		// Stop VPN on exit
+		lblStopVPN = widget.NewLabel(locales.Text("set5"))
+		checkboxStopVPN = widget.NewCheck("", func(b bool) {
+			cfg, _ := settings.GetCurrentSettings()
+			cfg.StopVPNOnExit = b
+			settings.WriteCurrentSettings()
+		})
+		checkboxStopVPN.SetChecked(cfg.StopVPNOnExit)
 
 		form := container.New(
 			layout.NewFormLayout(),

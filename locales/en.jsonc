@@ -66,6 +66,7 @@
 		{ "id": "set2", "other": "Enable tray icon" },
 		{ "id": "set3", "other": "Hide on startup" },
 		{ "id": "set4", "other": "Hide on close" },
+		{ "id": "set5", "other": "Stop VPN on exit" },
 		// SETTINGS ERRORS
 		{ "id": "err.set0", "other": "unable to create/overwrite file '{{.FileName}}'. Error: " },
 		{ "id": "err.set1", "other": "settings file '{{.FileName}}' does not exist or is unreachable: " },

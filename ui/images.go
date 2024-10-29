@@ -12,5 +12,6 @@ import (
 func getCyberGhostLogo() *canvas.Image {
 	image := canvas.NewImageFromResource(fyne.NewStaticResource("cyberghostvpn_logo.png", resources.CyberGhostLogoPng))
 	image.FillMode = canvas.ImageFillOriginal
+	image.Translucency = 100
 	return image
 }

@@ -3,6 +3,7 @@ package ui
 import (
 	"cyberghostvpn-gui/cg"
 	"cyberghostvpn-gui/locales"
+	"fmt"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
@@ -27,6 +28,9 @@ func getConnectComponents() *fyne.Container {
 }
 
 func updateConnectButtonStatus() {
+	if btnConnect == nil {
+		return
+	}
 	switch cg.GetCurrentState() {
 
 	case cg.Connected:
@@ -55,27 +59,64 @@ func updateConnectButtonStatus() {
 }
 
 func disableForm() {
-	btnDelProfile.Disable()
-	btnSaveProfile.Disable()
-	selectProfile.Disable()
-	selectCity.Disable()
-	selectCountry.Disable()
-	selectServerType.Disable()
-	selectServerInstance.Disable()
-	selectConnection.Disable()
-	selectService.Disable()
+	// btnDelProfile.Disable()
+	// btnSaveProfile.Disable()
+	// selectProfile.Disable()
+	// selectCity.Disable()
+	// selectCountry.Disable()
+	// selectServerType.Disable()
+	// selectServerInstance.Disable()
+	// selectConnection.Disable()
+	// selectService.Disable()
+	_enableForm(false)
 }
 
 func enableForm() {
-	if len(selectProfile.Selected) > 0 {
-		btnDelProfile.Enable()
+	// if len(selectProfile.Selected) > 0 {
+	// 	btnDelProfile.Enable()
+	// }
+	// btnSaveProfile.Enable()
+	// selectProfile.Enable()
+	// selectCity.Enable()
+	// selectCountry.Enable()
+	// selectServerType.Enable()
+	// selectServerInstance.Enable()
+	// selectConnection.Enable()
+	// selectService.Enable()
+	_enableForm(true)
+}
+
+func _enableForm(enable bool) {
+	components := []fyne.Disableable{
+		btnDelProfile,
+		btnSaveProfile,
+		selectProfile,
+		selectCity,
+		selectCountry,
+		selectServerType,
+		selectServerInstance,
+		selectConnection,
+		selectService,
 	}
-	btnSaveProfile.Enable()
-	selectProfile.Enable()
-	selectCity.Enable()
-	selectCountry.Enable()
-	selectServerType.Enable()
-	selectServerInstance.Enable()
-	selectConnection.Enable()
-	selectService.Enable()
+	for _, c := range components {
+		if c != nil {
+			switch enable {
+			case true:
+				if c.Disabled() {
+					if c == selectProfile {
+						if len(selectProfile.Selected) > 0 {
+							c.Enable()
+						}
+					} else {
+						fmt.Printf("Enabling %p\n", c)
+						c.Enable()
+					}
+				}
+			case false:
+				if !c.Disabled() {
+					c.Disable()
+				}
+			}
+		}
+	}
 }

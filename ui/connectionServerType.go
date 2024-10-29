@@ -29,10 +29,10 @@ func getServerTypeComponents() (*widget.Label, *widget.Select) {
 				// Reset current selection
 				selectServerInstance.SetOptions([]string{""})
 				selectServerInstance.SetSelected("")
-				selectServerInstance.Disable()
+				//selectServerInstance.Disable()
 				selectCity.SetOptions([]string{""})
 				selectCity.SetSelected("")
-				selectCity.Disable()
+				//selectCity.Disable()
 
 				// Get new selection
 				cg.SetSelectedServiceType(s)
