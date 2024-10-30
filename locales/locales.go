@@ -83,10 +83,6 @@ func GetSystemLocale() string {
 		locale = locale[:idx]
 	}
 
-	// if strings.Contains(locale, ".") {
-	// 	locale = strings.Split(locale, ".")[0]
-	// }
-
 	return locale
 }
 

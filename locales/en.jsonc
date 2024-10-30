@@ -22,6 +22,8 @@
 		{ "id": "gen12", "other": "No" },
 		{ "id": "gen13", "other": "Loading" },
 		{ "id": "gen14", "other": "Disconnect" },
+		{ "id": "gen15", "other": "Output" },
+		{ "id": "gen16", "other": "Error" },
 		// CG
 		{ "id": "cg0", "other": "VPN connection found." },
 		{ "id": "cg1", "other": "No VPN connections found." },

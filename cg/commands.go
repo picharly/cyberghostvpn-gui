@@ -2,6 +2,7 @@ package cg
 
 import (
 	"fmt"
+	"os/exec"
 	"strings"
 )
 
@@ -53,11 +54,35 @@ const (
 	CG_CONNECTION_TCP cgConnection = "TCP"
 )
 
+// getCGCommand constructs a command string for executing the CyberGhost VPN CLI.
+//
+// It takes a variable number of string options, joins them with spaces, and
+// appends them to the base command defined by CG_EXECUTABLE.
+//
+// The constructed command string is printed to the standard output for
+// debugging purposes, and then returned.
+//
+// Parameters:
+//
+//	options: a variable number of string arguments to append as options
+//	         to the base command.
+//
+// Returns:
+//
+//	A string representing the complete command to be executed.
 func getCGCommand(options ...string) string {
-	cmd := string(CG_EXECUTABLE) + " "
+
+	// Look for path
+	path, err := exec.LookPath(string(CG_EXECUTABLE))
+	if err != nil {
+		path = string(CG_EXECUTABLE)
+	}
+
+	cmd := path + " "
 	if len(options) > 0 {
 		cmd += strings.Join(options, " ")
 	}
 	fmt.Printf("Command: %s\n", cmd)
+
 	return cmd
 }

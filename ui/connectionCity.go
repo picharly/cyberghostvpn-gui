@@ -4,8 +4,6 @@ import (
 	"cyberghostvpn-gui/cg"
 	"cyberghostvpn-gui/locales"
 	"cyberghostvpn-gui/resources"
-	"fmt"
-	"time"
 
 	"fyne.io/fyne/v2/widget"
 )
@@ -13,48 +11,38 @@ import (
 var lblCity *widget.Label
 var selectCity *widget.Select
 
+// emptyCitySelect empties the city select widget and selects the first option (empty string).
+func emptyCitySelect() {
+	selectCity.SetOptions([]string{""})
+	selectCity.SetSelected("")
+}
+
+// getCityComponents returns a Label and a Select widget to select a city for CyberGhost.
+// The Select widget is populated with the available cities for the current country.
+// The Select widget is also connected to a function that updates the selected city when a new city is selected.
+// The function to update the selected city is triggered by the locales trigger.
 func getCityComponents() (*widget.Label, *widget.Select) {
 	if lblCity == nil || selectCity == nil {
 		lblCity = widget.NewLabel(locales.Text("con8"))
 		selectCity = widget.NewSelect([]string{""}, func(s string) {
 			if !firstLoad {
 				// Reset
-				selectServerInstance.SetOptions([]string{""})
-				selectServerInstance.SetSelected("")
-				//selectServerInstance.Disable()
+				emptyServerInstanceSelect()
 
+				cg.SetSelectedCity(cg.GetCity(s))
 				if len(s) > 0 {
-					fmt.Printf("City: '%v' (Len: %v)\n", s, len(s))
-					cg.SetSelectedCity(cg.GetCity(s))
 					if len(cg.SelectedCity.Name) > 0 {
-						go updateServerInstances(&cg.SelectedCountry, &cg.SelectedCity)
+						updateServerInstances(&cg.SelectedCountry, &cg.SelectedCity)
 					}
 				}
 			}
 		})
 
-		fmt.Printf("DEBUG: Created %p\n", selectCity)
-
 		// Default
 		selectCity.SetSelected("")
-		//selectCity.Disable()
 
 		// Automatic Enable/Disable
-		go func(s *widget.Select) {
-			for {
-				if len(s.Options) < 2 {
-					if !s.Disabled() {
-						s.Disable()
-					}
-				} else {
-					fmt.Printf("Options: %v (%v)\n", len(s.Options), s.Options)
-					if s.Disabled() {
-						s.Enable()
-					}
-				}
-				time.Sleep(time.Millisecond * 100)
-			}
-		}(selectCity)
+		go _automaticEnableDisable(selectCity)
 
 		// Add update method to current trigger
 		locales.GetTrigger().AddMethod(updateLanguageCity)
@@ -62,7 +50,16 @@ func getCityComponents() (*widget.Label, *widget.Select) {
 	return lblCity, selectCity
 }
 
+// updateCities updates the city select with the available cities for the current country.
+// It loads the cities if they are not already loaded and updates the selected city if a city was previously selected.
+// It also shows a loading popup while it is updating the cities.
 func updateCities(selCountry *resources.Country) {
+
+	// Show loading popup
+	showPopupLoading()
+	defer removeLoadingWait()
+
+	// Update
 	cities := make([]string, 0)
 	cities = append(cities, "")
 	for _, c := range *cg.GetCities(cg.CgServerType(selectServerType.Selected), selCountry.Code) {
@@ -75,9 +72,9 @@ func updateCities(selCountry *resources.Country) {
 		selectCity.SetSelected("")
 	}
 	loadingCity = ""
-	//selectCity.Enable()
 }
 
+// updateLanguageCity updates the label of the city select with the current language.
 func updateLanguageCity() {
 	lblCity.SetText(locales.Text("con8"))
 }

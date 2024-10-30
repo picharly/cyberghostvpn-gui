@@ -14,6 +14,10 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
+// showPopupLoadingProfile shows a popup window to load a profile.
+// The popup shows the name of the selected profile and a progress bar.
+// The progress bar is updated as the profile is loaded.
+// The popup is closed after the profile is loaded or if loading takes more than 6 seconds.
 func showPopupLoadingProfile() {
 	// New popup
 	var popup *widget.PopUp

@@ -20,6 +20,7 @@ var selectProfile *widget.Select
 var loadingCountry string
 var loadingCity string
 var loadingServerInstance string
+var loadingStreamingService string
 
 // getConnectionProfilesComponents returns a label and a container that contains a select widget for selecting a profile,
 // a button to add a new profile and a button to delete the selected profile.
@@ -56,14 +57,16 @@ func getConnectionProfilesComponents() (*widget.Label, *fyne.Container) {
 				if p != nil {
 					// Set value to load
 					loadingCountry = p.CountryName
+					loadingStreamingService = p.StreamingService
 					loadingCity = p.City
 					loadingServerInstance = p.Server
 
-					// Show progress popup
-					showPopupLoadingProfile()
+					// Clear current values
+					emptyCountrySelect()
 
 					// Apply profile settings
 					selectServerType.SetSelected(p.ServiceType)
+
 					selectService.SetSelected(p.VPNService)
 					selectConnection.SetSelected(p.Protocol)
 					selectCountry.SetSelected(p.CountryName)
@@ -89,11 +92,16 @@ func updateLanguageProfiles() {
 // updateProfiles updates the options of the select widget of the profiles component with the names of the profiles
 // that are currently in the settings and selects the first option (empty string)
 func updateProfiles() {
+	currentProfileName := selectProfile.Selected
 	profiles := make([]string, 0)
 	profiles = append(profiles, "")
 	for _, p := range *settings.GetProfiles() {
 		profiles = append(profiles, p.Name)
 	}
 	selectProfile.SetOptions(profiles)
-	selectProfile.SetSelected("")
+	if len(currentProfileName) > 0 {
+		selectProfile.SetSelected(currentProfileName)
+	} else {
+		selectProfile.SetSelected("")
+	}
 }

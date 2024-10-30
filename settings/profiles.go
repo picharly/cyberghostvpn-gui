@@ -12,10 +12,13 @@ type Profile struct {
 	VPNService       string `json:"vpn_service"`
 }
 
+// GetCurrentProfile returns the last profile used.
 func GetCurrentProfile() *Profile {
 	return &currentSettings.LastProfile
 }
 
+// GetProfile returns the profile with the given name.
+// If the profile is not found, it will return nil.
 func GetProfile(name string) *Profile {
 	for _, p := range *GetProfiles() {
 		if p.Name == name {
@@ -25,9 +28,11 @@ func GetProfile(name string) *Profile {
 	return nil
 }
 
+// GetProfiles returns a pointer to the list of profiles stored in the settings.
+// If the list of profiles is empty, it will initialize it with an empty list.
 func GetProfiles() *[]Profile {
 	if currentSettings.Profiles == nil {
 		currentSettings.Profiles = make([]Profile, 0)
 	}
-	return &currentSettings.Profiles
+	return &(*currentSettings).Profiles
 }

@@ -10,26 +10,47 @@ import (
 
 var streamingServices *[]resources.StreamingService
 
+// GetStreamingService returns a StreamingService object given a service name.
+// It searches through the loaded streaming services and matches the service name.
+// If no matching service is found, it returns an empty StreamingService object.
 func GetStreamingService(name string) resources.StreamingService {
-	for _, c := range *streamingServices {
-		if c.Service == name {
-			return c
+	if streamingServices != nil {
+		for _, c := range *streamingServices {
+			if c.Service == name {
+				return c
+			}
 		}
 	}
 	return resources.StreamingService{}
 }
 
+// GetStreamingServices retrieves the list of streaming services available for a given country code.
+// The function uses loadStreamingServices to fetch the streaming services and updates the streamingServices variable.
+// It returns a pointer to the list of StreamingService objects.
 func GetStreamingServices(countryCode string) *[]resources.StreamingService {
 	streamingServices = loadStreamingServices(countryCode)
 	return streamingServices
 }
 
+// loadStreamingServices loads the list of streaming services available for a given country code.
+// It executes a command to retrieve streaming service data, parses the output, and
+// populates the streamingServices variable. The function also updates the current
+// settings with the retrieved streaming services and returns an error if the
+// command fails. If the command succeeds, it returns nil.
+//
+// Parameters:
+//
+//	countryCode: The country code to filter the streaming services.
+//
+// Returns:
+//
+//	A pointer to the list of StreamingService objects.
 func loadStreamingServices(countryCode string) *[]resources.StreamingService {
 	array := make([]resources.StreamingService, 0)
 
 	if len(countryCode) > 0 {
 
-		if out, err := tools.ExecuteCommand(getCGCommand(string(CG_SERVERTYPES_STREAMING), string(CG_OTHER_COUNTRY_CODE), countryCode), true); err != nil {
+		if out, err := tools.ExecuteCommand(getCGCommand(string(CG_SERVERTYPES_STREAMING), string(CG_OTHER_COUNTRY_CODE), countryCode), true, false); err != nil {
 			streamingServices = &array
 			return &array
 		} else {

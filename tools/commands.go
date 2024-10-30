@@ -18,9 +18,12 @@ import (
 // It does so by executing the "which" command and seeing if the command is
 // available in the PATH. If it is, the function returns true. Otherwise, it
 // returns false.
-func IsCommandExists(cmd string) bool {
-	_, err := exec.LookPath(cmd)
-	return err == nil
+func IsCommandExists(cmd string) (string, bool) {
+	path, err := exec.LookPath(cmd)
+	if len(path) < 1 {
+		path = cmd
+	}
+	return path, err == nil
 }
 
 // IsFileExists checks if a file exists on the file system.
@@ -69,9 +72,32 @@ func IsServiceRunning(name string) bool {
 // returns an empty string array.
 //
 // The function returns an error if the command execution fails.
-func ExecuteCommand(command string, getOutput bool) ([]string, error) {
-	cmd := exec.Command("bash", "-c", command)
+func ExecuteCommand(command string, getOutput bool, sudo bool) ([]string, error) {
+
+	sudoCmd := ""
+	if sudo {
+		if path, ok := IsCommandExists("gksudo"); ok {
+			sudoCmd = path
+		} else if path, ok := IsCommandExists("pkexec"); ok {
+			sudoCmd = path
+		}
+	}
+
+	var cmd *exec.Cmd
+	if len(sudoCmd) > 0 {
+		sudoCmd += " --user " + os.Getenv("USER")
+		sudoCmd = "sudo"
+		strings.Replace(command, "\"", "\\\"", -1)
+		command = "\"" + sudoCmd + " " + command + "\""
+		// cmd = exec.Command("bash", "-c", sudoCmd, command)
+	} //else {
+	cmd = exec.Command("bash", "-c", command)
+	//}
+
 	stdout, _ := cmd.StdoutPipe()
+	if sudo {
+		fmt.Printf("Executing command: %s\n", cmd.String())
+	}
 	cmd.Start()
 	scanner := bufio.NewScanner(stdout)
 	scanner.Split(bufio.ScanLines)
@@ -111,6 +137,7 @@ func RunCommandWithGksudo(command string, args ...string) (string, error) {
 		return "", fmt.Errorf(locales.Text("err.too0"))
 	}
 
+	fmt.Printf("Sudo: %s\n", sudoCmd.String())
 	output, err := sudoCmd.CombinedOutput()
 	if err != nil {
 		return "", fmt.Errorf("%s: %w", locales.Text("err.too1"), err)
