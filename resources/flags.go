@@ -16,6 +16,9 @@ type flag struct {
 
 var flags = []flag{}
 
+// GetFlag returns the SVG data for the given country code.
+// The data is loaded from the "flags" directory on first call.
+// If the given code is not found, it will return nil.
 func GetFlag(code string) []byte {
 	if len(flags) == 0 {
 		loadFlags()
@@ -28,6 +31,9 @@ func GetFlag(code string) []byte {
 	return nil
 }
 
+// loadFlags loads the list of flags for all countries.
+// It will read all files in the "flags" directory and store them in the flags variable.
+// If a file cannot be read, it will log a warning and continue with the next file.
 func loadFlags() {
 	// Read all files in the "flags" directory
 	flagDir := "flags"

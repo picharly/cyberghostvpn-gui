@@ -27,18 +27,25 @@ func getServerTypeComponents() (*widget.Label, *widget.Select) {
 			if !firstLoad {
 
 				// Reset current selection
-				selectServerInstance.SetOptions([]string{""})
-				selectServerInstance.SetSelected("")
-				//selectServerInstance.Disable()
-				selectCity.SetOptions([]string{""})
-				selectCity.SetSelected("")
-				//selectCity.Disable()
+				emptyServerInstanceSelect()
+				emptyCitySelect()
+				emptyStreamingServiceSelect()
 
 				// Get new selection
 				cg.SetSelectedServiceType(s)
 
 				// Update countries
-				go updateCountries(cg.GetServerType(s))
+				if len(selectCountry.Selected) < 1 {
+					updateCountries(cg.GetServerType(s))
+				} else {
+					if s == string(cg.CG_SERVER_TYPE_STREAMING) {
+						updateStreamingServices()
+					} else {
+						emptyStreamingServiceSelect()
+						updateCities(&cg.SelectedCountry)
+					}
+				}
+
 			}
 		})
 

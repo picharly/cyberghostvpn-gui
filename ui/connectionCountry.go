@@ -3,7 +3,6 @@ package ui
 import (
 	"cyberghostvpn-gui/cg"
 	"cyberghostvpn-gui/locales"
-	"time"
 
 	"fyne.io/fyne/v2/widget"
 )
@@ -11,6 +10,17 @@ import (
 var lblCountry *widget.Label
 var selectCountry *widget.Select
 
+// emptyCountrySelect empties the country select widget and sets the selected item to an empty string.
+func emptyCountrySelect() {
+	selectCountry.SetOptions([]string{""})
+	selectCountry.Selected = ""
+}
+
+// getCountryComponents returns a label and a select widget to select the country for CyberGhost.
+// The select widget is populated with the countries that are available for the traffic server type.
+// The select widget is also connected to a function that updates the selected country when a new country is selected.
+// The function to update the selected country is triggered by the locales trigger.
+// The function also updates the cities and streaming services when a new country is selected.
 func getCountryComponents() (*widget.Label, *widget.Select) {
 	if lblCountry == nil || selectCountry == nil {
 		lblCountry = widget.NewLabel(locales.Text("con7"))
@@ -22,48 +32,46 @@ func getCountryComponents() (*widget.Label, *widget.Select) {
 		selectCountry = widget.NewSelect(countries, func(s string) {
 			if !firstLoad {
 				// Reset
-				selectServerInstance.SetOptions([]string{""})
-				selectServerInstance.SetSelected("")
-				//selectServerInstance.Disable()
-				selectCity.SetSelected("")
-				//selectCity.Disable()
+				emptyServerInstanceSelect()
+				emptyCitySelect()
+				emptyStreamingServiceSelect()
 
-				if len(s) > 0 {
-					cg.SetSelectedCountry(cg.GetCountry(s))
-					if len(cg.SelectedCountry.Name) > 0 {
-						go updateCities(&cg.SelectedCountry)
-					}
-				}
+				// Set selection
+				cg.SetSelectedCountry(cg.GetCountry(s))
 
 				// Show flag
-				if len(selectCountry.Selected) > 0 {
-					setFlag(cg.GetCountry(selectCountry.Selected).Code)
+				if len(cg.SelectedCountry.Name) > 0 {
+					setFlag(cg.SelectedCountry.Code)
+				} else {
+					setFlag("")
 				}
 
-				// Streaming service
-				if selectServerType.Selected == string(cg.CG_SERVER_TYPE_STREAMING) {
-					go updateStreamingServices()
-					selectStreamingService.Enable()
+				// Refresh
+				if len(s) > 0 {
+					// Streaming service
+					if selectServerType.Selected == string(cg.CG_SERVER_TYPE_STREAMING) {
+						updateStreamingServices()
+						selectStreamingService.Enable()
+					} else {
+						selectStreamingService.SetSelected("")
+						selectStreamingService.Disable()
+
+						// City
+						if len(cg.SelectedCountry.Name) > 0 {
+							updateCities(&cg.SelectedCountry)
+						}
+					}
 				} else {
-					selectStreamingService.SetSelected("")
-					selectStreamingService.Disable()
+					btnConnect.Disable()
 				}
+
 			} else {
 				selectCountry.Disable()
 			}
 		})
 
 		// Automatic Enable/Disable
-		go func(s *widget.Select) {
-			for {
-				if len(s.Options) < 2 {
-					s.Disable()
-				} else {
-					s.Enable()
-				}
-				time.Sleep(time.Millisecond * 100)
-			}
-		}(selectCountry)
+		go _automaticEnableDisable(selectCountry)
 
 		if len(loadingCountry) > 0 {
 			selectCountry.SetSelected(loadingCountry)
@@ -78,7 +86,21 @@ func getCountryComponents() (*widget.Label, *widget.Select) {
 	return lblCountry, selectCountry
 }
 
+// updateCountries updates the country select widget with the list of countries
+// available for the given server type. It displays a loading popup while the
+// countries are being retrieved. Once updated, the select widget is enabled,
+// and the list of countries is set as options with no selection by default.
+//
+// Parameters:
+//
+//	serverType: The server type for which to retrieve the list of countries.
 func updateCountries(serverType cg.CgServerType) {
+
+	// Show loading popup
+	showPopupLoading()
+	defer removeLoadingWait()
+
+	// Update
 	countries := make([]string, 0)
 	countries = append(countries, "")
 	for _, c := range *cg.GetCountries(serverType) {
@@ -89,6 +111,8 @@ func updateCountries(serverType cg.CgServerType) {
 	selectCountry.Enable()
 }
 
+// updateLanguageCountry updates the label of the country select widget
+// with the text translated into the current language.
 func updateLanguageCountry() {
 	lblCountry.SetText(locales.Text("con7"))
 }

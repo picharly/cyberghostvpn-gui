@@ -68,11 +68,6 @@ func getMainContent() *fyne.Container {
 // or quit the application based on the "Hide on close" setting.
 func setTrayIcon(window fyne.Window) {
 	if window == nil {
-		// if desktopApp != nil {
-		// 	desktopApp.SetSystemTrayMenu(nil)
-		// 	desktopApp.SetSystemTrayIcon(nil)
-		// 	desktopApp = nil
-		// }
 		return
 	}
 	if desk, ok := GetApp().(desktop.App); ok {

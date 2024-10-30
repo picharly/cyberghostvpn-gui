@@ -25,8 +25,14 @@ var lblStopVPN *widget.Label
 var lblTrayIcon *widget.Label
 
 // getSettingsBox returns the settings box of the application, which contains
-// the settings that can be changed by the user. It is used in the settings
-// window and is updated every time the language is changed.
+// the settings UI components.  The first time it is called, the UI components
+// are created and the settingsBox variable is set.  On subsequent calls, the
+// value of settingsBox is returned immediately.
+//
+// The settings box is a horizontal box containing the following components: the
+// language text and form, the tray icon text and form, the start on tray text
+// and form, the hide on tray text and form, and the stop VPN on exit text and
+// form.
 func getSettingsBox() *fyne.Container {
 
 	if settingsBox == nil {
@@ -72,13 +78,6 @@ func getSettingsBox() *fyne.Container {
 					checkboxHideOnTray.Disable()
 					checkboxStartOnTray.Disable()
 				}
-			}
-
-			// Apply new settings
-			if b {
-				setTrayIcon(GetMainWindow())
-			} else {
-				setTrayIcon(nil)
 			}
 		})
 		checkboxTrayIcon.SetChecked(cfg.TrayIcon)

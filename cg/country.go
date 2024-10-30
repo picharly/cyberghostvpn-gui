@@ -11,6 +11,9 @@ import (
 
 var countries *[]resources.Country
 
+// GetCountries retrieves a list of countries for the specified server type.
+// It loads the countries if they are not already loaded and returns a pointer
+// to the list of countries.
 func GetCountries(serverType CgServerType) *[]resources.Country {
 	if countries == nil || len(*countries) == 0 {
 		LoadCountries(serverType)
@@ -19,19 +22,36 @@ func GetCountries(serverType CgServerType) *[]resources.Country {
 	return countries
 }
 
+// GetCountry returns a Country object given a country name.
+// If the country is not found, it will return an empty Country object.
 func GetCountry(name string) resources.Country {
-	for _, c := range *countries {
-		if c.Name == name {
-			return c
+	if countries != nil {
+		for _, c := range *countries {
+			if c.Name == name {
+				return c
+			}
 		}
 	}
 	return resources.Country{}
 }
 
+// LoadCountries loads the list of countries for the given server type.
+// It executes a command to retrieve country data, parses the output, and
+// populates the countries variable. The function also updates the current
+// settings with the retrieved country list and returns an error if the
+// command fails. If the command succeeds, it returns nil.
+//
+// Parameters:
+//
+//	serverType: The server type to filter the countries.
+//
+// Returns:
+//
+//	An error if the command execution fails, or nil if it succeeds.
 func LoadCountries(serverType CgServerType) error {
 	array := make([]resources.Country, 0)
 
-	if out, err := tools.ExecuteCommand(getCGCommand(GetOptionServerType(string(serverType)), string(CG_OTHER_COUNTRY_CODE)), true); err != nil {
+	if out, err := tools.ExecuteCommand(getCGCommand(GetOptionServerType(string(serverType)), string(CG_OTHER_COUNTRY_CODE)), true, false); err != nil {
 		countries = &array
 		return err
 	} else {

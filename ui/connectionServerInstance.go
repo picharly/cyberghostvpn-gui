@@ -31,14 +31,21 @@ func getServerInstanceComponents() (*widget.Label, *widget.Select) {
 
 		// Default
 		selectServerInstance.SetSelected("")
-		if firstLoad {
-			selectServerInstance.Disable()
-		}
+
+		// Automatic Enable/Disable
+		go _automaticEnableDisable(selectServerInstance)
 
 		// Add update method to current trigger
 		locales.GetTrigger().AddMethod(updateLanguageServerInstance)
 	}
 	return lblServerInstance, selectServerInstance
+}
+
+// emptyServerInstanceSelect resets the server instance select to its default state.
+// It is called when the country or city selection changes.
+func emptyServerInstanceSelect() {
+	selectServerInstance.SetOptions([]string{""})
+	selectServerInstance.SetSelected("")
 }
 
 // updateLanguageServerInstance updates the label of the server instance select with the current language
@@ -48,6 +55,12 @@ func updateLanguageServerInstance() {
 
 // updateServerInstances updates the server instance select with the available server instances for the current country and city.
 func updateServerInstances(selCountry *resources.Country, selCity *resources.City) {
+
+	// Show loading popup
+	showPopupLoading()
+	defer removeLoadingWait()
+
+	// Update
 	srv := make([]string, 0)
 	srv = append(srv, "")
 	selection := ""
@@ -64,5 +77,4 @@ func updateServerInstances(selCountry *resources.Country, selCity *resources.Cit
 		selectServerInstance.SetSelected("")
 	}
 	loadingServerInstance = ""
-	selectServerInstance.Enable()
 }

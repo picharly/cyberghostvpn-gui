@@ -10,21 +10,30 @@ import (
 
 var cities *[]resources.City
 
+// GetCities retrieves a list of cities for the specified server type and country code.
+// It loads the cities if they are not already loaded and returns a pointer to the list of cities.
 func GetCities(serverType CgServerType, countryCode string) *[]resources.City {
 	LoadCities(serverType, countryCode)
 
 	return cities
 }
 
+// GetCity returns a City object given a city name.
+// If the city is not found, it will return an empty City object.
 func GetCity(name string) resources.City {
-	for _, c := range *cities {
-		if c.Name == name {
-			return c
+	if cities != nil {
+		for _, c := range *cities {
+			if c.Name == name {
+				return c
+			}
 		}
 	}
 	return resources.City{}
 }
 
+// LoadCities loads the list of cities for the given server type and country code.
+// It will store the result in the cities variable and return an error if the command fails.
+// If the command succeeds, it will return nil.
 func LoadCities(serverType CgServerType, countryCode string) error {
 	array := make([]resources.City, 0)
 	streaming := ""
@@ -38,7 +47,7 @@ func LoadCities(serverType CgServerType, countryCode string) error {
 			GetOptionServerType(string(serverType)),
 			streaming,
 			string(CG_OTHER_COUNTRY_CODE),
-			countryCode), true); err != nil {
+			countryCode), true, false); err != nil {
 		cities = &array
 		return err
 	} else {
