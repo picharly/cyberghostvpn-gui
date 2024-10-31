@@ -30,6 +30,10 @@ func getConnectionVPNServiceComponents() (*widget.Label, *widget.Select) {
 
 		// Default Value
 		defaultValue := string(cg.CG_SERVICE_TYPE_OPENVPN)
+		if len(loadingVPNService) > 0 {
+			defaultValue = loadingVPNService
+		}
+		loadingVPNService = ""
 		selectService.SetSelected(defaultValue)
 		cg.SetSelectedVPNService(defaultValue)
 

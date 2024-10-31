@@ -1,7 +1,6 @@
 package cg
 
 import (
-	"fmt"
 	"os/exec"
 	"strings"
 )
@@ -82,7 +81,6 @@ func getCGCommand(options ...string) string {
 	if len(options) > 0 {
 		cmd += strings.Join(options, " ")
 	}
-	fmt.Printf("Command: %s\n", cmd)
 
 	return cmd
 }

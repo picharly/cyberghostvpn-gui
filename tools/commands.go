@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"context"
 	"cyberghostvpn-gui/locales"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -87,18 +88,12 @@ func ExecuteCommand(command string, getOutput bool, sudo bool) ([]string, error)
 	var cmd *exec.Cmd
 	if len(sudoCmd) > 0 {
 		sudoCmd += " --user " + os.Getenv("USER")
-		sudoCmd = "sudo"
-		//strings.Replace(command, "\"", "\\\"", -1)
 		command = "\"" + sudoCmd + " " + command + "\""
-		// cmd = exec.Command("bash", "-c", sudoCmd, command)
-	} //else {
-	cmd = exec.Command("bash", "-c", command)
-	//}
+	} else {
+		cmd = exec.Command("bash", "-c", command)
+	}
 
 	stdout, _ := cmd.StdoutPipe()
-	if sudo {
-		fmt.Printf("Executing command: %s\n", cmd.String())
-	}
 	cmd.Start()
 	scanner := bufio.NewScanner(stdout)
 	scanner.Split(bufio.ScanLines)
@@ -135,10 +130,9 @@ func RunCommandWithGksudo(command string, args ...string) (string, error) {
 			sudoCmd = exec.Command("pkexec", append([]string{command}, args...)...)
 		}
 	} else {
-		return "", fmt.Errorf(locales.Text("err.too0"))
+		return "", errors.New(locales.Text("err.too0"))
 	}
 
-	fmt.Printf("Sudo: %s\n", sudoCmd.String())
 	output, err := sudoCmd.CombinedOutput()
 	if err != nil {
 		return "", fmt.Errorf("%s: %w", locales.Text("err.too1"), err)

@@ -19,8 +19,11 @@ var selectProfile *widget.Select
 
 var loadingCountry string
 var loadingCity string
+var loadingProtocol string
 var loadingServerInstance string
+var loadingServiceType string
 var loadingStreamingService string
+var loadingVPNService string
 
 // getConnectionProfilesComponents returns a label and a container that contains a select widget for selecting a profile,
 // a button to add a new profile and a button to delete the selected profile.
