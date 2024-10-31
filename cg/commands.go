@@ -86,3 +86,20 @@ func getCGCommand(options ...string) string {
 
 	return cmd
 }
+
+func getCGCommandWithArgs(options ...string) []string {
+
+	// Look for path
+	path, err := exec.LookPath(string(CG_EXECUTABLE))
+	if err != nil {
+		path = string(CG_EXECUTABLE)
+	}
+
+	cmd := []string{path}
+
+	if len(options) > 0 {
+		cmd = append(cmd, options...)
+	}
+
+	return cmd
+}
