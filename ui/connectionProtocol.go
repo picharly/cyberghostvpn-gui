@@ -24,6 +24,10 @@ func getConnectionProtocolComponents() (*widget.Label, *widget.Select) {
 
 		// Default Value
 		defaultValue := string(cg.CG_CONNECTION_UDP)
+		if len(loadingProtocol) > 0 {
+			defaultValue = loadingProtocol
+		}
+		loadingProtocol = ""
 		selectConnection.SetSelected(defaultValue)
 		cg.SetSelectedProtocol(defaultValue)
 

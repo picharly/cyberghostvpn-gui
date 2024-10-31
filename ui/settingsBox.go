@@ -13,13 +13,17 @@ import (
 var settingsBox *fyne.Container
 
 // Components with text
+var checkboxConnectStartup *widget.Check
 var checkboxHideOnTray *widget.Check
+var checkboxLoadLastProfile *widget.Check
 var checkboxStartOnTray *widget.Check
 var checkboxStopVPN *widget.Check
 var checkboxTrayIcon *widget.Check
 
+var lblConnectStartup *widget.Label
 var lblHideOnTray *widget.Label
 var lblLanguage *widget.Label
+var lblLoadLastProfile *widget.Label
 var lblStartOnTray *widget.Label
 var lblStopVPN *widget.Label
 var lblTrayIcon *widget.Label
@@ -67,7 +71,6 @@ func getSettingsBox() *fyne.Container {
 		checkboxTrayIcon = widget.NewCheck("", func(b bool) {
 			cfg, _ := settings.GetCurrentSettings()
 			cfg.TrayIcon = b
-			settings.WriteCurrentSettings()
 
 			// Update other components
 			if checkboxStartOnTray != nil {
@@ -76,9 +79,13 @@ func getSettingsBox() *fyne.Container {
 					checkboxStartOnTray.Enable()
 				} else {
 					checkboxHideOnTray.Disable()
+					checkboxHideOnTray.SetChecked(false)
 					checkboxStartOnTray.Disable()
+					checkboxStartOnTray.SetChecked(false)
 				}
 			}
+
+			settings.WriteCurrentSettings()
 		})
 		checkboxTrayIcon.SetChecked(cfg.TrayIcon)
 
@@ -90,6 +97,9 @@ func getSettingsBox() *fyne.Container {
 			settings.WriteCurrentSettings()
 		})
 		checkboxStartOnTray.SetChecked(cfg.HideOnStart)
+		if !cfg.TrayIcon {
+			checkboxStartOnTray.Disable()
+		}
 
 		// Hide on tray
 		lblHideOnTray = widget.NewLabel(locales.Text("set4"))
@@ -99,6 +109,9 @@ func getSettingsBox() *fyne.Container {
 			settings.WriteCurrentSettings()
 		})
 		checkboxHideOnTray.SetChecked(cfg.HideOnClose)
+		if !cfg.TrayIcon {
+			checkboxHideOnTray.Disable()
+		}
 
 		// Stop VPN on exit
 		lblStopVPN = widget.NewLabel(locales.Text("set5"))
@@ -108,6 +121,38 @@ func getSettingsBox() *fyne.Container {
 			settings.WriteCurrentSettings()
 		})
 		checkboxStopVPN.SetChecked(cfg.StopVPNOnExit)
+
+		// Load last profile
+		lblLoadLastProfile = widget.NewLabel(locales.Text("set6"))
+		checkboxLoadLastProfile = widget.NewCheck("", func(b bool) {
+			cfg, _ := settings.GetCurrentSettings()
+			cfg.LoadLastProfile = b
+
+			// Update other components
+			if checkboxConnectStartup != nil {
+				if checkboxLoadLastProfile.Checked {
+					checkboxConnectStartup.Enable()
+				} else {
+					checkboxConnectStartup.Disable()
+					checkboxConnectStartup.SetChecked(false)
+				}
+			}
+
+			settings.WriteCurrentSettings()
+		})
+		checkboxLoadLastProfile.SetChecked(cfg.LoadLastProfile)
+
+		// Connect on startup
+		lblConnectStartup = widget.NewLabel(locales.Text("set7"))
+		checkboxConnectStartup = widget.NewCheck("", func(b bool) {
+			cfg, _ := settings.GetCurrentSettings()
+			cfg.ConnectStartup = b
+			settings.WriteCurrentSettings()
+		})
+		checkboxConnectStartup.SetChecked(cfg.ConnectStartup)
+		if !cfg.LoadLastProfile {
+			checkboxConnectStartup.Disable()
+		}
 
 		form := container.New(
 			layout.NewFormLayout(),
@@ -119,6 +164,12 @@ func getSettingsBox() *fyne.Container {
 			checkboxStartOnTray,
 			lblHideOnTray,
 			checkboxHideOnTray,
+			lblLoadLastProfile,
+			checkboxLoadLastProfile,
+			lblConnectStartup,
+			checkboxConnectStartup,
+			lblStopVPN,
+			checkboxStopVPN,
 		)
 		settingsBox = container.NewHBox(form)
 

@@ -37,12 +37,25 @@ func GetApp() fyne.App {
 func GetMainWindow() fyne.Window {
 
 	if mainWindow == nil {
+		// Check for last profile
+		cfg, _ := settings.GetCurrentSettings()
+		if len(cfg.LastProfile.CountryCode) > 0 {
+			// Set value to load
+			loadingCountry = cfg.LastProfile.CountryName
+			loadingStreamingService = cfg.LastProfile.StreamingService
+			loadingCity = cfg.LastProfile.City
+			loadingServerInstance = cfg.LastProfile.Server
+			loadingProtocol = cfg.LastProfile.Protocol
+			loadingServiceType = cfg.LastProfile.ServiceType
+			loadingVPNService = cfg.LastProfile.VPNService
+		}
+
+		// Create main window
 		mainWindow = GetApp().NewWindow(fmt.Sprintf("%s - v%s", about.AppName, about.AppVersion))
 		mainWindow.SetFixedSize(true)
 		mainWindow.SetContent(getMainContent())
 
 		// Set tray icon
-		cfg, _ := settings.GetCurrentSettings()
 		if cfg.TrayIcon {
 			setTrayIcon(mainWindow)
 		}

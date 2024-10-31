@@ -51,6 +51,10 @@ func getServerTypeComponents() (*widget.Label, *widget.Select) {
 
 		// Default option
 		defaultOption := cg.CG_SERVER_TYPE_TRAFFIC
+		if len(loadingServiceType) > 0 {
+			defaultOption = cg.GetServerType(loadingServiceType)
+		}
+		loadingServiceType = ""
 		selectServerType.SetSelected(string(defaultOption))
 		cg.SetSelectedServiceType(string(defaultOption))
 
