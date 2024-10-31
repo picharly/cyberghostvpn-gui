@@ -13,11 +13,12 @@ import (
 	"github.com/shirou/gopsutil/v3/process"
 )
 
-// IsCommandExists checks if a command is available on the system.
+// IsCommandExists checks if a command exists on the system.
 //
-// It does so by executing the "which" command and seeing if the command is
-// available in the PATH. If it is, the function returns true. Otherwise, it
-// returns false.
+// It does so by using the exec.LookPath function. If the command does not exist,
+// the function returns false. Otherwise, it returns true. Additionally, the
+// function returns the path of the command if it was found, or the original
+// command name if it was not.
 func IsCommandExists(cmd string) (string, bool) {
 	path, err := exec.LookPath(cmd)
 	if len(path) < 1 {
@@ -87,7 +88,7 @@ func ExecuteCommand(command string, getOutput bool, sudo bool) ([]string, error)
 	if len(sudoCmd) > 0 {
 		sudoCmd += " --user " + os.Getenv("USER")
 		sudoCmd = "sudo"
-		strings.Replace(command, "\"", "\\\"", -1)
+		//strings.Replace(command, "\"", "\\\"", -1)
 		command = "\"" + sudoCmd + " " + command + "\""
 		// cmd = exec.Command("bash", "-c", sudoCmd, command)
 	} //else {

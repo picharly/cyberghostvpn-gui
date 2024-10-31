@@ -3,7 +3,6 @@ package ui
 import (
 	"cyberghostvpn-gui/cg"
 	"cyberghostvpn-gui/locales"
-	"fmt"
 	"time"
 
 	"fyne.io/fyne/v2"
@@ -24,24 +23,24 @@ func getConnectComponents() *fyne.Container {
 			locales.Text("gen9"),
 			func() {
 				if actionConnect {
-					showPopupSudo()
-					//showPopupLoading()
-					if out, err := cg.Connect(); err != nil {
-						removeLoadingWait()
-						time.Sleep(time.Millisecond * 25) // Wait for loading popup to close
-						showPopupError(fmt.Errorf("%s: %s\n\n%s: %v", locales.Text("gen15"), out, locales.Text("gen16"), err))
-					} else {
-						removeLoadingWait()
-					}
+					showPopupSudo(cg.Connect()...)
+					// //showPopupLoading()
+					// if out, err := cg.Connect(); err != nil {
+					// 	removeLoadingWait()
+					// 	time.Sleep(time.Millisecond * 25) // Wait for loading popup to close
+					// 	showPopupError(fmt.Errorf("%s: %s\n\n%s: %v", locales.Text("gen15"), out, locales.Text("gen16"), err))
+					// } else {
+					// 	removeLoadingWait()
+					// }
 				} else {
-					showPopupLoading()
-					if out, err := cg.Disconnect(); err != nil {
-						removeLoadingWait()
-						time.Sleep(time.Millisecond * 25) // Wait for loading popup to close
-						showPopupError(fmt.Errorf("%s: %s\n\n%s %v", locales.Text("gen15"), out, locales.Text("gen16"), err))
-					} else {
-						removeLoadingWait()
-					}
+					// showPopupLoading()
+					// if out, err := cg.Disconnect(); err != nil {
+					// 	removeLoadingWait()
+					// 	time.Sleep(time.Millisecond * 25) // Wait for loading popup to close
+					// 	showPopupError(fmt.Errorf("%s: %s\n\n%s %v", locales.Text("gen15"), out, locales.Text("gen16"), err))
+					// } else {
+					// 	removeLoadingWait()
+					// }
 				}
 			},
 		)

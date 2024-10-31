@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func Connect() (string, error) {
+func Connect() []string {
 	options := []string{}
 
 	// Server Type
@@ -46,13 +46,10 @@ func Connect() (string, error) {
 	// Connect
 	options = append(options, string(CG_OTHER_CONNECT))
 
-	// Execute command with SUDO
-	// if out, err := tools.ExecuteCommand(getCGCommand(
-	// 	options...), true, true); err != nil {
-	// 	return strings.Join(out, "\n"), err
-	// }
+	// Build command with SUDO
+	cmd := getCGCommandWithArgs(options...)
 
-	return "", nil
+	return cmd
 }
 
 func Disconnect() (string, error) {
