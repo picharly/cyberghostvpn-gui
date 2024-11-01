@@ -24,8 +24,8 @@ func main() {
 	}
 
 	// Initiliaze logger
-	//logger.AddLoggerUIWriter(ui.GetLogWriter(), cfg.GetTimeFormat())
-	logger.LoggerInit(nil)
+	logger.SetDateTimeFormat(locales.Text("date"), locales.Text("time"))
+	logger.GetCurrentLogger()
 	if about.DevelopmentMode {
 		logger.SetLogLevel("debug")
 	} else {
