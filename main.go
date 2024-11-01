@@ -35,6 +35,11 @@ func main() {
 	// Load countries
 	cg.GetCountries(cg.CG_SERVER_TYPE_TRAFFIC)
 
+	// Check requirements
+	if missing, ok := settings.CheckRequirements(); !ok {
+		ui.ShowRequirementsPopup(missing)
+	}
+
 	// Start UI
 	if cfg.HideOnStart {
 		ui.GetMainWindow().Hide()

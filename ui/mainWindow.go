@@ -24,7 +24,7 @@ var mainWindow fyne.Window
 // creates a new one with the default dark theme and the CyberGhost VPN icon.
 func GetApp() fyne.App {
 	if mainApp == nil {
-		mainApp = app.NewWithID("com.github.picharly.cyberghostvpn-gui")
+		mainApp = app.NewWithID(about.AppID)
 		mainApp.Settings().SetTheme(&resources.DarkTheme{Theme: theme.DefaultTheme()})
 		mainApp.SetIcon(resources.GetCyberGhostIcon())
 	}

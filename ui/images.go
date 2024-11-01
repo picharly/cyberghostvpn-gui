@@ -26,3 +26,11 @@ func getLoadingAnimatedGIF() *widget.AnimatedGif {
 	gif.Resize(fyne.NewSize(64, 64))
 	return gif
 }
+
+func getWarningPicture() *canvas.Image {
+	image := canvas.NewImageFromResource(fyne.NewStaticResource("warning", resources.WarningIcon))
+	image.FillMode = canvas.ImageFillOriginal
+	image.SetMinSize(fyne.NewSize(64, 64))
+	image.Resize(fyne.NewSize(64, 64))
+	return image
+}

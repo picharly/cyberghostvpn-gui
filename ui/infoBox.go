@@ -104,12 +104,20 @@ func getInfoBox() *fyne.Container {
 // It is called by the getInfoBox function and runs until the application is
 // terminated.
 func refresh() {
+	lastUpdate := time.Now()
 	for {
+		// Refresh CgVPN stateevery second
+		if time.Since(lastUpdate) > time.Millisecond*1000 {
+			cg.GetCurrentState()
+			lastUpdate = time.Now()
+		}
+
+		// Update InfoBox
 		updateNetwork()
 		updateStatus()
 		updateConnectButtonStatus()
 
-		time.Sleep(time.Second * 1)
+		time.Sleep(time.Millisecond * 100)
 	}
 }
 
@@ -159,7 +167,7 @@ func updateNetwork() {
 // updateStatus is a function that periodically updates the current status of
 // the VPN (connected, disconnected, connecting, disconnecting, not installed).
 func updateStatus() {
-	status := cg.GetCurrentState()
+	status := cg.CurrentState
 
 	switch status {
 	case cg.Connected:

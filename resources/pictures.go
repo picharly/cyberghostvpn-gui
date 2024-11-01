@@ -25,3 +25,7 @@ func GetCyberGhostIconWhite() fyne.Resource {
 func GetLoadingGIF() fyne.Resource {
 	return fyne.NewStaticResource("loading", LoadingGIF)
 }
+
+func GetWarningIcon() fyne.Resource {
+	return fyne.NewStaticResource("warning", WarningIcon)
+}

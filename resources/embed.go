@@ -33,3 +33,8 @@ var CyberGhostIconTransparent []byte
 
 //go:embed icons/cyberghostvpn_icon_white.png
 var CyberGhostIconWhite []byte
+
+// Source: https://icon-library.com/icon/warning-icon-png-1.html
+//
+//go:embed icons/warning-icon.png
+var WarningIcon []byte

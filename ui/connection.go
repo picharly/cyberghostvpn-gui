@@ -59,14 +59,14 @@ func updateConnectButtonStatus() {
 		return
 	}
 
-	if len(cg.SelectedCountry.Name) == 0 && cg.GetCurrentState() != cg.Connected {
+	if len(cg.SelectedCountry.Name) == 0 && cg.CurrentState != cg.Connected {
 		if !btnConnect.Disabled() {
 			btnConnect.Disable()
 		}
 		return
 	}
 
-	switch cg.GetCurrentState() {
+	switch cg.CurrentState {
 
 	case cg.Connected:
 		btnConnect.Text = locales.Text("gen14")
@@ -130,6 +130,7 @@ func _enableForm(enable bool) {
 		selectServerInstance,
 		selectConnection,
 		selectService,
+		selectStreamingService,
 	}
 	for _, c := range components {
 		if c != nil {
@@ -165,13 +166,15 @@ func _automaticEnableDisable(selectComponent *widget.Select) {
 	// Automatic Enable/Disable
 	go func(s *widget.Select) {
 		for {
-			if len(s.Options) < 2 {
-				if !s.Disabled() {
-					s.Disable()
-				}
-			} else {
-				if s.Disabled() {
-					s.Enable()
+			if cg.CurrentState != cg.Connected {
+				if len(s.Options) < 2 {
+					if !s.Disabled() {
+						s.Disable()
+					}
+				} else {
+					if s.Disabled() {
+						s.Enable()
+					}
 				}
 			}
 			time.Sleep(time.Millisecond * 100)
