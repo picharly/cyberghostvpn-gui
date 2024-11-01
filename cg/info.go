@@ -54,10 +54,11 @@ func GetCurrentState() Status {
 // GetVersion returns the version of the CyberGhost VPN client executable.
 // If the executable command does not exist or the command fails, it will return an empty string.
 func GetVersion() string {
-	if version == "" {
+	if len(version) < 1 {
 		out, err := tools.ExecuteCommand(fmt.Sprintf("%s %s | grep -i \"cyberghost -\"", CG_EXECUTABLE, CG_OTHER_HELP), true, false)
 		if err == nil && len(out) > 0 {
-			return strings.ReplaceAll(strings.Replace(out[0], "cyberghost -", "", 1), " ", "")
+			version = strings.ReplaceAll(strings.Replace(out[0], "cyberghost -", "", 1), " ", "")
+			return version
 		}
 	}
 	return ""

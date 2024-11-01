@@ -5,6 +5,17 @@ import (
 	"strings"
 )
 
+// Connect returns a command string to connect to the VPN using the selected options.
+//
+// This function takes into account the selected server type, country, city, server, protocol, and VPN service.
+//
+// The command string is constructed by appending the selected options to the base command defined by CG_EXECUTABLE.
+//
+// The constructed command string is then prepended with SUDO to ensure that the command is run with root privileges.
+//
+// Parameters: None
+//
+// Returns: A string representing the complete command to be executed.
 func Connect() []string {
 	options := []string{}
 
@@ -52,7 +63,14 @@ func Connect() []string {
 	return cmd
 }
 
+// Disconnect stops the current VPN connection.
+//
+// It returns the output of the command if it succeeds, or an error if it fails.
 func Disconnect() (string, error) {
-	return tools.RunCommandWithGksudo(getCGCommand(
-		string(CG_OTHER_STOP)))
+	out, err := tools.RunCommand(getCGCommandWithArgs(
+		string(CG_OTHER_STOP)), true, false)
+	if err != nil {
+		return strings.Join(out, "\n"), err
+	}
+	return "", nil
 }

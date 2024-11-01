@@ -67,6 +67,14 @@
 		// RESOURCES ERRORS
 		{ "id": "err.res0", "other": "unable to read flag files: " },
 		{ "id": "err.res1", "other": "unable to load file '{{.FileName}}'. Error: " },
+		// SECURITY.ERRORS
+		{ "id": "err.sec0", "other": "encryption error while creating a new cipher block" },
+		{ "id": "err.sec1", "other": "encryption error while creating a new GCM" },
+		{ "id": "err.sec2", "other": "encryption error while reading a random reader" },
+		{ "id": "err.sec3", "other": "decryption error while creating a new cipher" },
+		{ "id": "err.sec4", "other": "decryption error while creating a new GCM" },
+		{ "id": "err.sec5", "other": "decryption error while extracting encrypted data" },
+		{ "id": "err.sec6", "other": "string is probably not encrypted" },
 		// SETTINGS
 		{ "id": "set0", "other": "Settings" },
 		{ "id": "set1", "other": "Language" },

@@ -26,6 +26,8 @@ showHelp() {
   echo -e "\n${fontBold}${fontOrange}Extra:${fontReset}\n\t${fontWhite}-32,--i386${fontReset}          \tBuild also 32-bits binaries"
   echo -e "\t${fontWhite}-arm,--arm${fontReset}          \tBuild also for ARM architecture"
   echo -e "\t${fontWhite}-nc,--no-compression${fontReset}\tDo not create compressed archives"
+  echo -e "\n${fontBold}${fontOrange}Security:${fontReset}"
+  echo -e "\t${fontWhite}-nk,--new-key${fontReset}       \tGenerate a new encryption key (security/encryption.go => var _keyString = \"...\""
   echo -e "\n"
   exit 1
 }
@@ -37,6 +39,8 @@ buildWindows=0
 build32bits=0
 buildARM=0
 buildError=0
+built=0
+newKey=0
 noArgs=1
 useGarble=0
 useCompression=1
@@ -62,6 +66,10 @@ do
     fi
     if [ "$var" == "-nc" ] || [ "$var" == "--no-compression" ]; then
       useCompression=0
+    fi
+    if [ "$var" == "-nk" ] || [ "$var" == "--new-key" ]; then
+      newKey=1
+      noArgs=0
     fi
     if [ "$var" == "-h" ] || [ "$var" == "--help" ]; then
       showHelp
@@ -113,6 +121,7 @@ buildCmd() {
   fi
 
   # Build
+  built=1
   BINFILE=${projectName}_${1}_${2}${version}
   GOOS=${1} GOARCH=${2} ${GOCMD} build -o bin/${BINFILE}
   if [ "$?" -eq 0 ]; then
@@ -185,6 +194,29 @@ build() {
   fi
 }
 
+generateSecurityKey() {
+  # Generate a random 64-character hexadecimal string and convert it to uppercase
+  new_key=$(openssl rand -hex 32 | tr '[:lower:]' '[:upper:]')
+
+  # Define the file path
+  file="security/encryption.go"
+
+  # Use sed to replace the value of _keyString with the new random key
+  sed -i "s/var _keyString = \"[^\"]*\"/var _keyString = \"$new_key\"/" "$file"
+
+  if [ "$?" -eq 0 ]; then
+    echo -e "${fontBold}${fontOrange}[WARN] Replaced _keyString with new random value:${fontReset} ${fontYellow}$new_key${fontReset}"
+  else
+    echo -e "${fontBold}${fontRed}[ERROR] Failed to replace _keyString with new random value:${fontReset} ${fontYellow}$new_key${fontReset}"
+  fi
+}
+
+# Generate new encryption key
+if [ $newKey -eq 1 ]; then
+  echo -e "${fontBold}${fontGreen}[INFO]${fontReset} Generating new encryption key..."
+  generateSecurityKey
+fi
+
 # Check if compression tool exists
 if ! command -v lrzip >/dev/null 2>&1; then
   useCompression=0
@@ -211,9 +243,11 @@ if [ $buildWindows -eq 1 ]; then
   build windows
 fi
 
-# Show compiled files
-if [ $buildError -eq 0 ]; then
-  echo -e "\n${fontBold}${fontGreen}[INFO]${fontReset} Successfully compiled ${fontBold}${fontBlue}${projectName}${fontReset}!"
-else
-  echo -e "\n${fontBold}${fontRed}[ERROR]${fontReset} Failed to compile ${fontBold}${fontRed}${projectName}${fontReset}!"
+if [ $built -eq 1 ]; then
+  # Show compiled files
+  if [ $buildError -eq 0 ]; then
+    echo -e "\n${fontBold}${fontGreen}[INFO]${fontReset} Successfully compiled ${fontBold}${fontBlue}${projectName}${fontReset}!"
+  else
+    echo -e "\n${fontBold}${fontRed}[ERROR]${fontReset} Failed to compile ${fontBold}${fontRed}${projectName}${fontReset}!"
+  fi
 fi
