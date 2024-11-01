@@ -6,6 +6,8 @@
 	"messages": [
 		{ "id": "name", "other": "English" },
 		{ "id": "code", "other": "en" },
+		{ "id": "date", "other": "2006-02-01" },
+		{ "id": "time", "other": "15:04:05.000" },
 		// _GENERIC
 		{ "id": "gen0", "other": "Save" },
 		{ "id": "gen1", "other": "Cancel" },

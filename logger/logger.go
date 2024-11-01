@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
+	"runtime"
 	"strings"
 	"time"
 
@@ -13,6 +15,12 @@ import (
 )
 
 var _loggerFilename string
+var logFileName string = "cyberghostvpn-gui.log"
+var logFilePath string
+var appFolder string = "cyberghostvpn-gui"
+
+var dateFormat string = "2006-01-02"
+var timeFormat string = "15:04:05.000"
 
 type zerologger struct {
 	*zerolog.Logger
@@ -39,14 +47,14 @@ var loggerWriters []io.Writer
 // print the logs. The writer should be a UI component that can display text.
 // The timeFormat parameter is optional and defaults to the format
 // "2006-02-01 15:04:05.000" if an empty string is passed.
-func AddLoggerUIWriter(writer io.Writer, timeFormat string) {
+func AddLoggerUIWriter(writer io.Writer, dtFormat string) {
 	if writer == nil {
 		return
 	}
-	if len(timeFormat) < 1 {
-		timeFormat = "2006-02-01 15:04:05.000"
+	if len(dtFormat) < 1 {
+		dtFormat = "2006-02-01 15:04:05.000"
 	}
-	loggerWriters = append(loggerWriters, zerolog.ConsoleWriter{Out: writer, TimeFormat: timeFormat})
+	loggerWriters = append(loggerWriters, zerolog.ConsoleWriter{Out: writer, TimeFormat: dtFormat})
 }
 
 // LoggerInit sets up the logging configuration based on the provided options.
@@ -56,7 +64,7 @@ func LoggerInit(options *LoggerOptions) {
 	if options != nil {
 		currentLoggerConfig = options
 	} else {
-		checkLoggerConfig()
+		currentLoggerConfig = checkLoggerConfig()
 	}
 }
 
@@ -81,6 +89,24 @@ func GetLoggerWriters() *[]io.Writer {
 	return &loggerWriters
 }
 
+// SetDateTimeFormat sets the date and time format for the logger.
+// The date format should be a valid Go time format string.
+// The time format should be a valid Go time format string.
+// If either parameter is empty, the default value is used.
+// The default date format is "2006-01-02".
+// The default time format is "15:04:05.000".
+func SetDateTimeFormat(date string, time string) {
+	// Set date format
+	if len(date) > 0 {
+		dateFormat = date
+	}
+
+	// Set time format
+	if len(time) > 0 {
+		timeFormat = time
+	}
+}
+
 // SetLogLevel sets the global log level according to the given parameter.
 //
 // It checks the log level setting in the configuration and sets the global log
@@ -89,6 +115,7 @@ func SetLogLevel(level string) {
 	// Check config
 	cfg := checkLoggerConfig()
 
+	// Set log level
 	switch strings.ToLower(cfg.Level) {
 	case "debug":
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
@@ -108,13 +135,30 @@ func SetLogLevel(level string) {
 }
 
 // If no settings has been set, these default settings will be applied
-func checkLoggerConfig() LoggerOptions {
+func checkLoggerConfig() *LoggerOptions {
 	if currentLoggerConfig == nil {
-		if _, err := os.Stat("./logs/last.log"); os.IsExist(err) {
-			os.Rename("./logs/last.log", "./logs/previous.log")
+		// Find log file path
+		switch runtime.GOOS {
+		case "linux":
+			logFilePath = filepath.Join(os.Getenv("HOME"), ".local", "share", appFolder, logFileName)
+		case "windows":
+			logFilePath = filepath.Join(os.Getenv("APPDATA"), appFolder, logFileName)
+		case "darwin": // macOS
+			logFilePath = filepath.Join(os.Getenv("HOME"), "Library", "Logs", appFolder, logFileName)
+		default:
+			logFilePath = "./" + logFileName
 		}
-		fileDir := "./logs/"
+
+		// Define log file path
+		fileDir := filepath.Dir(logFilePath) + "/"
 		fileName := "last.log" //GetNewLoggerFileName()
+
+		// Check if the log file exists and if it does, rename it to previous.log
+		if _, err := os.Stat(logFilePath); os.IsExist(err) {
+			os.Rename(logFilePath, fileDir+"previous.log")
+		}
+
+		// Set current logger config
 		currentLoggerConfig = &LoggerOptions{
 			Console:       false,
 			JSONFormatted: false,
@@ -134,7 +178,7 @@ func checkLoggerConfig() LoggerOptions {
 		}
 	}
 
-	return *currentLoggerConfig
+	return currentLoggerConfig
 }
 
 // Configure sets up the logging framework
@@ -161,7 +205,7 @@ func configureLogger() *zerologger {
 	mw := io.MultiWriter(loggerWriters...)
 
 	// zerolog.SetGlobalLevel(zerolog.DebugLevel)
-	zerolog.TimeFieldFormat = "15:04:05.000"
+	zerolog.TimeFieldFormat = timeFormat
 	logger := zerolog.New(mw).With().Timestamp().Logger()
 
 	logger.Info().
