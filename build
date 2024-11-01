@@ -3,17 +3,29 @@
 # Project name to define file name
 projectName=cyberghostvpn-gui
 
+# Style variables
+fontBold=$'\e[1m'
+fontUnderline=$'\e[4m'
+fontReset=$'\e[0m'
+fontYellow=$'\e[93m'
+fontWhite=$'\e[97m'
+fontBlink=$'\e[5m'
+fontRed=$'\e[31m'
+fontGreen=$'\e[32m'
+fontBlue=$'\e[34m'
+fontOrange=$'\e[38;5;214m'
+
 # Regular build tool does not work for Windows
 # GOOS=windows GOARCH=amd64 go build
 #fyne-cross windows -arch=amd64  -app-id jdas-ui.jtekt.com -icon Icon.png
 showHelp() {
-  echo -e "\n\nYou must choose for which operating system you want to build."
-  echo -e "\n\t-l,--linux          \tLinux X86_64/AMD64"
-  echo -e "\t-m,--macos          \tMacOS (darwin) X86_64/AMD64"
-  echo -e "\t-w,--windows        \tMicrosoft Windows X86_64/AMD64"
-  echo -e "\nExtra:\n\t-32,--i386          \tBuild also 32-bits binaries"
-  echo -e "\t-arm,--arm          \tBuild also for ARM architecture"
-  echo -e "\t-nc,--no-compression\tDo not create compressed archives"
+  echo -e "\n\n${fontBold}${fontUnderline}${fontYellow}You must choose for which operating system you want to build.${fontReset}"
+  echo -e "\n\t${fontWhite}-l,--linux${fontReset}          \tLinux X86_64/AMD64"
+  echo -e "\t${fontWhite}-m,--macos${fontReset}          \tMacOS (darwin) X86_64/AMD64"
+  echo -e "\t${fontWhite}-w,--windows${fontReset}        \tMicrosoft Windows X86_64/AMD64"
+  echo -e "\n${fontBold}${fontOrange}Extra:${fontReset}\n\t${fontWhite}-32,--i386${fontReset}          \tBuild also 32-bits binaries"
+  echo -e "\t${fontWhite}-arm,--arm${fontReset}          \tBuild also for ARM architecture"
+  echo -e "\t${fontWhite}-nc,--no-compression${fontReset}\tDo not create compressed archives"
   echo -e "\n"
   exit 1
 }
@@ -24,8 +36,10 @@ buildMacOS=0
 buildWindows=0
 build32bits=0
 buildARM=0
-useCompression=1
+buildError=0
 noArgs=1
+useGarble=0
+useCompression=1
 for var in "$@"
 do
     if [ "$var" == "-l" ] || [ "$var" == "--linux" ] || [ "$var" == "-a" ] || [ "$var" == "--all" ]; then
@@ -79,22 +93,61 @@ else
 fi
 
 # Build function
+# Build the binary using go or garble, and compress it with lrzip if possible.
+#
+# Parameters:
+#
+#	$1: The OS to build for.
+#	$2: The architecture to build for.
+#
+# Returns:
+#
+#	0 if the build and compression were successful.
+#	1 otherwise.
 buildCmd() {
+  # Build using go or garble
+  GOCMD=go
+  if [ $useGarble -eq 1 ]; then
+    GOCMD=garble
+    echo -e "${fontBold}${fontGreen}[INFO]${fontReset} Building using garble..."
+  fi
+
+  # Build
   BINFILE=${projectName}_${1}_${2}${version}
-  GOOS=${1} GOARCH=${2} go build -o bin/${BINFILE}
+  GOOS=${1} GOARCH=${2} ${GOCMD} build -o bin/${BINFILE}
   if [ "$?" -eq 0 ]; then
-    echo "Compression..."
-    lrzip -f -z bin/${BINFILE}
+    if [ $useCompression -eq 1 ]; then
+      echo -e "${fontBold}${fontGreen}[INFO]${fontReset} Compressing using lrzip..."
+      lrzip -f -z bin/${BINFILE}
+      if [ "$?" -gt 0 ]; then
+        echo -e "${fontBold}${fontRed}[ERROR]${fontReset} Failed to compress bin/${BINFILE}."
+        return 1
+      fi
+    fi
     return 0
+  else
+    echo -e "${fontBold}${fontRed}[ERROR]${fontReset} Failed to build bin/${BINFILE}."
+    buildError=1
   fi
   return 1
 }
 
+  # Build an executable file for a given OS using go or garble.
+  #
+  # Parameters:
+  #   $1: string, the OS to build for. Can be "linux", "macos" or "windows".
+  #
+  # Returns:
+  #   0 if the build was successful, 1 otherwise.
+  #
+  # Example:
+  #   build linux
 build() {
   argOS=""
   argArch=amd64
   if [ "$1" == "" ]; then
-    echo -e "\n Script error! Missing Go OS value.\n"
+    echo -e "\n${fontBold}${fontRed}${fontBlink}[ERROR]${fontReset} Script error! Missing Go OS value.\n"
+    buildError=1
   else
     if [ "$1" == "linux" ]; then
       argOS=linux
@@ -105,25 +158,24 @@ build() {
     fi
     
     if ! [ "$argOS" == "" ]; then
-      echo -e "\nBuilding $1 64-bits executable file..."
+      echo -e "\n${fontBold}${fontGreen}[INFO]${fontReset} Building $1 64-bits executable file..."
       buildCmd $argOS $argArch
-      echo "Test: $?"
       if [ "$?" -eq 0 ]; then
                 
         if [ ${build32bits} -eq 1 ]; then
           argArch=386
-          echo -e "\nBuilding $1 32-bits executable file..."
+          echo -e "\n${fontBold}${fontGreen}[INFO]${fontReset} Building $1 32-bits executable file..."
           buildCmd $argOS $argArch
         fi
 
         if [ ${buildARM} -eq 1 ]; then
           argArch=arm64
-          echo -e "\nBuilding $1 ARM 64-bits executable file..."
+          echo -e "\n${fontBold}${fontGreen}[INFO]${fontReset} Building $1 ARM 64-bits executable file..."
           buildCmd $argOS $argArch
 
           if [ ${build32bits} -eq 1 ]; then
             argArch=arm
-            echo -e "\nBuilding $1 ARM 32-bits executable file..."
+            echo -e "\n${fontBold}${fontGreen}[INFO]${fontReset} Building $1 ARM 32-bits executable file..."
             buildCmd $argOS $argArch
           fi
 
@@ -132,6 +184,17 @@ build() {
     fi
   fi
 }
+
+# Check if compression tool exists
+if ! command -v lrzip >/dev/null 2>&1; then
+  useCompression=0
+  echo -e "${fontBold}${fontOrange}[WARN]${fontReset} Compression tool lrzip not found. Compression disabled."
+fi
+
+# Check if garble exists
+if command -v garble >/dev/null 2>&1; then
+  useGarble=1
+fi
 
 # Linux build
 if [ $buildLinux -eq 1 ]; then
@@ -146,4 +209,11 @@ fi
 # Windows build
 if [ $buildWindows -eq 1 ]; then
   build windows
+fi
+
+# Show compiled files
+if [ $buildError -eq 0 ]; then
+  echo -e "\n${fontBold}${fontGreen}[INFO]${fontReset} Successfully compiled ${fontBold}${fontBlue}${projectName}${fontReset}!"
+else
+  echo -e "\n${fontBold}${fontRed}[ERROR]${fontReset} Failed to compile ${fontBold}${fontRed}${projectName}${fontReset}!"
 fi
