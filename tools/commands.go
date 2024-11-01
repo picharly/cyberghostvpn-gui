@@ -93,7 +93,45 @@ func ExecuteCommand(command string, getOutput bool, sudo bool) ([]string, error)
 		cmd = exec.Command("bash", "-c", command)
 	}
 
+	fmt.Printf("Command: %s\n", cmd.String())
 	stdout, _ := cmd.StdoutPipe()
+	cmd.Start()
+	scanner := bufio.NewScanner(stdout)
+	scanner.Split(bufio.ScanLines)
+	result := []string{}
+	for scanner.Scan() {
+		m := scanner.Text()
+		if getOutput {
+			result = append(result, m)
+		}
+	}
+	err := cmd.Wait()
+	return result, err
+}
+
+func RunCommand(commands []string, getOutput bool, sudo bool) ([]string, error) {
+
+	sudoCmd := ""
+	if sudo {
+		if path, ok := IsCommandExists("gksudo"); ok {
+			sudoCmd = path
+		} else if path, ok := IsCommandExists("pkexec"); ok {
+			sudoCmd = path
+		}
+	}
+
+	var cmd *exec.Cmd
+	if len(sudoCmd) > 0 {
+		newCommands := make([]string, len(commands))
+		newCommands = append(newCommands, sudoCmd, "--user", os.Getenv("USER"))
+		newCommands = append(newCommands, commands...)
+		commands = newCommands
+	}
+
+	cmd = exec.Command(commands[0], commands[1:]...)
+
+	stdout, _ := cmd.StdoutPipe()
+	cmd.Stderr = cmd.Stdout
 	cmd.Start()
 	scanner := bufio.NewScanner(stdout)
 	scanner.Split(bufio.ScanLines)
