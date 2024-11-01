@@ -68,7 +68,7 @@ func Connect() []string {
 // It returns the output of the command if it succeeds, or an error if it fails.
 func Disconnect() (string, error) {
 	out, err := tools.RunCommand(getCGCommandWithArgs(
-		string(CG_OTHER_STOP)), true, false)
+		string(CG_OTHER_STOP)), true, true)
 	if err != nil {
 		return strings.Join(out, "\n"), err
 	}

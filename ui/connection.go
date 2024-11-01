@@ -3,6 +3,7 @@ package ui
 import (
 	"cyberghostvpn-gui/cg"
 	"cyberghostvpn-gui/locales"
+	"cyberghostvpn-gui/tools"
 	"fmt"
 	"time"
 
@@ -14,6 +15,7 @@ import (
 var btnConnect *widget.Button
 var connectContainer *fyne.Container
 var actionConnect = true
+var needPassword = false
 
 // getConnectComponents returns a container with a centered connect button.
 // The button is created only once and is initialized with a label from the locales.
@@ -24,7 +26,7 @@ func getConnectComponents() *fyne.Container {
 			locales.Text("gen9"),
 			func() {
 				if actionConnect {
-					showPopupSudo(cg.Connect()...)
+					ShowPopupSudo(cg.Connect()...)
 					// //showPopupLoading()
 					// if out, err := cg.Connect(); err != nil {
 					// 	removeLoadingWait()
@@ -34,7 +36,12 @@ func getConnectComponents() *fyne.Container {
 					// 	removeLoadingWait()
 					// }
 				} else {
-					showPopupLoading()
+					go func() {
+						time.Sleep(time.Millisecond * 250) // Wait for command to be initiated
+						if tools.NeedsPassword != nil {
+							ShowPopupPassword()
+						}
+					}()
 					if out, err := cg.Disconnect(); err != nil {
 						removeLoadingWait()
 						time.Sleep(time.Millisecond * 25) // Wait for loading popup to close

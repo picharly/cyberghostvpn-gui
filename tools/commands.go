@@ -6,6 +6,7 @@ import (
 	"cyberghostvpn-gui/locales"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"runtime"
@@ -13,6 +14,9 @@ import (
 
 	"github.com/shirou/gopsutil/v3/process"
 )
+
+var NeedsPassword io.WriteCloser
+var PasswordChannel = make(chan string)
 
 // IsCommandExists checks if a command exists on the system.
 //
@@ -111,37 +115,48 @@ func ExecuteCommand(command string, getOutput bool, sudo bool) ([]string, error)
 
 func RunCommand(commands []string, getOutput bool, sudo bool) ([]string, error) {
 
-	sudoCmd := ""
-	if sudo {
-		if path, ok := IsCommandExists("gksudo"); ok {
-			sudoCmd = path
-		} else if path, ok := IsCommandExists("pkexec"); ok {
-			sudoCmd = path
-		}
-	}
-
 	var cmd *exec.Cmd
-	if len(sudoCmd) > 0 {
-		newCommands := make([]string, len(commands))
-		newCommands = append(newCommands, sudoCmd, "--user", os.Getenv("USER"))
+	if sudo {
+		newCommands := make([]string, 0)
+		newCommands = append(newCommands, "sudo", "-S", "--")
 		newCommands = append(newCommands, commands...)
 		commands = newCommands
 	}
 
 	cmd = exec.Command(commands[0], commands[1:]...)
 
+	fmt.Printf("Command: %s (%s)\n", commands[0], cmd.String())
+	//stdin, _ := cmd.StdinPipe()
 	stdout, _ := cmd.StdoutPipe()
-	cmd.Stderr = cmd.Stdout
 	cmd.Start()
 	scanner := bufio.NewScanner(stdout)
 	scanner.Split(bufio.ScanLines)
 	result := []string{}
+
 	for scanner.Scan() {
+		fmt.Println("Scanning... ")
 		m := scanner.Text()
+		fmt.Println("Scanned: " + m)
+		if strings.Contains(m, "[sudo] ") {
+			// Password prompt
+			fmt.Println("Asked for popup password")
+			NeedsPassword, _ = cmd.StdinPipe()
+			password := <-PasswordChannel
+			if password == "CancelledAction" {
+				cmd.Cancel()
+				return result, errors.New("cancelled action")
+			}
+			// Write the password to stdin followed by a newline
+			_, err := fmt.Fprintf(NeedsPassword, "%s\n", password)
+			if err != nil {
+				return result, err
+			}
+		}
 		if getOutput {
 			result = append(result, m)
 		}
 	}
+	fmt.Println("Waiting for command to finish")
 	err := cmd.Wait()
 	return result, err
 }
