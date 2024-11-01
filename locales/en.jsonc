@@ -61,6 +61,9 @@
 		{ "id": "pro6", "other": "Loading Country '{{.Name}}'..." },
 		{ "id": "pro7", "other": "Loading City '{{.Name}}'..." },
 		{ "id": "pro8", "other": "Loading Server '{{.Name}}'..." },
+		// REQUIREMENTS
+		{ "id": "req0", "other": "Requirements" },
+		{ "id": "req1", "other": "Please install the following packages:" },
 		// RESOURCES ERRORS
 		{ "id": "err.res0", "other": "unable to read flag files: " },
 		{ "id": "err.res1", "other": "unable to load file '{{.FileName}}'. Error: " },

@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-var currentState Status
+var CurrentState Status
 var version string
 
 type Status int
@@ -35,20 +35,20 @@ const (
 func GetCurrentState() Status {
 
 	if _, ok := tools.IsCommandExists(string(CG_EXECUTABLE)); !ok {
-		currentState = NotInstalled
+		CurrentState = NotInstalled
 	} else {
 		newStatus := refreshStatus()
 		switch newStatus {
 		case string(cgConnected):
-			currentState = Connected
+			CurrentState = Connected
 		case string(cgNotConnected):
-			currentState = Disconnected
+			CurrentState = Disconnected
 		default:
-			currentState = Unknown
+			CurrentState = Unknown
 		}
 	}
 
-	return currentState
+	return CurrentState
 }
 
 // GetVersion returns the version of the CyberGhost VPN client executable.
