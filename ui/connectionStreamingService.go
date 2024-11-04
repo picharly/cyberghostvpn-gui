@@ -79,8 +79,8 @@ func updateStreamingServices(popup bool) {
 
 	// Update
 	countryCode := cg.SelectedCountry.Code
-	if len(loadingStreamingServiceCountry) > 0 {
-		countryCode = loadingStreamingServiceCountry
+	if len(loadingCountryCode) > 0 {
+		countryCode = loadingCountryCode
 	}
 	services := make([]string, 0)
 	services = append(services, "")
@@ -95,5 +95,5 @@ func updateStreamingServices(popup bool) {
 		selectStreamingService.SetSelected("")
 	}
 	loadingStreamingService = ""
-	loadingStreamingServiceCountry = ""
+	loadingCountryCode = ""
 }

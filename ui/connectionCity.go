@@ -39,7 +39,11 @@ func getCityComponents() (*widget.Label, *widget.Select) {
 		})
 
 		// Default
-		selectCity.SetSelected("")
+		if len(loadingCity) > 0 {
+			updateCities(&cg.SelectedCountry)
+		} else {
+			selectCity.SetSelected("")
+		}
 
 		// Automatic Enable/Disable
 		go _automaticEnableDisable(selectCity)

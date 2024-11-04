@@ -41,7 +41,7 @@ func Connect() []string {
 
 	// Server
 	if SelectedServer.Name != "" {
-		options = append(options, string(CG_OTHER_SERVER), SelectedServer.Name)
+		options = append(options, string(CG_OTHER_SERVER), SelectedServer.Instance)
 	}
 
 	// Protocol
