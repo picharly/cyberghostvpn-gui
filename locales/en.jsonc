@@ -26,6 +26,7 @@
 		{ "id": "gen14", "other": "Disconnect" },
 		{ "id": "gen15", "other": "Output" },
 		{ "id": "gen16", "other": "Error" },
+		{ "id": "gen17", "other": "Timeout" },
 		// CG
 		{ "id": "cg0", "other": "VPN connection found." },
 		{ "id": "cg1", "other": "No VPN connections found." },
@@ -53,6 +54,7 @@
 		{ "id": "inf8", "other": "Network:" },
 		// INFO ERRORS
 		{ "id": "err.inf0", "other": "unable to get version:" },
+		{ "id": "err.inf1", "other": "cannot get local IP:" },
 		// POPUP SUDO
 		{ "id": "sud0", "other": "Password" },
 		// PROFILE
@@ -95,6 +97,9 @@
 		// TOOLS
 		// TOOLS ERRORS
 		{ "id": "err.too0", "other": "this method is currently only supported on Linux systems" },
-		{ "id": "err.too1", "other": "command execution failed: " }
+		{ "id": "err.too1", "other": "command execution failed: " },
+		{ "id": "err.too2", "other": "failed to retrieve network interfaces" },
+		{ "id": "err.too3", "other": "failed to read ip addresse from interface '{{.Interface}}'" },
+
 	]
 }

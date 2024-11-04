@@ -11,6 +11,12 @@ type DarkTheme struct {
 	fyne.Theme
 }
 
+// Color returns the color associated with the given theme color name and variant.
+//
+// Note: CyberGhost VPN Dark theme overrides the default colors as follows:
+// - Background: ColorBlack
+// - Foreground: ColorWhite
+// - Primary: ColorYellow
 func (m DarkTheme) Color(name fyne.ThemeColorName, variant fyne.ThemeVariant) color.Color {
 	switch name {
 	case theme.ColorNameBackground:

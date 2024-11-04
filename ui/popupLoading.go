@@ -1,8 +1,11 @@
 package ui
 
 import (
+	"cyberghostvpn-gui/locales"
+	"errors"
 	"image/color"
 	"sync"
+	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -115,8 +118,17 @@ func showPopupLoading() {
 
 	// Wait for end of loading
 	go func(p *loadingPopup) {
+		start := time.Now()
 		for waitFor > 0 {
 			// time.Sleep(time.Millisecond * 50)
+			if time.Since(start) > (time.Second * 30) {
+				go func() {
+					time.Sleep(time.Millisecond * 50)
+					showPopupError(errors.New(locales.Text("gen17")))
+				}()
+				waitFor = 0
+				break
+			}
 		}
 		p.Hide()
 		popupLoading = nil

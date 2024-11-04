@@ -1,66 +1,103 @@
 {
-    // LOCALE: fr
-    // TRANSLATION: Français
-    // CODE: fr
+	// LOCALE: fr
+	// TRANSLATION: Français
+	// CODE: fr
 
-    "messages": [
-        { "id": "name", "other": "Français" },
-        { "id": "code", "other": "fr" },
-        // _GENERIC
-        { "id": "gen0", "other": "Enregistrer" },
-        { "id": "gen1", "other": "Annuler" },
-        { "id": "gen2", "other": "Ajouter" },
-        { "id": "gen3", "other": "Modifier" },
-        { "id": "gen4", "other": "Supprimer" },
-        { "id": "gen5", "other": "Mettre à jour" },
-        { "id": "gen6", "other": "Confirmer" },
-        { "id": "gen7", "other": "Ok" },
-        { "id": "gen8", "other": "Fichier" },
-        { "id": "gen9", "other": "Connecter" },
-        { "id": "gen10", "other": "Chargement de {{.Object}}" },
-        { "id": "gen11", "other": "Oui" },
-        { "id": "gen12", "other": "Non" },
-        { "id": "gen13", "other": "Chargement" },
-        // CG
-        { "id": "cg0", "other": "Connexion VPN trouvée." },
-        { "id": "cg1", "other": "Aucune connexion VPN trouvée." },
-        // CONNECTION
-        { "id": "con0", "other": "Connexion" },
-        { "id": "con1", "other": "Profil" },
-        { "id": "con2", "other": "Par défaut" },
-        { "id": "con3", "other": "Nouveau" },
-        { "id": "con4", "other": "Protocole VPN" },
-        { "id": "con5", "other": "Service" },
-        { "id": "con6", "other": "Protocole réseau" },
-        { "id": "con7", "other": "Pays" },
-        { "id": "con8", "other": "Ville" },
-        { "id": "con9", "other": "Serveur" },
-        // INFO
-        { "id": "inf0", "other": "Version :" },
-        { "id": "inf1", "other": "Statut :" },
-        { "id": "inf2", "other": "connecté" },
-        { "id": "inf3", "other": "déconnecté" },
-        { "id": "inf4", "other": "connexion en cours..." },
-        { "id": "inf5", "other": "déconnexion en cours..." },
-        { "id": "inf6", "other": "non installé" },
-        { "id": "inf7", "other": "inconnu" },
-        { "id": "inf8", "other": "Réseau :" },
-        // RESOURCES ERRORS
-        { "id": "err.res0", "other": "impossible de lire les fichiers de drapeau : " },
-        { "id": "err.res1", "other": "impossible de charger le fichier '{{.FileName}}'. Erreur : " },
-        // SETTINGS
-        { "id": "set0", "other": "Paramètres" },
-        { "id": "set1", "other": "Langue" },
-        { "id": "set2", "other": "Activer l'icône de la barre d'état" },
-        { "id": "set3", "other": "Masquer au démarrage" },
-        { "id": "set4", "other": "Masquer à la fermeture" },
-        // SETTINGS ERRORS
-        { "id": "err.set0", "other": "impossible de créer/écraser le fichier '{{.FileName}}'. Erreur : " },
-        { "id": "err.set1", "other": "le fichier de paramètres '{{.FileName}}' n'existe pas ou est inaccessible : " },
-        { "id": "err.set2", "other": "impossible de décoder le fichier de paramètres '{{.FileName}}' : " },
-        // TOOLS
-        // TOOLS ERRORS
-        { "id": "err.too0", "other": "cette méthode n'est actuellement prise en charge que sur les systèmes Linux" },
-        { "id": "err.too1", "other": "l'exécution de la commande a échoué : " }
-    ]
+	"messages": [
+		{ "id": "name", "other": "Français" },
+		{ "id": "code", "other": "fr" },
+		{ "id": "date", "other": "01/02/2006" },
+		{ "id": "time", "other": "15:04:05.000" },
+		// _GENERIC
+		{ "id": "gen0", "other": "Enregistrer" },
+		{ "id": "gen1", "other": "Annuler" },
+		{ "id": "gen2", "other": "Ajouter" },
+		{ "id": "gen3", "other": "Modifier" },
+		{ "id": "gen4", "other": "Supprimer" },
+		{ "id": "gen5", "other": "Mettre à jour" },
+		{ "id": "gen6", "other": "Confirmer" },
+		{ "id": "gen7", "other": "Ok" },
+		{ "id": "gen8", "other": "Fichier" },
+		{ "id": "gen9", "other": "Connecter" },
+		{ "id": "gen10", "other": "Chargement de {{.Object}}" },
+		{ "id": "gen11", "other": "Oui" },
+		{ "id": "gen12", "other": "Non" },
+		{ "id": "gen13", "other": "Chargement" },
+		{ "id": "gen14", "other": "Déconnecter" },
+		{ "id": "gen15", "other": "Sortie" },
+		{ "id": "gen16", "other": "Erreur" },
+		{ "id": "gen17", "other": "Expiration" },
+		// CG
+		{ "id": "cg0", "other": "Connexion VPN trouvée." },
+		{ "id": "cg1", "other": "Aucune connexion VPN trouvée." },
+		// CONNECTION
+		{ "id": "con0", "other": "Connexion" },
+		{ "id": "con1", "other": "Profil" },
+		{ "id": "con2", "other": "Défaut" },
+		{ "id": "con3", "other": "Nouveau" },
+		{ "id": "con4", "other": "Protocole VPN" },
+		{ "id": "con5", "other": "Service" },
+		{ "id": "con6", "other": "Protocole réseau" },
+		{ "id": "con7", "other": "Pays" },
+		{ "id": "con8", "other": "Ville" },
+		{ "id": "con9", "other": "Serveur" },
+		{ "id": "con10", "other": "Service de streaming" },
+		// INFO
+		{ "id": "inf0", "other": "Version:" },
+		{ "id": "inf1", "other": "Statut:" },
+		{ "id": "inf2", "other": "connecté" },
+		{ "id": "inf3", "other": "déconnecté" },
+		{ "id": "inf4", "other": "connexion en cours..." },
+		{ "id": "inf5", "other": "déconnexion en cours..." },
+		{ "id": "inf6", "other": "non installé" },
+		{ "id": "inf7", "other": "inconnu" },
+		{ "id": "inf8", "other": "Réseau:" },
+		// INFO ERRORS
+		{ "id": "err.inf0", "other": "impossible d'obtenir la version :" },
+		{ "id": "err.inf1", "other": "impossible d'obtenir l'IP locale :" },
+		// POPUP SUDO
+		{ "id": "sud0", "other": "Mot de passe" },
+		// PROFILE
+		{ "id": "pro0", "other": "Enregistrer le profil" },
+		{ "id": "pro1", "other": "Nom :" },
+		{ "id": "pro2", "other": "Vous devez entrer un nom pour le profil" },
+		{ "id": "pro3", "other": "Entrez un nom..." },
+		{ "id": "pro4", "other": "Supprimer le profil" },
+		{ "id": "pro5", "other": "Voulez-vous vraiment supprimer le profil '{{.Name}}'?" },
+		{ "id": "pro6", "other": "Chargement du pays '{{.Name}}'..." },
+		{ "id": "pro7", "other": "Chargement de la ville '{{.Name}}'..." },
+		{ "id": "pro8", "other": "Chargement du serveur '{{.Name}}'..." },
+		// REQUIREMENTS
+		{ "id": "req0", "other": "Exigences" },
+		{ "id": "req1", "other": "Veuillez installer les packages suivants :" },
+		// RESOURCES ERRORS
+		{ "id": "err.res0", "other": "impossible de lire les fichiers de drapeau :" },
+		{ "id": "err.res1", "other": "impossible de charger le fichier '{{.FileName}}'. Erreur : " },
+		// SECURITY.ERRORS
+		{ "id": "err.sec0", "other": "erreur de chiffrement lors de la création d'un nouveau bloc de chiffrement" },
+		{ "id": "err.sec1", "other": "erreur de chiffrement lors de la création d'un nouveau GCM" },
+		{ "id": "err.sec2", "other": "erreur de chiffrement lors de la lecture d'un générateur aléatoire" },
+		{ "id": "err.sec3", "other": "erreur de déchiffrement lors de la création d'un nouveau chiffrement" },
+		{ "id": "err.sec4", "other": "erreur de déchiffrement lors de la création d'un nouveau GCM" },
+		{ "id": "err.sec5", "other": "erreur de déchiffrement lors de l'extraction des données chiffrées" },
+		{ "id": "err.sec6", "other": "la chaîne n'est probablement pas chiffrée" },
+		// SETTINGS
+		{ "id": "set0", "other": "Paramètres" },
+		{ "id": "set1", "other": "Langue" },
+		{ "id": "set2", "other": "Activer l'icône de la barre d'état" },
+		{ "id": "set3", "other": "Masquer au démarrage" },
+		{ "id": "set4", "other": "Masquer à la fermeture" },
+		{ "id": "set5", "other": "Arrêter le VPN à la sortie" },
+		{ "id": "set6", "other": "Appliquer le dernier profil au démarrage" },
+		{ "id": "set7", "other": "Connecter au démarrage" },
+		// SETTINGS ERRORS
+		{ "id": "err.set0", "other": "impossible de créer/écraser le fichier '{{.FileName}}'. Erreur : " },
+		{ "id": "err.set1", "other": "le fichier de paramètres '{{.FileName}}' n'existe pas ou est inatteignable :" },
+		{ "id": "err.set2", "other": "impossible de décoder le fichier de paramètres '{{.FileName}}' :" },
+		// TOOLS ERRORS
+		{ "id": "err.too0", "other": "cette méthode est actuellement uniquement prise en charge sur les systèmes Linux" },
+		{ "id": "err.too1", "other": "échec de l'exécution de la commande :" },
+		{ "id": "err.too2", "other": "échec de la récupération des interfaces réseau" },
+		{ "id": "err.too3", "other": "échec de la lecture de l'adresse IP depuis l'interface '{{.Interface}}'" }
+	]
 }
