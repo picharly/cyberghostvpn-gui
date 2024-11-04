@@ -28,6 +28,8 @@ func getLoadingAnimatedGIF() *widget.AnimatedGif {
 	return gif
 }
 
+// getWarningPicture returns a canvas.Image containing the warning icon.
+// The returned image is created from a static resource and has its size set to 64x64.
 func getWarningPicture() *canvas.Image {
 	image := canvas.NewImageFromResource(fyne.NewStaticResource("warning", resources.WarningIcon))
 	image.FillMode = canvas.ImageFillOriginal

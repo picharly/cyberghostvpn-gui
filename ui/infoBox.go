@@ -147,7 +147,7 @@ func updatelanguageInfoBox() {
 func updateNetwork() {
 	if textNet != nil {
 		if ip, err := tools.GetLocalIPAddresses(net.FlagPointToPoint); err != nil {
-			logger.Errorf("cannot get local IP: %v", err)
+			logger.Errorf("%s %v", locales.Text("err.inf1"), err)
 			textNet.Text = locales.Text("inf7")
 			textNet.Color = resources.ColorOrange
 		} else if len(ip) > 0 {

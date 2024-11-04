@@ -6,6 +6,7 @@ package tools
 */
 
 import (
+	"cyberghostvpn-gui/locales"
 	"fmt"
 	"net"
 )
@@ -25,7 +26,7 @@ func GetLocalIPAddresses(filters ...net.Flags) ([]*net.IP, error) {
 	// Get local interface
 	ifaces, err := net.Interfaces()
 	if err != nil {
-		lastError = fmt.Errorf("failed to retrieve network interfaces: %v", err)
+		lastError = fmt.Errorf("%s: %v", locales.Text("err.too2"), err)
 	}
 
 	// Iterate network interfaces
@@ -47,7 +48,7 @@ func GetLocalIPAddresses(filters ...net.Flags) ([]*net.IP, error) {
 
 		addrs, err := i.Addrs()
 		if err != nil {
-			lastError = fmt.Errorf("failed to read ip addresse from interface '%s': %v", i.Name, err)
+			lastError = fmt.Errorf("%s: %v", locales.Text("err.too3", locales.Variable{Name: "Interface", Value: i.Name}), err)
 			continue
 		}
 		// Iterate IP addresses
