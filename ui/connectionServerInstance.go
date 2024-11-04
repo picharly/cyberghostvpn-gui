@@ -30,7 +30,11 @@ func getServerInstanceComponents() (*widget.Label, *widget.Select) {
 		})
 
 		// Default
-		selectServerInstance.SetSelected("")
+		if len(loadingServerInstance) > 0 {
+			updateServerInstances(&cg.SelectedCountry, &cg.SelectedCity)
+		} else {
+			selectServerInstance.SetSelected("")
+		}
 
 		// Automatic Enable/Disable
 		go _automaticEnableDisable(selectServerInstance)

@@ -157,7 +157,7 @@ func updateNetwork() {
 		} else {
 			textNet.Text = "-" //locales.Text("inf3")
 			textNet.Color = resources.ColorRed
-			GetApp().SetIcon(resources.GetCyberGhostIconWhite())
+			GetApp().SetIcon(resources.GetCyberGhostIcon())
 		}
 
 		textNet.Refresh()

@@ -43,18 +43,20 @@ func GetMainWindow() fyne.Window {
 		if len(cfg.LastProfile.CountryCode) > 0 {
 			// Set value to load
 			loadingCountry = cfg.LastProfile.CountryName
-			loadingStreamingServiceCountry = cfg.LastProfile.CountryCode
-			cg.SetSelectedCountry(cg.GetCountry(cfg.LastProfile.CountryCode))
+			loadingCountryCode = cfg.LastProfile.CountryCode
 			loadingStreamingService = cfg.LastProfile.StreamingService
-			cg.SetSelectedStreamingService(cfg.LastProfile.StreamingService)
 			loadingCity = cfg.LastProfile.City
 			loadingServerInstance = cfg.LastProfile.Server
 			loadingProtocol = cfg.LastProfile.Protocol
-			cg.SetSelectedProtocol(cfg.LastProfile.Protocol)
 			loadingServiceType = cfg.LastProfile.ServiceType
-			cg.SetSelectedServiceType(cfg.LastProfile.ServiceType)
 			loadingVPNService = cfg.LastProfile.VPNService
-			cg.SetSelectedVPNService(cfg.LastProfile.VPNService)
+
+			cg.SetSelectedCountry(cg.GetCountry(loadingCountryCode))
+			cg.SetSelectedStreamingService(loadingStreamingService)
+			cg.SetSelectedCity(cg.GetCity(loadingCity))
+			cg.SetSelectedProtocol(loadingProtocol)
+			cg.SetSelectedServiceType(loadingServiceType)
+			cg.SetSelectedVPNService(loadingVPNService)
 		}
 
 		// Create main window

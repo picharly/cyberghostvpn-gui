@@ -60,15 +60,15 @@ func GetVersion() string {
 		args := []string{
 			string(CG_EXECUTABLE),
 			string(CG_OTHER_HELP),
-			"|",
-			"grep",
-			"-i",
-			"\"cyberghost -\"",
 		}
 		out, err := tools.RunCommand(args, true, false, "")
 		if err == nil && len(out) > 0 {
-			version = strings.ReplaceAll(strings.Replace(out[0], "cyberghost -", "", 1), " ", "")
-			return version
+			for _, line := range out {
+				if strings.Contains(line, "cyberghost -") {
+					version = strings.ReplaceAll(strings.Replace(line, "cyberghost -", "", 1), " ", "")
+					return version
+				}
+			}
 		} else if err != nil {
 			logger.Warnf("%s %sv", locales.Text("err.inf0"), err)
 		}

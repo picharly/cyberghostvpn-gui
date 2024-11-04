@@ -23,7 +23,7 @@ var loadingProtocol string
 var loadingServerInstance string
 var loadingServiceType string
 var loadingStreamingService string
-var loadingStreamingServiceCountry string
+var loadingCountryCode string
 var loadingVPNService string
 
 // getConnectionProfilesComponents returns a label and a container that contains a select widget for selecting a profile,

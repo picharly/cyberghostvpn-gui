@@ -2,7 +2,7 @@ package settings
 
 import "cyberghostvpn-gui/tools"
 
-var requirements = []string{"cyberghostvpn", "sudo", "bash"}
+var requirements = []string{"cyberghostvpn", "sudo"}
 
 // CheckRequirements returns a list of requirements that are not satisfied. The second argument
 // is a boolean indicating whether all requirements are satisfied.
