@@ -54,6 +54,9 @@ func getStreamingServiceComponents() (*widget.Label, *widget.Select) {
 		// Automatic Enable/Disable
 		go _automaticEnableDisable(selectStreamingService)
 
+		// Add update method to current trigger
+		locales.GetTrigger().AddMethod(updateLanguageStreamingService)
+
 	}
 	return lblStreamingService, selectStreamingService
 }
