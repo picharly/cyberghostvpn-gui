@@ -1,7 +1,6 @@
 package tools
 
 import (
-	"bufio"
 	"context"
 	"cyberghostvpn-gui/locales"
 	"errors"
@@ -67,91 +66,39 @@ func IsServiceRunning(name string) bool {
 	return false
 }
 
-// ExecuteCommand runs a command and optionally returns the output of the command
-// as a string array.
+// RunCommand runs a command with arguments and returns the output as a string array.
 //
-// The command is executed with bash as the shell. The command can be a simple
-// command or a shell script.
+// Parameters:
 //
-// If the getOutput parameter is true, the function returns the output of the
-// command as a string array. If the getOutput parameter is false, the function
-// returns an empty string array.
+//	args: a slice of strings representing the command and its arguments
+//	getOutput: boolean indicating whether the function should return the output of the command
+//	sudo: boolean indicating whether the command should be run with sudo
+//	pwd: string containing the password to use with sudo
 //
-// The function returns an error if the command execution fails.
-func ExecuteCommand(command string, getOutput bool, sudo bool) ([]string, error) {
+// Returns:
+//
+//	A string array containing the output of the command if getOutput is true, an empty string array otherwise
+//	An error if the command execution fails
+func RunCommand(args []string, getOutput bool, sudo bool, pwd string) ([]string, error) {
 
-	sudoCmd := ""
+	// Add sudo command if needed
 	if sudo {
-		if path, ok := IsCommandExists("gksudo"); ok {
-			sudoCmd = path
-		} else if path, ok := IsCommandExists("pkexec"); ok {
-			sudoCmd = path
-		}
+		newArgs := make([]string, 0)
+		newArgs = append(newArgs, "sudo", "-S", "--")
+		newArgs = append(newArgs, args...)
+		args = newArgs
 	}
 
-	var cmd *exec.Cmd
-	if len(sudoCmd) > 0 {
-		sudoCmd += " --user " + os.Getenv("USER")
-		command = "\"" + sudoCmd + " " + command + "\""
-	} else {
-		cmd = exec.Command("bash", "-c", command)
-	}
-
-	stdout, _ := cmd.StdoutPipe()
-	cmd.Start()
-	scanner := bufio.NewScanner(stdout)
-	scanner.Split(bufio.ScanLines)
-	result := []string{}
-	for scanner.Scan() {
-		m := scanner.Text()
-		if getOutput {
-			result = append(result, m)
-		}
-	}
-	err := cmd.Wait()
-	return result, err
-}
-
-func RunCommand(commands []string, getOutput bool, sudo bool) ([]string, error) {
-
-	var cmd *exec.Cmd
+	// Instance the command
+	cmd := exec.Command(args[0], args[1:]...)
 	if sudo {
-		newCommands := make([]string, 0)
-		newCommands = append(newCommands, "sudo", "-S", "--")
-		newCommands = append(newCommands, commands...)
-		commands = newCommands
+		cmd.Stdin = strings.NewReader(pwd)
 	}
 
-	cmd = exec.Command(commands[0], commands[1:]...)
+	// Start the command
+	stdout, err := cmd.CombinedOutput()
+	result := strings.Split(string(stdout), "\n")
 
-	//stdin, _ := cmd.StdinPipe()
-	stdout, _ := cmd.StdoutPipe()
-	cmd.Start()
-	scanner := bufio.NewScanner(stdout)
-	scanner.Split(bufio.ScanLines)
-	result := []string{}
-
-	for scanner.Scan() {
-		m := scanner.Text()
-		if strings.Contains(m, "[sudo] ") {
-			// Password prompt
-			NeedsPassword, _ = cmd.StdinPipe()
-			password := <-PasswordChannel
-			if password == "CancelledAction" {
-				cmd.Cancel()
-				return result, errors.New("cancelled action")
-			}
-			// Write the password to stdin followed by a newline
-			_, err := fmt.Fprintf(NeedsPassword, "%s\n", password)
-			if err != nil {
-				return result, err
-			}
-		}
-		if getOutput {
-			result = append(result, m)
-		}
-	}
-	err := cmd.Wait()
 	return result, err
 }
 
@@ -165,6 +112,8 @@ func RunCommand(commands []string, getOutput bool, sudo bool) ([]string, error) 
 //
 // If an error occurs during the execution of the command, the function returns
 // an error.
+//
+// NOT USED BECAUSE CYBERGHOSTVPN CLI ASK FOR SUDO, IT DOES NOT WORK WITH PKEXEC
 func RunCommandWithGksudo(command string, args ...string) (string, error) {
 	var sudoCmd *exec.Cmd
 

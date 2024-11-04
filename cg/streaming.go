@@ -50,7 +50,13 @@ func loadStreamingServices(countryCode string) *[]resources.StreamingService {
 
 	if len(countryCode) > 0 {
 
-		if out, err := tools.ExecuteCommand(getCGCommand(string(CG_SERVERTYPES_STREAMING), string(CG_OTHER_COUNTRY_CODE), countryCode), true, false); err != nil {
+		args := []string{
+			string(CG_EXECUTABLE),
+			string(CG_SERVERTYPES_STREAMING),
+			string(CG_OTHER_COUNTRY_CODE),
+			countryCode,
+		}
+		if out, err := tools.RunCommand(args, true, false, ""); err != nil {
 			streamingServices = &array
 			return &array
 		} else {

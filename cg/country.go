@@ -51,7 +51,12 @@ func GetCountry(name string) resources.Country {
 func LoadCountries(serverType CgServerType) error {
 	array := make([]resources.Country, 0)
 
-	if out, err := tools.ExecuteCommand(getCGCommand(GetOptionServerType(string(serverType)), string(CG_OTHER_COUNTRY_CODE)), true, false); err != nil {
+	args := []string{
+		string(CG_EXECUTABLE),
+		GetOptionServerType(string(serverType)),
+		string(CG_OTHER_COUNTRY_CODE),
+	}
+	if out, err := tools.RunCommand(args, true, false, ""); err != nil {
 		countries = &array
 		return err
 	} else {

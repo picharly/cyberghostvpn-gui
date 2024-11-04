@@ -4,7 +4,6 @@ import (
 	"cyberghostvpn-gui/locales"
 	"cyberghostvpn-gui/logger"
 	"cyberghostvpn-gui/tools"
-	"fmt"
 	"strings"
 )
 
@@ -57,7 +56,16 @@ func GetCurrentState() Status {
 // If the executable command does not exist or the command fails, it will return an empty string.
 func GetVersion() string {
 	if len(version) < 1 {
-		out, err := tools.ExecuteCommand(fmt.Sprintf("%s %s | grep -i \"cyberghost -\"", CG_EXECUTABLE, CG_OTHER_HELP), true, false)
+		// out, err := tools.ExecuteCommand(fmt.Sprintf("%s %s | grep -i \"cyberghost -\"", CG_EXECUTABLE, CG_OTHER_HELP), true, false)
+		args := []string{
+			string(CG_EXECUTABLE),
+			string(CG_OTHER_HELP),
+			"|",
+			"grep",
+			"-i",
+			"\"cyberghost -\"",
+		}
+		out, err := tools.RunCommand(args, true, false, "")
 		if err == nil && len(out) > 0 {
 			version = strings.ReplaceAll(strings.Replace(out[0], "cyberghost -", "", 1), " ", "")
 			return version
@@ -71,7 +79,12 @@ func GetVersion() string {
 // refreshStatus executes the CyberGhost VPN client with the status command and returns the first line of the output.
 // If the command fails or the output is empty, it returns an empty string.
 func refreshStatus() string {
-	out, err := tools.ExecuteCommand(fmt.Sprintf("%s %s", CG_EXECUTABLE, CG_OTHER_STATUS), true, false)
+	// out, err := tools.ExecuteCommand(fmt.Sprintf("%s %s", CG_EXECUTABLE, CG_OTHER_STATUS), true, false)
+	args := []string{
+		string(CG_EXECUTABLE),
+		string(CG_OTHER_STATUS),
+	}
+	out, err := tools.RunCommand(args, true, false, "")
 	if err == nil && len(out) > 0 {
 		return out[0]
 	}

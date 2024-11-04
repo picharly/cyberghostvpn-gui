@@ -60,14 +60,16 @@ func LoadServers(serverType CgServerType, countryCode string, cityName string) e
 		streaming = `"` + SelectedStreamingService + `"`
 	}
 
-	if out, err := tools.ExecuteCommand(
-		getCGCommand(
-			GetOptionServerType(string(serverType)),
-			streaming,
-			string(CG_OTHER_COUNTRY_CODE),
-			countryCode,
-			string(CG_OTHER_CITY),
-			cityName), true, false); err != nil {
+	args := []string{
+		string(CG_EXECUTABLE),
+		GetOptionServerType(string(serverType)),
+		streaming,
+		string(CG_OTHER_COUNTRY_CODE),
+		countryCode,
+		string(CG_OTHER_CITY),
+		cityName,
+	}
+	if out, err := tools.RunCommand(args, true, false, ""); err != nil {
 		servers = &array
 		return err
 	} else {

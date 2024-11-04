@@ -25,8 +25,10 @@ func getConnectComponents() *fyne.Container {
 			locales.Text("gen9"),
 			func() {
 				if actionConnect {
+					// ShowPopupSudo_Test(cg.Connect()...)
 					ShowPopupSudo(cg.Connect()...)
 				} else {
+					// ShowPopupSudo_Test(cg.Disconnect()...)
 					ShowPopupSudo(cg.Disconnect()...)
 				}
 			},
@@ -108,9 +110,9 @@ func enableForm() {
 // The method also checks if the select widget is not empty before enabling it.
 func _enableForm(enable bool) {
 	components := []fyne.Disableable{
+		selectProfile,
 		btnDelProfile,
 		btnSaveProfile,
-		selectProfile,
 		selectCity,
 		selectCountry,
 		selectServerType,
@@ -124,15 +126,17 @@ func _enableForm(enable bool) {
 			switch enable {
 			case true:
 				if c.Disabled() {
-					if c == selectProfile {
+					if c == btnDelProfile {
 						if len(selectProfile.Selected) > 0 {
 							c.Enable()
 						}
 					} else {
 						if s, ok := c.(*widget.Select); ok {
-							if len(s.Options) > 1 {
-								c.Enable()
+							if len(s.Options) > 1 || s == selectProfile {
+								s.Enable()
 							}
+						} else if b, ok := c.(*widget.Button); ok {
+							b.Enable()
 						}
 					}
 				}

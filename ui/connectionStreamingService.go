@@ -3,7 +3,6 @@ package ui
 import (
 	"cyberghostvpn-gui/cg"
 	"cyberghostvpn-gui/locales"
-	"fmt"
 
 	"fyne.io/fyne/v2/widget"
 )
@@ -79,7 +78,6 @@ func updateStreamingServices(popup bool) {
 	countryCode := cg.SelectedCountry.Code
 	if len(loadingStreamingServiceCountry) > 0 {
 		countryCode = loadingStreamingServiceCountry
-		fmt.Printf("Updating streaming country: %s\n", countryCode)
 	}
 	services := make([]string, 0)
 	services = append(services, "")
