@@ -190,4 +190,7 @@ func updateLanguageSettings() {
 	lblTrayIcon.SetText(locales.Text("set2"))
 	lblStartOnTray.SetText(locales.Text("set3"))
 	lblHideOnTray.SetText(locales.Text("set4"))
+	lblStopVPN.SetText(locales.Text("set5"))
+	lblLoadLastProfile.SetText(locales.Text("set6"))
+	lblConnectStartup.SetText(locales.Text("set7"))
 }
