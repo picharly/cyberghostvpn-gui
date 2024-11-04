@@ -40,6 +40,9 @@ func main() {
 		ui.ShowRequirementsPopup(missing)
 	}
 
+	// Get current VPN state
+	cg.GetCurrentState()
+
 	// Start UI
 	if cfg.HideOnStart {
 		ui.GetMainWindow().Hide()

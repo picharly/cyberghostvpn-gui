@@ -39,7 +39,7 @@ func getServerTypeComponents() (*widget.Label, *widget.Select) {
 					updateCountries(cg.GetServerType(s))
 				} else {
 					if s == string(cg.CG_SERVER_TYPE_STREAMING) {
-						updateStreamingServices()
+						updateStreamingServices(true)
 					} else {
 						emptyStreamingServiceSelect()
 						updateCities(&cg.SelectedCountry)

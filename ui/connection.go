@@ -3,8 +3,6 @@ package ui
 import (
 	"cyberghostvpn-gui/cg"
 	"cyberghostvpn-gui/locales"
-	"cyberghostvpn-gui/tools"
-	"fmt"
 	"time"
 
 	"fyne.io/fyne/v2"
@@ -17,9 +15,10 @@ var connectContainer *fyne.Container
 var actionConnect = true
 var needPassword = false
 
-// getConnectComponents returns a container with a centered connect button.
-// The button is created only once and is initialized with a label from the locales.
-// The returned container is used to trigger the connection process.
+// getConnectComponents initializes and returns a container with a connect button.
+// The button toggles between connecting and disconnecting the VPN based on
+// the current state. It uses ShowPopupSudo to execute the connect or disconnect
+// command with administrative privileges.
 func getConnectComponents() *fyne.Container {
 	if btnConnect == nil {
 		btnConnect = widget.NewButton(
@@ -27,28 +26,8 @@ func getConnectComponents() *fyne.Container {
 			func() {
 				if actionConnect {
 					ShowPopupSudo(cg.Connect()...)
-					// //showPopupLoading()
-					// if out, err := cg.Connect(); err != nil {
-					// 	removeLoadingWait()
-					// 	time.Sleep(time.Millisecond * 25) // Wait for loading popup to close
-					// 	showPopupError(fmt.Errorf("%s: %s\n\n%s: %v", locales.Text("gen15"), out, locales.Text("gen16"), err))
-					// } else {
-					// 	removeLoadingWait()
-					// }
 				} else {
-					go func() {
-						time.Sleep(time.Millisecond * 250) // Wait for command to be initiated
-						if tools.NeedsPassword != nil {
-							ShowPopupPassword()
-						}
-					}()
-					if out, err := cg.Disconnect(); err != nil {
-						removeLoadingWait()
-						time.Sleep(time.Millisecond * 25) // Wait for loading popup to close
-						showPopupError(fmt.Errorf("%s: %s\n\n%s %v", locales.Text("gen15"), out, locales.Text("gen16"), err))
-					} else {
-						removeLoadingWait()
-					}
+					ShowPopupSudo(cg.Disconnect()...)
 				}
 			},
 		)

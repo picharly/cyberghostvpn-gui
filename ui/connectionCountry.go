@@ -50,7 +50,7 @@ func getCountryComponents() (*widget.Label, *widget.Select) {
 				if len(s) > 0 {
 					// Streaming service
 					if selectServerType.Selected == string(cg.CG_SERVER_TYPE_STREAMING) {
-						updateStreamingServices()
+						updateStreamingServices(true)
 						selectStreamingService.Enable()
 					} else {
 						selectStreamingService.SetSelected("")
@@ -75,6 +75,15 @@ func getCountryComponents() (*widget.Label, *widget.Select) {
 
 		if len(loadingCountry) > 0 {
 			selectCountry.SetSelected(loadingCountry)
+			// Set selection
+			cg.SetSelectedCountry(cg.GetCountry(loadingCountry))
+
+			// Show flag
+			if len(cg.SelectedCountry.Name) > 0 {
+				setFlag(cg.SelectedCountry.Code)
+			} else {
+				setFlag("")
+			}
 		} else {
 			selectCountry.SetSelected("")
 		}

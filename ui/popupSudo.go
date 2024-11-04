@@ -1,7 +1,6 @@
 package ui
 
 import (
-	"cyberghostvpn-gui/tools"
 	"fmt"
 	"os/exec"
 	"strings"
@@ -17,7 +16,13 @@ func ShowPopupSudo(args ...string) {
 		var procErr error
 		if ok {
 			// Use the password with sudo
-			cmd := exec.Command("sudo", "-S", "--", "/usr/sbin/cyberghostvpn", "--connect")
+			newArgs := []string{}
+			newArgs = append(newArgs, "sudo", "-S", "--")
+			newArgs = append(newArgs, args...)
+			args = newArgs
+
+			cmd := exec.Command(args[0], args[1:]...)
+			fmt.Printf("Connect: %s\n", cmd.String())
 			cmd.Stdin = strings.NewReader(password.Text)
 			output, err := cmd.CombinedOutput()
 			if err != nil {
@@ -29,20 +34,7 @@ func ShowPopupSudo(args ...string) {
 			showPopupError(procErr)
 		}
 	}, GetMainWindow())
-}
 
-func ShowPopupPassword() {
-	password := widget.NewPasswordEntry()
-	dialog.ShowCustomConfirm("Enter sudo password", "OK", "Cancel", password, func(ok bool) {
-		var procErr error
-		if ok {
-			tools.PasswordChannel <- password.Text
-		} else {
-			tools.PasswordChannel <- "CancelledAction"
-		}
-		if procErr != nil {
-			time.Sleep(time.Millisecond * 25) // Wait for popup to close
-			showPopupError(procErr)
-		}
-	}, GetMainWindow())
+	GetMainWindow().Show()
+	GetMainWindow().RequestFocus()
 }

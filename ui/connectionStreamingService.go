@@ -3,6 +3,7 @@ package ui
 import (
 	"cyberghostvpn-gui/cg"
 	"cyberghostvpn-gui/locales"
+	"fmt"
 
 	"fyne.io/fyne/v2/widget"
 )
@@ -45,7 +46,11 @@ func getStreamingServiceComponents() (*widget.Label, *widget.Select) {
 		})
 
 		// Default
-		selectStreamingService.SetSelected("")
+		if cg.SelectedServiceType == string(cg.CG_SERVER_TYPE_STREAMING) {
+			updateStreamingServices(false)
+		} else {
+			selectStreamingService.SetSelected("")
+		}
 
 		// Automatic Enable/Disable
 		go _automaticEnableDisable(selectStreamingService)
@@ -62,23 +67,32 @@ func updateLanguageStreamingService() {
 // updateStreamingServices updates the select widget of the streaming service component with the available streaming services for the current country.
 // The function shows a loading popup while it is updating the streaming services and resets the selected streaming service if the user has selected a new country.
 // After updating the select widget, the function resets the selected server instance and city.
-func updateStreamingServices() {
+func updateStreamingServices(popup bool) {
 
 	// Show loading popup
-	showPopupLoading()
-	defer removeLoadingWait()
+	if popup {
+		showPopupLoading()
+		defer removeLoadingWait()
+	}
 
 	// Update
+	countryCode := cg.SelectedCountry.Code
+	if len(loadingStreamingServiceCountry) > 0 {
+		countryCode = loadingStreamingServiceCountry
+		fmt.Printf("Updating streaming country: %s\n", countryCode)
+	}
 	services := make([]string, 0)
 	services = append(services, "")
-	for _, s := range *cg.GetStreamingServices(cg.SelectedCountry.Code) {
+	for _, s := range *cg.GetStreamingServices(countryCode) {
 		services = append(services, s.Service)
 	}
 	selectStreamingService.SetOptions(services)
-	if len(loadingStreamingService) > 0 {
+
+	if cg.SelectedServiceType == string(cg.CG_SERVER_TYPE_STREAMING) {
 		selectStreamingService.SetSelected(loadingStreamingService)
 	} else {
 		selectStreamingService.SetSelected("")
 	}
 	loadingStreamingService = ""
+	loadingStreamingServiceCountry = ""
 }

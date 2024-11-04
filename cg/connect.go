@@ -1,21 +1,24 @@
 package cg
 
 import (
-	"cyberghostvpn-gui/tools"
 	"strings"
 )
 
-// Connect returns a command string to connect to the VPN using the selected options.
+// Connect builds a command to connect to a CyberGhost VPN server and returns it as a slice of strings.
 //
-// This function takes into account the selected server type, country, city, server, protocol, and VPN service.
+// The command is built based on the values of the following global variables:
 //
-// The command string is constructed by appending the selected options to the base command defined by CG_EXECUTABLE.
+// - SelectedServiceType: the type of server (traffic, streaming, torrent)
+// - SelectedStreamingService: the name of the streaming service to use when SelectedServiceType is streaming
+// - SelectedCountry: the country to connect to
+// - SelectedCity: the city to connect to
+// - SelectedServer: the server to connect to
+// - SelectedProtocol: the protocol to use (UDP or TCP)
+// - SelectedVPNService: the VPN service to use (OpenVPN or WireGuard)
 //
-// The constructed command string is then prepended with SUDO to ensure that the command is run with root privileges.
+// The command is built by calling getCGCommandWithArgs with the relevant options.
 //
-// Parameters: None
-//
-// Returns: A string representing the complete command to be executed.
+// The returned slice of strings can be used with the os/exec package to execute the command.
 func Connect() []string {
 	options := []string{}
 
@@ -63,14 +66,7 @@ func Connect() []string {
 	return cmd
 }
 
-// Disconnect stops the current VPN connection.
-//
-// It returns the output of the command if it succeeds, or an error if it fails.
-func Disconnect() (string, error) {
-	out, err := tools.RunCommand(getCGCommandWithArgs(
-		string(CG_OTHER_STOP)), true, true)
-	if err != nil {
-		return strings.Join(out, "\n"), err
-	}
-	return "", nil
+// Disconnect returns a command to disconnect the VPN connection.
+func Disconnect() []string {
+	return getCGCommandWithArgs(string(CG_OTHER_STOP))
 }

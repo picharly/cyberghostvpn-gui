@@ -1,6 +1,8 @@
 package cg
 
 import (
+	"cyberghostvpn-gui/locales"
+	"cyberghostvpn-gui/logger"
 	"cyberghostvpn-gui/tools"
 	"fmt"
 	"strings"
@@ -59,9 +61,11 @@ func GetVersion() string {
 		if err == nil && len(out) > 0 {
 			version = strings.ReplaceAll(strings.Replace(out[0], "cyberghost -", "", 1), " ", "")
 			return version
+		} else if err != nil {
+			logger.Warnf("%s %sv", locales.Text("err.inf0"), err)
 		}
 	}
-	return ""
+	return version
 }
 
 // refreshStatus executes the CyberGhost VPN client with the status command and returns the first line of the output.

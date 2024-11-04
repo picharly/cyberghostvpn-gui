@@ -97,7 +97,6 @@ func ExecuteCommand(command string, getOutput bool, sudo bool) ([]string, error)
 		cmd = exec.Command("bash", "-c", command)
 	}
 
-	fmt.Printf("Command: %s\n", cmd.String())
 	stdout, _ := cmd.StdoutPipe()
 	cmd.Start()
 	scanner := bufio.NewScanner(stdout)
@@ -125,7 +124,6 @@ func RunCommand(commands []string, getOutput bool, sudo bool) ([]string, error) 
 
 	cmd = exec.Command(commands[0], commands[1:]...)
 
-	fmt.Printf("Command: %s (%s)\n", commands[0], cmd.String())
 	//stdin, _ := cmd.StdinPipe()
 	stdout, _ := cmd.StdoutPipe()
 	cmd.Start()
@@ -134,12 +132,9 @@ func RunCommand(commands []string, getOutput bool, sudo bool) ([]string, error) 
 	result := []string{}
 
 	for scanner.Scan() {
-		fmt.Println("Scanning... ")
 		m := scanner.Text()
-		fmt.Println("Scanned: " + m)
 		if strings.Contains(m, "[sudo] ") {
 			// Password prompt
-			fmt.Println("Asked for popup password")
 			NeedsPassword, _ = cmd.StdinPipe()
 			password := <-PasswordChannel
 			if password == "CancelledAction" {
@@ -156,7 +151,6 @@ func RunCommand(commands []string, getOutput bool, sudo bool) ([]string, error) 
 			result = append(result, m)
 		}
 	}
-	fmt.Println("Waiting for command to finish")
 	err := cmd.Wait()
 	return result, err
 }
