@@ -32,6 +32,11 @@ showHelp() {
   exit 1
 }
 
+# Check if garble exists
+if command -v garble >/dev/null 2>&1; then
+  useGarble=1
+fi
+
 # Check arguments
 buildLinux=0
 buildMacOS=0
@@ -70,6 +75,9 @@ do
     if [ "$var" == "-nk" ] || [ "$var" == "--new-key" ]; then
       newKey=1
       noArgs=0
+    fi
+    if [ "$var" == "-ng" ] || [ "$var" == "--no-garble" ]; then
+      useGarble=0
     fi
     if [ "$var" == "-h" ] || [ "$var" == "--help" ]; then
       showHelp
@@ -221,11 +229,6 @@ fi
 if ! command -v lrzip >/dev/null 2>&1; then
   useCompression=0
   echo -e "${fontBold}${fontOrange}[WARN]${fontReset} Compression tool lrzip not found. Compression disabled."
-fi
-
-# Check if garble exists
-if command -v garble >/dev/null 2>&1; then
-  useGarble=1
 fi
 
 # Linux build

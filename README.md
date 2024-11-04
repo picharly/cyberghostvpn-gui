@@ -38,7 +38,7 @@ git clone https://github.com/yourusername/cyberghost-vpn-linux-gui.git
 
 ### 2. Build the application using the build script
 ```bash
-./build -l # Build for Linux. Add -32 for 32 bits
+./build -l # Build for Linux.
 ```
 
 # License
