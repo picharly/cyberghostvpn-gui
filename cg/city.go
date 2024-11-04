@@ -42,12 +42,14 @@ func LoadCities(serverType CgServerType, countryCode string) error {
 		streaming = `"` + SelectedStreamingService + `"`
 	}
 
-	if out, err := tools.ExecuteCommand(
-		getCGCommand(
-			GetOptionServerType(string(serverType)),
-			streaming,
-			string(CG_OTHER_COUNTRY_CODE),
-			countryCode), true, false); err != nil {
+	args := []string{
+		string(CG_EXECUTABLE),
+		GetOptionServerType(string(serverType)),
+		streaming,
+		string(CG_OTHER_COUNTRY_CODE),
+		countryCode,
+	}
+	if out, err := tools.RunCommand(args, true, false, ""); err != nil {
 		cities = &array
 		return err
 	} else {
