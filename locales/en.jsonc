@@ -51,6 +51,8 @@
 		{ "id": "inf6", "other": "not installed" },
 		{ "id": "inf7", "other": "unknown" },
 		{ "id": "inf8", "other": "Network:" },
+		// INFO ERRORS
+		{ "id": "err.inf0", "other": "unable to get version:" },
 		// PROFILE
 		{ "id": "pro0", "other": "Save Profile" },
 		{ "id": "pro1", "other": "Name:" },
