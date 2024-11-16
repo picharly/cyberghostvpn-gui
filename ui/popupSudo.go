@@ -2,6 +2,7 @@ package ui
 
 import (
 	"cyberghostvpn-gui/locales"
+	"cyberghostvpn-gui/security"
 	"cyberghostvpn-gui/tools"
 	"fmt"
 	"strings"
@@ -13,6 +14,9 @@ import (
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
+
+// Encrypted password (stored in memory only - you must type it once at each run)
+var password string
 
 // ShowPopupSudo shows a popup window to enter a sudo password to run a command.
 // The command is given as a slice of strings, similar to the arguments passed to os/exec.Command.
@@ -44,7 +48,16 @@ func ShowPopupSudo(args ...string) {
 	// Password
 	inputPwd := widget.NewPasswordEntry()
 	inputPwd.OnSubmitted = func(v string) {
+		password, _ = security.Encrypt(v)
 		action(args, v)
+	}
+	if len(password) > 0 {
+		decrypt, _ := security.Decrypt(password)
+		inputPwd.SetText(decrypt)
+		go func(p string, a ...string) {
+			time.Sleep(time.Millisecond * 250)
+			action(a, p)
+		}(decrypt, args...)
 	}
 	// Buttons
 	btnOk := widget.NewButtonWithIcon("", theme.ConfirmIcon(), func() {
