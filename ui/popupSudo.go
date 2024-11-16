@@ -26,6 +26,10 @@ func ShowPopupSudo(args ...string) {
 
 	// Action
 	action := func(args []string, pwd string) {
+		// Show loading popup
+		p.Hide()
+		showPopupLoading()
+		defer removeLoadingWait()
 		output, err := tools.RunCommand(args, true, true, pwd)
 		if err != nil {
 			go func(o string, e error) {
@@ -33,7 +37,6 @@ func ShowPopupSudo(args ...string) {
 				showPopupError(fmt.Errorf("%v\n%s", e, o))
 			}(strings.Join(output, "\n"), err)
 		}
-		p.Hide()
 	}
 
 	// Text
