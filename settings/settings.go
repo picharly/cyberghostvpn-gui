@@ -24,6 +24,7 @@ type settings struct {
 	ConnectStartup  bool                `json:"connect_startup"`
 	Countries       []resources.Country `json:"countries"`
 	HideOnClose     bool                `json:"hide_on_close"`
+	KeepPassMem     bool                `json:"keep_password_memory"`
 	Language        string              `json:"language"`
 	LastProfile     Profile             `json:"last_profile"`
 	LoadLastProfile bool                `json:"load_last_profile"`

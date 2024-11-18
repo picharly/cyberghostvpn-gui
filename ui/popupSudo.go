@@ -3,6 +3,7 @@ package ui
 import (
 	"cyberghostvpn-gui/locales"
 	"cyberghostvpn-gui/security"
+	"cyberghostvpn-gui/settings"
 	"cyberghostvpn-gui/tools"
 	"fmt"
 	"strings"
@@ -27,6 +28,7 @@ func ShowPopupSudo(args ...string) {
 
 	// New popup
 	var p *widget.PopUp
+	cfg, _ := settings.GetCurrentSettings()
 
 	// Action
 	action := func(args []string, pwd string) {
@@ -48,7 +50,11 @@ func ShowPopupSudo(args ...string) {
 	// Password
 	inputPwd := widget.NewPasswordEntry()
 	inputPwd.OnSubmitted = func(v string) {
-		password, _ = security.Encrypt(v)
+		if cfg.KeepPassMem {
+			password, _ = security.Encrypt(v)
+		} else {
+			password = ""
+		}
 		action(args, v)
 	}
 	if len(password) > 0 {
@@ -59,6 +65,12 @@ func ShowPopupSudo(args ...string) {
 			action(a, p)
 		}(decrypt, args...)
 	}
+	// Checkbox
+	checkbox := widget.NewCheck(locales.Text("sud1"), func(b bool) {
+		cfg.KeepPassMem = b
+		settings.WriteCurrentSettings()
+	})
+	checkbox.SetChecked(cfg.KeepPassMem)
 	// Buttons
 	btnOk := widget.NewButtonWithIcon("", theme.ConfirmIcon(), func() {
 		action(args, inputPwd.Text)
@@ -70,7 +82,7 @@ func ShowPopupSudo(args ...string) {
 
 	// Container
 	buttonsContainer := container.NewHBox(btnOk, btnCancel)
-	popupContainer := container.NewVBox(lblText, inputPwd, layout.NewSpacer(), buttonsContainer)
+	popupContainer := container.NewVBox(lblText, inputPwd, checkbox, layout.NewSpacer(), buttonsContainer)
 
 	// Build popup
 	p = widget.NewModalPopUp(popupContainer, GetMainWindow().Canvas())

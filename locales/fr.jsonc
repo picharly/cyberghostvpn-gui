@@ -57,6 +57,7 @@
 		{ "id": "err.inf1", "other": "impossible d'obtenir l'IP locale :" },
 		// POPUP SUDO
 		{ "id": "sud0", "other": "Mot de passe" },
+		{ "id": "sud1", "other": "Mémoriser le mot de passe (session)" },
 		// PROFILE
 		{ "id": "pro0", "other": "Enregistrer le profil" },
 		{ "id": "pro1", "other": "Nom :" },
