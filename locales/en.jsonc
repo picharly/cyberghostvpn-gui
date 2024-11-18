@@ -57,6 +57,7 @@
 		{ "id": "err.inf1", "other": "cannot get local IP:" },
 		// POPUP SUDO
 		{ "id": "sud0", "other": "Password" },
+		{ "id": "sud1", "other": "Remember password (session only) " },
 		// PROFILE
 		{ "id": "pro0", "other": "Save Profile" },
 		{ "id": "pro1", "other": "Name:" },
