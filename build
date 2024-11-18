@@ -25,17 +25,13 @@ showHelp() {
   echo -e "\t${fontWhite}-w,--windows${fontReset}        \tMicrosoft Windows X86_64/AMD64"
   echo -e "\n${fontBold}${fontOrange}Extra:${fontReset}\n\t${fontWhite}-32,--i386${fontReset}          \tBuild also 32-bits binaries"
   echo -e "\t${fontWhite}-arm,--arm${fontReset}          \tBuild also for ARM architecture"
+  echo -e "\t${fontWhite}-g,--use-garble${fontReset}     \tBuild using garble to obfuscate code and reduce size"
   echo -e "\t${fontWhite}-nc,--no-compression${fontReset}\tDo not create compressed archives"
   echo -e "\n${fontBold}${fontOrange}Security:${fontReset}"
   echo -e "\t${fontWhite}-nk,--new-key${fontReset}       \tGenerate a new encryption key (security/encryption.go => var _keyString = \"...\""
   echo -e "\n"
   exit 1
 }
-
-# Check if garble exists
-if command -v garble >/dev/null 2>&1; then
-  useGarble=1
-fi
 
 # Check arguments
 buildLinux=0
@@ -76,8 +72,8 @@ do
       newKey=1
       noArgs=0
     fi
-    if [ "$var" == "-ng" ] || [ "$var" == "--no-garble" ]; then
-      useGarble=0
+    if [ "$var" == "-g" ] || [ "$var" == "--use-garble" ]; then
+      useGarble=1
     fi
     if [ "$var" == "-h" ] || [ "$var" == "--help" ]; then
       showHelp
@@ -86,6 +82,19 @@ done
 
 if [ $noArgs -eq 1 ]; then
   showHelp
+fi
+
+# Check if garble exists
+if [ $useGarble -eq 1 ]; then
+  if command -v garble >/dev/null 2>&1; then
+    garbleCache=./bin/.garble_cache
+    if ! [ -d $garbleCache ]; then
+      mkdir $garbleCache
+    fi
+  else
+    echo -e "${fontBold}${fontOrange}[WARN]${fontReset} Cannot find command 'garble'. Regular build will be used instead."
+    useGarble=0
+  fi
 fi
 
 # Clean bin folder
@@ -125,13 +134,15 @@ buildCmd() {
   GOCMD=go
   if [ $useGarble -eq 1 ]; then
     GOCMD=garble
+    GARBLE_CACHE=$garbleCache
     echo -e "${fontBold}${fontGreen}[INFO]${fontReset} Building using garble..."
   fi
 
   # Build
   built=1
   BINFILE=${projectName}_${1}_${2}${version}
-  GOOS=${1} GOARCH=${2} ${GOCMD} build -o bin/${BINFILE}
+  echo "Command => GOOS=${1} GOARCH=${2} ${GOCMD} build -o ./bin/${BINFILE}"
+  GOOS=${1} GOARCH=${2} ${GOCMD} build -o ./bin/${BINFILE} .
   if [ "$?" -eq 0 ]; then
     if [ $useCompression -eq 1 ]; then
       echo -e "${fontBold}${fontGreen}[INFO]${fontReset} Compressing using lrzip..."
