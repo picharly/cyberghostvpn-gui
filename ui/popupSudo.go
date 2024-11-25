@@ -32,6 +32,12 @@ func ShowPopupSudo(args ...string) {
 
 	// Action
 	action := func(args []string, pwd string) {
+		// Keep password into memory
+		if cfg.KeepPassMem {
+			password, _ = security.Encrypt(pwd)
+		} else {
+			password = ""
+		}
 		// Show loading popup
 		p.Hide()
 		showPopupLoading()
@@ -50,11 +56,6 @@ func ShowPopupSudo(args ...string) {
 	// Password
 	inputPwd := widget.NewPasswordEntry()
 	inputPwd.OnSubmitted = func(v string) {
-		if cfg.KeepPassMem {
-			password, _ = security.Encrypt(v)
-		} else {
-			password = ""
-		}
 		action(args, v)
 	}
 	if len(password) > 0 {
