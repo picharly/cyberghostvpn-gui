@@ -7,7 +7,7 @@ A simple and intuitive graphical user interface for managing Cyberghost VPN conn
 * Connect and disconnect from Cyberghost VPN servers
 * Manage VPN profiles (create, edit, delete)
 * Monitor VPN connection status
-* Simple and intuitive graphical user interface
+* Simple and intuitive graphical user interface (multilingual)
 
 ## Screenshots
 
@@ -28,7 +28,7 @@ Before you can use Cyberghost VPN Linux GUI, you need to have the following prer
 
 ## Installation
 
-To install Cyberghost VPN Linux GUI, you can use the release of follow these steps:
+To install Cyberghost VPN Linux GUI, you can use the latest release available or build it:
 
 ### 1. Clone the repository
 
@@ -48,3 +48,15 @@ Cyberghost VPN Linux GUI is licensed under the MIT License. See the LICENSE file
 # Disclaimer
 
 Use this application at your own risk. The authors of this application are not responsible for any damage or loss caused by using this application.
+
+# Translations
+This application is available in the following languages:
+
+- Czech: Česká republika
+- English: English
+- French: Français
+- Italian: Italiano
+- Japanese: 日本語
+- Polish: Polski
+- Portuguese: Português
+- Spanish: Español
