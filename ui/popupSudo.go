@@ -89,4 +89,7 @@ func ShowPopupSudo(args ...string) {
 	p = widget.NewModalPopUp(popupContainer, GetMainWindow().Canvas())
 	p.Resize(fyne.NewSize(300, 90))
 	p.Show()
+
+	// Focus
+	GetMainWindow().Canvas().Focus(inputPwd)
 }
