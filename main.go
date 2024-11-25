@@ -63,7 +63,7 @@ func main() {
 	// this session.
 	//        /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\
 	//
-	if cfg.StopVPNOnExit {
+	if cg.IsConnected() && cfg.StopVPNOnExit {
 		args := cg.Disconnect()
 		decrypt, _ := security.Decrypt(ui.Password)
 		output, err := tools.RunCommand(args, true, true, decrypt)

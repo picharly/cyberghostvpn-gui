@@ -83,7 +83,7 @@ func GetMainWindow() fyne.Window {
 // process by calling ShowPopupSudo with the disconnect command.
 func DisconnectBeforeExit() {
 	cfg, _ := settings.GetCurrentSettings()
-	if cfg.StopVPNOnExit {
+	if cg.IsConnected() && cfg.StopVPNOnExit {
 		GetMainWindow().Show()
 		ShowPopupSudo(cg.Disconnect()...)
 	}
