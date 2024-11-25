@@ -76,6 +76,11 @@ func GetVersion() string {
 	return version
 }
 
+// IsConnected returns true if the CyberGhost VPN client is currently connected, false otherwise.
+func IsConnected() bool {
+	return GetCurrentState() == Connected
+}
+
 // refreshStatus executes the CyberGhost VPN client with the status command and returns the first line of the output.
 // If the command fails or the output is empty, it returns an empty string.
 func refreshStatus() string {
