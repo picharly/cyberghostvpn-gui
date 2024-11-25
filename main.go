@@ -5,8 +5,11 @@ import (
 	"cyberghostvpn-gui/cg"
 	"cyberghostvpn-gui/locales"
 	"cyberghostvpn-gui/logger"
+	"cyberghostvpn-gui/security"
 	"cyberghostvpn-gui/settings"
+	"cyberghostvpn-gui/tools"
 	"cyberghostvpn-gui/ui"
+	"strings"
 )
 
 // main is the entry point of the application. It initializes settings, loads
@@ -49,5 +52,23 @@ func main() {
 		ui.GetApp().Run()
 	} else {
 		ui.GetMainWindow().ShowAndRun()
+	}
+
+	// Disconnect before exit
+	//
+	//        /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\
+	// Because of a limitation of Fyne.io library, it is not possible to catch a Close/Quit event from menu
+	// like the on on Tray Icon because it is an automatically generated action.
+	// In this case, the app will try to disconnect from VPN but sudo password must has been memorized during
+	// this session.
+	//        /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\
+	//
+	if cfg.StopVPNOnExit {
+		args := cg.Disconnect()
+		decrypt, _ := security.Decrypt(ui.Password)
+		output, err := tools.RunCommand(args, true, true, decrypt)
+		if err != nil {
+			logger.Errorf("%v\n%s", err, strings.Join(output, "\n"))
+		}
 	}
 }

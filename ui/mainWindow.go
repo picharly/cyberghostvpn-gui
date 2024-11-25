@@ -67,6 +67,8 @@ func GetMainWindow() fyne.Window {
 		// Set tray icon
 		if cfg.TrayIcon {
 			setTrayIcon(mainWindow)
+		} else {
+			GetMainWindow().SetCloseIntercept(DisconnectBeforeExit)
 		}
 
 	}
@@ -75,6 +77,17 @@ func GetMainWindow() fyne.Window {
 }
 
 /* Private Functions */
+
+// DisconnectBeforeExit checks the current settings and if the StopVPNOnExit
+// option is enabled, it shows the main window and initiates the VPN disconnect
+// process by calling ShowPopupSudo with the disconnect command.
+func DisconnectBeforeExit() {
+	cfg, _ := settings.GetCurrentSettings()
+	if cfg.StopVPNOnExit {
+		GetMainWindow().Show()
+		ShowPopupSudo(cg.Disconnect()...)
+	}
+}
 
 // getMainContent returns the main content of the application window.
 func getMainContent() *fyne.Container {
@@ -106,6 +119,7 @@ func setTrayIcon(window fyne.Window) {
 		if cfg.HideOnClose {
 			window.Hide()
 		} else {
+			DisconnectBeforeExit()
 			GetApp().Quit()
 		}
 	})
