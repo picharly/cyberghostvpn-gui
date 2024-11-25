@@ -90,7 +90,7 @@ func getConnectionProfilesComponents() (*widget.Label, *fyne.Container) {
 // updateLanguageProfiles updates the label of the select widget of the profiles component with the new text
 // translated with the current language.
 func updateLanguageProfiles() {
-	lblProfile = widget.NewLabel(locales.Text("con1"))
+	lblProfile.SetText(locales.Text("con1"))
 }
 
 // updateProfiles updates the options of the select widget of the profiles component with the names of the profiles

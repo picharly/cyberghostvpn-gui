@@ -1,0 +1,105 @@
+{
+	// LOCALE: cs
+	// TRANSLATION: Czech
+	// CODE: cs
+
+	"messages": [
+		{ "id": "name", "other": "Čeština" },
+		{ "id": "code", "other": "cs" },
+		{ "id": "date", "other": "01. 02. 2006" },
+		{ "id": "time", "other": "15:04:05.000" },
+		// _GENERIC
+		{ "id": "gen0", "other": "Uložit" },
+		{ "id": "gen1", "other": "Zrušit" },
+		{ "id": "gen2", "other": "Přidat" },
+		{ "id": "gen3", "other": "Upravit" },
+		{ "id": "gen4", "other": "Smazat" },
+		{ "id": "gen5", "other": "Aktualizovat" },
+		{ "id": "gen6", "other": "Potvrdit" },
+		{ "id": "gen7", "other": "Ok" },
+		{ "id": "gen8", "other": "Soubor" },
+		{ "id": "gen9", "other": "Připojit" },
+		{ "id": "gen10", "other": "Načítání {{.Object}}" },
+		{ "id": "gen11", "other": "Ano" },
+		{ "id": "gen12", "other": "Ne" },
+		{ "id": "gen13", "other": "Načítání" },
+		{ "id": "gen14", "other": "Odpojit" },
+		{ "id": "gen15", "other": "Výstup" },
+		{ "id": "gen16", "other": "Chyba" },
+		{ "id": "gen17", "other": "Vypršení času" },
+		// CG
+		{ "id": "cg0", "other": "VPN připojení nalezeno." },
+		{ "id": "cg1", "other": "Nenalezena žádná VPN připojení." },
+		// CONNECTION
+		{ "id": "con0", "other": "Připojení" },
+		{ "id": "con1", "other": "Profil" },
+		{ "id": "con2", "other": "Výchozí" },
+		{ "id": "con3", "other": "Nový" },
+		{ "id": "con4", "other": "Protokol VPN" },
+		{ "id": "con5", "other": "Služba" },
+		{ "id": "con6", "other": "Síťový protokol" },
+		{ "id": "con7", "other": "Země" },
+		{ "id": "con8", "other": "Město" },
+		{ "id": "con9", "other": "Server" },
+		{ "id": "con10", "other": "Streamingová služba" },
+		// INFO
+		{ "id": "inf0", "other": "Verze:" },
+		{ "id": "inf1", "other": "Stav:" },
+		{ "id": "inf2", "other": "připojeno" },
+		{ "id": "inf3", "other": "odpojeno" },
+		{ "id": "inf4", "other": "připojování..." },
+		{ "id": "inf5", "other": "odpojování..." },
+		{ "id": "inf6", "other": "nenainstalováno" },
+		{ "id": "inf7", "other": "neznámé" },
+		{ "id": "inf8", "other": "Síť:" },
+		// INFO ERRORS
+		{ "id": "err.inf0", "other": "nelze získat verzi:" },
+		{ "id": "err.inf1", "other": "nelze získat lokální IP:" },
+		// POPUP SUDO
+		{ "id": "sud0", "other": "Heslo" },
+		{ "id": "sud1", "other": "Zapamatovat heslo (pouze pro tuto relaci)" },
+		// PROFILE
+		{ "id": "pro0", "other": "Uložit profil" },
+		{ "id": "pro1", "other": "Název:" },
+		{ "id": "pro2", "other": "Musíte zadat název profilu" },
+		{ "id": "pro3", "other": "Zadejte název..." },
+		{ "id": "pro4", "other": "Smazat profil" },
+		{ "id": "pro5", "other": "Opravdu chcete smazat profil '{{.Name}}'?" },
+		{ "id": "pro6", "other": "Načítání země '{{.Name}}'..." },
+		{ "id": "pro7", "other": "Načítání města '{{.Name}}'..." },
+		{ "id": "pro8", "other": "Načítání serveru '{{.Name}}'..." },
+		// REQUIREMENTS
+		{ "id": "req0", "other": "Požadavky" },
+		{ "id": "req1", "other": "Nainstalujte prosím následující balíčky:" },
+		// RESOURCES ERRORS
+		{ "id": "err.res0", "other": "nelze číst soubory příznaků:" },
+		{ "id": "err.res1", "other": "nelze načíst soubor '{{.FileName}}'. Chyba:" },
+		// SECURITY.ERRORS
+		{ "id": "err.sec0", "other": "chyba při šifrování při vytváření nového bloku šifry" },
+		{ "id": "err.sec1", "other": "chyba při šifrování při vytváření nového GCM" },
+		{ "id": "err.sec2", "other": "chyba při šifrování při čtení náhodného čtečky" },
+		{ "id": "err.sec3", "other": "chyba při dešifrování při vytváření nové šifry" },
+		{ "id": "err.sec4", "other": "chyba při dešifrování při vytváření nového GCM" },
+		{ "id": "err.sec5", "other": "chyba při dešifrování při extrakci šifrovaných dat" },
+		{ "id": "err.sec6", "other": "řetězec pravděpodobně není šifrován" },
+		// SETTINGS
+		{ "id": "set0", "other": "Nastavení" },
+		{ "id": "set1", "other": "Jazyk" },
+		{ "id": "set2", "other": "Povolit ikonu v systémové liště" },
+		{ "id": "set3", "other": "Skrýt při spuštění" },
+		{ "id": "set4", "other": "Skrýt při zavření" },
+		{ "id": "set5", "other": "Zastavit VPN při ukončení" },
+		{ "id": "set6", "other": "Použít poslední profil při spuštění" },
+		{ "id": "set7", "other": "Připojit při spuštění" },
+		// SETTINGS ERRORS
+		{ "id": "err.set0", "other": "nelze vytvořit/přepsat soubor '{{.FileName}}'. Chyba:" },
+		{ "id": "err.set1", "other": "soubor s nastavením '{{.FileName}}' neexistuje nebo není dosažitelný:" },
+		{ "id": "err.set2", "other": "nelze dekódovat soubor s nastavením '{{.FileName}}':" },
+		// TOOLS
+		// TOOLS ERRORS
+		{ "id": "err.too0", "other": "tato metoda je aktuálně podporována pouze na systémech Linux" },
+		{ "id": "err.too1", "other": "provedení příkazu selhalo:" },
+		{ "id": "err.too2", "other": "chyba při získávání síťových rozhraní" },
+		{ "id": "err.too3", "other": "chyba při čtení IP adresy z rozhraní '{{.Interface}}'" }
+	]
+}

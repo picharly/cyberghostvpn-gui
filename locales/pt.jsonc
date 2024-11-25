@@ -1,0 +1,105 @@
+{
+	// LOCALE: pt
+	// TRANSLATION: Portuguese
+	// CODE: pt
+
+	"messages": [
+		{ "id": "name", "other": "Português" },
+		{ "id": "code", "other": "pt" },
+		{ "id": "date", "other": "01/02/2006" },
+		{ "id": "time", "other": "15:04:05.000" },
+		// _GENERIC
+		{ "id": "gen0", "other": "Salvar" },
+		{ "id": "gen1", "other": "Cancelar" },
+		{ "id": "gen2", "other": "Adicionar" },
+		{ "id": "gen3", "other": "Editar" },
+		{ "id": "gen4", "other": "Excluir" },
+		{ "id": "gen5", "other": "Atualizar" },
+		{ "id": "gen6", "other": "Confirmar" },
+		{ "id": "gen7", "other": "Ok" },
+		{ "id": "gen8", "other": "Arquivo" },
+		{ "id": "gen9", "other": "Conectar" },
+		{ "id": "gen10", "other": "Carregando {{.Object}}" },
+		{ "id": "gen11", "other": "Sim" },
+		{ "id": "gen12", "other": "Não" },
+		{ "id": "gen13", "other": "Carregando" },
+		{ "id": "gen14", "other": "Desconectar" },
+		{ "id": "gen15", "other": "Saída" },
+		{ "id": "gen16", "other": "Erro" },
+		{ "id": "gen17", "other": "Tempo esgotado" },
+		// CG
+		{ "id": "cg0", "other": "Conexão VPN encontrada." },
+		{ "id": "cg1", "other": "Nenhuma conexão VPN encontrada." },
+		// CONNECTION
+		{ "id": "con0", "other": "Conexão" },
+		{ "id": "con1", "other": "Perfil" },
+		{ "id": "con2", "other": "Padrão" },
+		{ "id": "con3", "other": "Novo" },
+		{ "id": "con4", "other": "Protocolo VPN" },
+		{ "id": "con5", "other": "Serviço" },
+		{ "id": "con6", "other": "Protocolo de rede" },
+		{ "id": "con7", "other": "País" },
+		{ "id": "con8", "other": "Cidade" },
+		{ "id": "con9", "other": "Servidor" },
+		{ "id": "con10", "other": "Serviço de Streaming" },
+		// INFO
+		{ "id": "inf0", "other": "Versão:" },
+		{ "id": "inf1", "other": "Status:" },
+		{ "id": "inf2", "other": "conectado" },
+		{ "id": "inf3", "other": "desconectado" },
+		{ "id": "inf4", "other": "conectando..." },
+		{ "id": "inf5", "other": "desconectando..." },
+		{ "id": "inf6", "other": "não instalado" },
+		{ "id": "inf7", "other": "desconhecido" },
+		{ "id": "inf8", "other": "Rede:" },
+		// INFO ERRORS
+		{ "id": "err.inf0", "other": "não foi possível obter a versão:" },
+		{ "id": "err.inf1", "other": "não foi possível obter o IP local:" },
+		// POPUP SUDO
+		{ "id": "sud0", "other": "Senha" },
+		{ "id": "sud1", "other": "Lembrar senha (apenas na sessão)" },
+		// PROFILE
+		{ "id": "pro0", "other": "Salvar Perfil" },
+		{ "id": "pro1", "other": "Nome:" },
+		{ "id": "pro2", "other": "Você deve inserir um nome para o perfil" },
+		{ "id": "pro3", "other": "Digite um nome..." },
+		{ "id": "pro4", "other": "Excluir Perfil" },
+		{ "id": "pro5", "other": "Você realmente deseja excluir o perfil '{{.Name}}'?" },
+		{ "id": "pro6", "other": "Carregando País '{{.Name}}'..." },
+		{ "id": "pro7", "other": "Carregando Cidade '{{.Name}}'..." },
+		{ "id": "pro8", "other": "Carregando Servidor '{{.Name}}'..." },
+		// REQUIREMENTS
+		{ "id": "req0", "other": "Requisitos" },
+		{ "id": "req1", "other": "Por favor, instale os seguintes pacotes:" },
+		// RESOURCES ERRORS
+		{ "id": "err.res0", "other": "não foi possível ler os arquivos de flag:" },
+		{ "id": "err.res1", "other": "não foi possível carregar o arquivo '{{.FileName}}'. Erro:" },
+		// SECURITY.ERRORS
+		{ "id": "err.sec0", "other": "erro de encriptação ao criar um novo bloco de cifra" },
+		{ "id": "err.sec1", "other": "erro de encriptação ao criar um novo GCM" },
+		{ "id": "err.sec2", "other": "erro de encriptação ao ler o leitor aleatório" },
+		{ "id": "err.sec3", "other": "erro de desencriptação ao criar uma nova cifra" },
+		{ "id": "err.sec4", "other": "erro de desencriptação ao criar um novo GCM" },
+		{ "id": "err.sec5", "other": "erro de desencriptação ao extrair dados encriptados" },
+		{ "id": "err.sec6", "other": "a string provavelmente não está encriptada" },
+		// SETTINGS
+		{ "id": "set0", "other": "Configurações" },
+		{ "id": "set1", "other": "Idioma" },
+		{ "id": "set2", "other": "Habilitar ícone de bandeja" },
+		{ "id": "set3", "other": "Ocultar na inicialização" },
+		{ "id": "set4", "other": "Ocultar ao fechar" },
+		{ "id": "set5", "other": "Parar VPN ao sair" },
+		{ "id": "set6", "other": "Aplicar o último perfil na inicialização" },
+		{ "id": "set7", "other": "Conectar na inicialização" },
+		// SETTINGS ERRORS
+		{ "id": "err.set0", "other": "não foi possível criar/substituir o arquivo '{{.FileName}}'. Erro:" },
+		{ "id": "err.set1", "other": "o arquivo de configurações '{{.FileName}}' não existe ou está inacessível:" },
+		{ "id": "err.set2", "other": "não foi possível decodificar o arquivo de configurações '{{.FileName}}':" },
+		// TOOLS
+		// TOOLS ERRORS
+		{ "id": "err.too0", "other": "este método atualmente só é suportado em sistemas Linux" },
+		{ "id": "err.too1", "other": "execução do comando falhou:" },
+		{ "id": "err.too2", "other": "falha ao recuperar as interfaces de rede" },
+		{ "id": "err.too3", "other": "falha ao ler o endereço IP da interface '{{.Interface}}'" }
+	]
+}
