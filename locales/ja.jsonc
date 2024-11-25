@@ -1,0 +1,105 @@
+{
+	// LOCALE: ja
+	// TRANSLATION: Japanese
+	// CODE: ja
+
+	"messages": [
+		{ "id": "name", "other": "日本語" },
+		{ "id": "code", "other": "ja" },
+		{ "id": "date", "other": "2006/02/01" },
+		{ "id": "time", "other": "15:04:05.000" },
+		// _GENERIC
+		{ "id": "gen0", "other": "保存" },
+		{ "id": "gen1", "other": "キャンセル" },
+		{ "id": "gen2", "other": "追加" },
+		{ "id": "gen3", "other": "編集" },
+		{ "id": "gen4", "other": "削除" },
+		{ "id": "gen5", "other": "更新" },
+		{ "id": "gen6", "other": "確認" },
+		{ "id": "gen7", "other": "Ok" },
+		{ "id": "gen8", "other": "ファイル" },
+		{ "id": "gen9", "other": "接続" },
+		{ "id": "gen10", "other": "読み込み中 {{.Object}}" },
+		{ "id": "gen11", "other": "はい" },
+		{ "id": "gen12", "other": "いいえ" },
+		{ "id": "gen13", "other": "読み込み中" },
+		{ "id": "gen14", "other": "切断" },
+		{ "id": "gen15", "other": "終了" },
+		{ "id": "gen16", "other": "エラー" },
+		{ "id": "gen17", "other": "タイムアウト" },
+		// CG
+		{ "id": "cg0", "other": "VPN接続が見つかりました。" },
+		{ "id": "cg1", "other": "VPN接続が見つかりません。" },
+		// CONNECTION
+		{ "id": "con0", "other": "接続" },
+		{ "id": "con1", "other": "プロファイル" },
+		{ "id": "con2", "other": "デフォルト" },
+		{ "id": "con3", "other": "新規" },
+		{ "id": "con4", "other": "VPNプロトコル" },
+		{ "id": "con5", "other": "サービス" },
+		{ "id": "con6", "other": "ネットワークプロトコル" },
+		{ "id": "con7", "other": "国" },
+		{ "id": "con8", "other": "都市" },
+		{ "id": "con9", "other": "サーバー" },
+		{ "id": "con10", "other": "ストリーミングサービス" },
+		// INFO
+		{ "id": "inf0", "other": "バージョン:" },
+		{ "id": "inf1", "other": "ステータス:" },
+		{ "id": "inf2", "other": "接続済み" },
+		{ "id": "inf3", "other": "切断済み" },
+		{ "id": "inf4", "other": "接続中..." },
+		{ "id": "inf5", "other": "切断中..." },
+		{ "id": "inf6", "other": "未インストール" },
+		{ "id": "inf7", "other": "不明" },
+		{ "id": "inf8", "other": "ネットワーク:" },
+		// INFO ERRORS
+		{ "id": "err.inf0", "other": "バージョンを取得できません:" },
+		{ "id": "err.inf1", "other": "ローカルIPを取得できません:" },
+		// POPUP SUDO
+		{ "id": "sud0", "other": "パスワード" },
+		{ "id": "sud1", "other": "パスワードを記憶する（このセッションのみ）" },
+		// PROFILE
+		{ "id": "pro0", "other": "プロファイルを保存" },
+		{ "id": "pro1", "other": "名前:" },
+		{ "id": "pro2", "other": "プロファイルの名前を入力してください" },
+		{ "id": "pro3", "other": "名前を入力..." },
+		{ "id": "pro4", "other": "プロファイルを削除" },
+		{ "id": "pro5", "other": "プロファイル '{{.Name}}' を本当に削除しますか？" },
+		{ "id": "pro6", "other": "国 '{{.Name}}' を読み込み中..." },
+		{ "id": "pro7", "other": "都市 '{{.Name}}' を読み込み中..." },
+		{ "id": "pro8", "other": "サーバー '{{.Name}}' を読み込み中..." },
+		// REQUIREMENTS
+		{ "id": "req0", "other": "必要条件" },
+		{ "id": "req1", "other": "以下のパッケージをインストールしてください:" },
+		// RESOURCES ERRORS
+		{ "id": "err.res0", "other": "フラグファイルを読み取れません:" },
+		{ "id": "err.res1", "other": "ファイル '{{.FileName}}' を読み込めません。エラー:" },
+		// SECURITY.ERRORS
+		{ "id": "err.sec0", "other": "新しい暗号ブロックの作成中に暗号化エラーが発生しました" },
+		{ "id": "err.sec1", "other": "新しいGCMの作成中に暗号化エラーが発生しました" },
+		{ "id": "err.sec2", "other": "ランダムリーダーの読み取り中に暗号化エラーが発生しました" },
+		{ "id": "err.sec3", "other": "新しい暗号の作成中に復号エラーが発生しました" },
+		{ "id": "err.sec4", "other": "新しいGCMの作成中に復号エラーが発生しました" },
+		{ "id": "err.sec5", "other": "暗号化されたデータの抽出中に復号エラーが発生しました" },
+		{ "id": "err.sec6", "other": "文字列は暗号化されていない可能性があります" },
+		// SETTINGS
+		{ "id": "set0", "other": "設定" },
+		{ "id": "set1", "other": "言語" },
+		{ "id": "set2", "other": "システムトレイアイコンを有効にする" },
+		{ "id": "set3", "other": "起動時に非表示" },
+		{ "id": "set4", "other": "閉じるときに非表示" },
+		{ "id": "set5", "other": "終了時にVPNを停止" },
+		{ "id": "set6", "other": "起動時に最後のプロファイルを適用" },
+		{ "id": "set7", "other": "起動時に接続" },
+		// SETTINGS ERRORS
+		{ "id": "err.set0", "other": "ファイル '{{.FileName}}' を作成/上書きできません。エラー:" },
+		{ "id": "err.set1", "other": "設定ファイル '{{.FileName}}' が存在しないか、アクセスできません:" },
+		{ "id": "err.set2", "other": "設定ファイル '{{.FileName}}' をデコードできません:" },
+		// TOOLS
+		// TOOLS ERRORS
+		{ "id": "err.too0", "other": "このメソッドは現在Linuxシステムでのみサポートされています" },
+		{ "id": "err.too1", "other": "コマンドの実行に失敗しました:" },
+		{ "id": "err.too2", "other": "ネットワークインターフェースの取得に失敗しました" },
+		{ "id": "err.too3", "other": "インターフェース '{{.Interface}}' からIPアドレスの読み取りに失敗しました" }
+	]
+}
