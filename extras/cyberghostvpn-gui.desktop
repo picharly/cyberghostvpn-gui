@@ -1,0 +1,17 @@
+[Desktop Entry]
+Version=1.0.0
+Type=Application
+Exec=/usr/sbin/cyberghostvpn-gui
+Terminal=false
+X-MultipleArgs=false
+Icon=/usr/share/icons/cyberghostvpn-gui.png
+StartupWMClass=cyberghostvpn-gui
+DBusActivatable=false
+Categories=Network;
+StartupNotify=true
+Actions=new-window;new-private-window;open-profile-manager;
+Name=Cyberghost VPN GUI
+Comment=Cyberghost VPN Management
+GenericName=Cyberghost VPN GUI
+Keywords=Internet;VPN;Cyberghost;
+X-GNOME-FullName=Cyberghost VPN GUI
