@@ -16,8 +16,8 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-// Encrypted password (stored in memory only - you must type it once at each run)
-var password string
+// Encrypted Password (stored in memory only - you must type it once at each run)
+var Password string
 
 // ShowPopupSudo shows a popup window to enter a sudo password to run a command.
 // The command is given as a slice of strings, similar to the arguments passed to os/exec.Command.
@@ -34,9 +34,9 @@ func ShowPopupSudo(args ...string) {
 	action := func(args []string, pwd string) {
 		// Keep password into memory
 		if cfg.KeepPassMem {
-			password, _ = security.Encrypt(pwd)
+			Password, _ = security.Encrypt(pwd)
 		} else {
-			password = ""
+			Password = ""
 		}
 		// Show loading popup
 		p.Hide()
@@ -58,8 +58,8 @@ func ShowPopupSudo(args ...string) {
 	inputPwd.OnSubmitted = func(v string) {
 		action(args, v)
 	}
-	if len(password) > 0 {
-		decrypt, _ := security.Decrypt(password)
+	if len(Password) > 0 {
+		decrypt, _ := security.Decrypt(Password)
 		inputPwd.SetText(decrypt)
 		go func(p string, a ...string) {
 			time.Sleep(time.Millisecond * 250)
