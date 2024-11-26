@@ -135,17 +135,24 @@ func showPopupProfileSave() {
 		return nil
 	}
 
-	// Buttons
-	btnOk := widget.NewButtonWithIcon("", theme.ConfirmIcon(), func() {
+	// Action
+	action := func() {
 		if err := input.Validate(); err != nil {
-			input.FocusLost()
 			return
 		} else {
 			cg.SaveProfile(input.Text, previousName)
 			p.Hide()
 			updateProfiles()
 		}
-	})
+	}
+
+	// Input submit
+	input.OnSubmitted = func(s string) {
+		action()
+	}
+
+	// Buttons
+	btnOk := widget.NewButtonWithIcon("", theme.ConfirmIcon(), action)
 
 	btnCancel := widget.NewButtonWithIcon("", theme.CancelIcon(), func() {
 		p.Hide()
@@ -161,7 +168,8 @@ func showPopupProfileSave() {
 	// Build popup
 	p = widget.NewModalPopUp(popupContainer, GetMainWindow().Canvas())
 	p.Resize(fyne.NewSize(300, 90))
-	input.FocusGained()
-	p.Canvas.Focus(input)
 	p.Show()
+
+	// Focus
+	GetMainWindow().Canvas().Focus(input)
 }
