@@ -1,0 +1,105 @@
+{
+	// LOCALE: de
+	// TRANSLATION: German
+	// CODE: de
+
+	"messages": [
+		{ "id": "name", "other": "Deutsch" },
+		{ "id": "code", "other": "de" },
+		{ "id": "date", "other": "01.02.2006" },
+		{ "id": "time", "other": "15:04:05.000" },
+		// _GENERIC
+		{ "id": "gen0", "other": "Speichern" },
+		{ "id": "gen1", "other": "Abbrechen" },
+		{ "id": "gen2", "other": "Hinzufügen" },
+		{ "id": "gen3", "other": "Bearbeiten" },
+		{ "id": "gen4", "other": "Löschen" },
+		{ "id": "gen5", "other": "Aktualisieren" },
+		{ "id": "gen6", "other": "Bestätigen" },
+		{ "id": "gen7", "other": "Ok" },
+		{ "id": "gen8", "other": "Datei" },
+		{ "id": "gen9", "other": "Verbinden" },
+		{ "id": "gen10", "other": "Lade {{.Object}}" },
+		{ "id": "gen11", "other": "Ja" },
+		{ "id": "gen12", "other": "Nein" },
+		{ "id": "gen13", "other": "Laden" },
+		{ "id": "gen14", "other": "Trennen" },
+		{ "id": "gen15", "other": "Beenden" },
+		{ "id": "gen16", "other": "Fehler" },
+		{ "id": "gen17", "other": "Zeitüberschreitung" },
+		// CG
+		{ "id": "cg0", "other": "VPN-Verbindung gefunden." },
+		{ "id": "cg1", "other": "Keine VPN-Verbindung gefunden." },
+		// CONNECTION
+		{ "id": "con0", "other": "Verbindung" },
+		{ "id": "con1", "other": "Profil" },
+		{ "id": "con2", "other": "Standard" },
+		{ "id": "con3", "other": "Neu" },
+		{ "id": "con4", "other": "VPN-Protokoll" },
+		{ "id": "con5", "other": "Dienst" },
+		{ "id": "con6", "other": "Netzwerkprotokoll" },
+		{ "id": "con7", "other": "Land" },
+		{ "id": "con8", "other": "Stadt" },
+		{ "id": "con9", "other": "Server" },
+		{ "id": "con10", "other": "Streaming-Dienst" },
+		// INFO
+		{ "id": "inf0", "other": "Version:" },
+		{ "id": "inf1", "other": "Status:" },
+		{ "id": "inf2", "other": "verbunden" },
+		{ "id": "inf3", "other": "getrennt" },
+		{ "id": "inf4", "other": "verbinden..." },
+		{ "id": "inf5", "other": "trennen..." },
+		{ "id": "inf6", "other": "nicht installiert" },
+		{ "id": "inf7", "other": "unbekannt" },
+		{ "id": "inf8", "other": "Netzwerk:" },
+		// INFO ERRORS
+		{ "id": "err.inf0", "other": "Version kann nicht abgerufen werden:" },
+		{ "id": "err.inf1", "other": "Lokale IP kann nicht abgerufen werden:" },
+		// POPUP SUDO
+		{ "id": "sud0", "other": "Passwort" },
+		{ "id": "sud1", "other": "Passwort merken (nur für diese Sitzung)" },
+		// PROFILE
+		{ "id": "pro0", "other": "Profil speichern" },
+		{ "id": "pro1", "other": "Name:" },
+		{ "id": "pro2", "other": "Sie müssen einen Profilnamen eingeben" },
+		{ "id": "pro3", "other": "Geben Sie einen Namen ein..." },
+		{ "id": "pro4", "other": "Profil löschen" },
+		{ "id": "pro5", "other": "Möchten Sie das Profil '{{.Name}}' wirklich löschen?" },
+		{ "id": "pro6", "other": "Lade Land '{{.Name}}'..." },
+		{ "id": "pro7", "other": "Lade Stadt '{{.Name}}'..." },
+		{ "id": "pro8", "other": "Lade Server '{{.Name}}'..." },
+		// REQUIREMENTS
+		{ "id": "req0", "other": "Anforderungen" },
+		{ "id": "req1", "other": "Bitte installieren Sie die folgenden Pakete:" },
+		// RESOURCES ERRORS
+		{ "id": "err.res0", "other": "Flag-Dateien können nicht gelesen werden:" },
+		{ "id": "err.res1", "other": "Datei '{{.FileName}}' kann nicht geladen werden. Fehler:" },
+		// SECURITY.ERRORS
+		{ "id": "err.sec0", "other": "Verschlüsselungsfehler beim Erstellen eines neuen Cipher-Blocks" },
+		{ "id": "err.sec1", "other": "Verschlüsselungsfehler beim Erstellen eines neuen GCM" },
+		{ "id": "err.sec2", "other": "Verschlüsselungsfehler beim Lesen eines Zufallsgenerators" },
+		{ "id": "err.sec3", "other": "Entschlüsselungsfehler beim Erstellen einer neuen Verschlüsselung" },
+		{ "id": "err.sec4", "other": "Entschlüsselungsfehler beim Erstellen eines neuen GCM" },
+		{ "id": "err.sec5", "other": "Entschlüsselungsfehler beim Extrahieren der verschlüsselten Daten" },
+		{ "id": "err.sec6", "other": "Zeichenfolge ist wahrscheinlich nicht verschlüsselt" },
+		// SETTINGS
+		{ "id": "set0", "other": "Einstellungen" },
+		{ "id": "set1", "other": "Sprache" },
+		{ "id": "set2", "other": "Systemtray-Symbol aktivieren" },
+		{ "id": "set3", "other": "Beim Starten ausblenden" },
+		{ "id": "set4", "other": "Beim Schließen ausblenden" },
+		{ "id": "set5", "other": "VPN beim Beenden stoppen" },
+		{ "id": "set6", "other": "Letztes Profil beim Start anwenden" },
+		{ "id": "set7", "other": "Beim Start verbinden" },
+		// SETTINGS ERRORS
+		{ "id": "err.set0", "other": "Datei '{{.FileName}}' kann nicht erstellt/überschrieben werden. Fehler:" },
+		{ "id": "err.set1", "other": "Einstellungsdatei '{{.FileName}}' existiert nicht oder ist nicht erreichbar:" },
+		{ "id": "err.set2", "other": "Einstellungsdatei '{{.FileName}}' kann nicht dekodiert werden:" },
+		// TOOLS
+		// TOOLS ERRORS
+		{ "id": "err.too0", "other": "Diese Methode wird derzeit nur auf Linux-Systemen unterstützt" },
+		{ "id": "err.too1", "other": "Befehl konnte nicht ausgeführt werden:" },
+		{ "id": "err.too2", "other": "Netzwerkschnittstellen konnten nicht abgerufen werden" },
+		{ "id": "err.too3", "other": "Fehler beim Lesen der IP-Adresse von Schnittstelle '{{.Interface}}'" }
+	]
+}

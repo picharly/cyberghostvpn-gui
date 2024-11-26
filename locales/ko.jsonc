@@ -1,0 +1,105 @@
+{
+	// LOCALE: ko
+	// TRANSLATION: Korean
+	// CODE: ko
+
+	"messages": [
+		{ "id": "name", "other": "한국어" },
+		{ "id": "code", "other": "ko" },
+		{ "id": "date", "other": "2006년 02월 01일" },
+		{ "id": "time", "other": "15:04:05.000" },
+		// _GENERIC
+		{ "id": "gen0", "other": "저장" },
+		{ "id": "gen1", "other": "취소" },
+		{ "id": "gen2", "other": "추가" },
+		{ "id": "gen3", "other": "편집" },
+		{ "id": "gen4", "other": "삭제" },
+		{ "id": "gen5", "other": "업데이트" },
+		{ "id": "gen6", "other": "확인" },
+		{ "id": "gen7", "other": "확인" },
+		{ "id": "gen8", "other": "파일" },
+		{ "id": "gen9", "other": "연결" },
+		{ "id": "gen10", "other": "로드 중 {{.Object}}" },
+		{ "id": "gen11", "other": "예" },
+		{ "id": "gen12", "other": "아니오" },
+		{ "id": "gen13", "other": "로드 중" },
+		{ "id": "gen14", "other": "연결 해제" },
+		{ "id": "gen15", "other": "종료" },
+		{ "id": "gen16", "other": "오류" },
+		{ "id": "gen17", "other": "시간 초과" },
+		// CG
+		{ "id": "cg0", "other": "VPN 연결이 발견되었습니다." },
+		{ "id": "cg1", "other": "VPN 연결이 발견되지 않았습니다." },
+		// CONNECTION
+		{ "id": "con0", "other": "연결" },
+		{ "id": "con1", "other": "프로필" },
+		{ "id": "con2", "other": "기본값" },
+		{ "id": "con3", "other": "새로운" },
+		{ "id": "con4", "other": "VPN 프로토콜" },
+		{ "id": "con5", "other": "서비스" },
+		{ "id": "con6", "other": "네트워크 프로토콜" },
+		{ "id": "con7", "other": "국가" },
+		{ "id": "con8", "other": "도시" },
+		{ "id": "con9", "other": "서버" },
+		{ "id": "con10", "other": "스트리밍 서비스" },
+		// INFO
+		{ "id": "inf0", "other": "버전:" },
+		{ "id": "inf1", "other": "상태:" },
+		{ "id": "inf2", "other": "연결됨" },
+		{ "id": "inf3", "other": "연결 해제됨" },
+		{ "id": "inf4", "other": "연결 중..." },
+		{ "id": "inf5", "other": "연결 해제 중..." },
+		{ "id": "inf6", "other": "설치되지 않음" },
+		{ "id": "inf7", "other": "알 수 없음" },
+		{ "id": "inf8", "other": "네트워크:" },
+		// INFO ERRORS
+		{ "id": "err.inf0", "other": "버전을 가져올 수 없습니다:" },
+		{ "id": "err.inf1", "other": "로컬 IP를 가져올 수 없습니다:" },
+		// POPUP SUDO
+		{ "id": "sud0", "other": "비밀번호" },
+		{ "id": "sud1", "other": "비밀번호 기억하기 (이 세션만)" },
+		// PROFILE
+		{ "id": "pro0", "other": "프로필 저장" },
+		{ "id": "pro1", "other": "이름:" },
+		{ "id": "pro2", "other": "프로필 이름을 입력해야 합니다" },
+		{ "id": "pro3", "other": "이름을 입력하십시오..." },
+		{ "id": "pro4", "other": "프로필 삭제" },
+		{ "id": "pro5", "other": "정말로 프로필 '{{.Name}}'을(를) 삭제하시겠습니까?" },
+		{ "id": "pro6", "other": "국가 '{{.Name}}' 로드 중..." },
+		{ "id": "pro7", "other": "도시 '{{.Name}}' 로드 중..." },
+		{ "id": "pro8", "other": "서버 '{{.Name}}' 로드 중..." },
+		// REQUIREMENTS
+		{ "id": "req0", "other": "요구 사항" },
+		{ "id": "req1", "other": "다음 패키지를 설치하십시오:" },
+		// RESOURCES ERRORS
+		{ "id": "err.res0", "other": "플래그 파일을 읽을 수 없습니다:" },
+		{ "id": "err.res1", "other": "파일 '{{.FileName}}'을(를) 로드할 수 없습니다. 오류:" },
+		// SECURITY.ERRORS
+		{ "id": "err.sec0", "other": "새 암호 블록 생성 중 암호화 오류 발생" },
+		{ "id": "err.sec1", "other": "새 GCM 생성 중 암호화 오류 발생" },
+		{ "id": "err.sec2", "other": "무작위 리더 읽기 중 암호화 오류 발생" },
+		{ "id": "err.sec3", "other": "새 암호 생성 중 복호화 오류 발생" },
+		{ "id": "err.sec4", "other": "새 GCM 생성 중 복호화 오류 발생" },
+		{ "id": "err.sec5", "other": "암호화된 데이터 추출 중 복호화 오류 발생" },
+		{ "id": "err.sec6", "other": "문자열이 암호화되지 않았을 가능성이 큽니다" },
+		// SETTINGS
+		{ "id": "set0", "other": "설정" },
+		{ "id": "set1", "other": "언어" },
+		{ "id": "set2", "other": "시스템 트레이 아이콘 활성화" },
+		{ "id": "set3", "other": "시작 시 숨기기" },
+		{ "id": "set4", "other": "닫을 때 숨기기" },
+		{ "id": "set5", "other": "종료 시 VPN 중지" },
+		{ "id": "set6", "other": "시작 시 마지막 프로필 적용" },
+		{ "id": "set7", "other": "시작 시 연결" },
+		// SETTINGS ERRORS
+		{ "id": "err.set0", "other": "파일 '{{.FileName}}'을(를) 생성/덮어쓸 수 없습니다. 오류:" },
+		{ "id": "err.set1", "other": "설정 파일 '{{.FileName}}'이(가) 존재하지 않거나 접근할 수 없습니다:" },
+		{ "id": "err.set2", "other": "설정 파일 '{{.FileName}}'을(를) 디코딩할 수 없습니다:" },
+		// TOOLS
+		// TOOLS ERRORS
+		{ "id": "err.too0", "other": "이 메서드는 현재 Linux 시스템에서만 지원됩니다" },
+		{ "id": "err.too1", "other": "명령 실행 실패:" },
+		{ "id": "err.too2", "other": "네트워크 인터페이스를 가져오는 중 오류 발생" },
+		{ "id": "err.too3", "other": "인터페이스 '{{.Interface}}'에서 IP 주소를 읽는 중 오류 발생" }
+	]
+}
