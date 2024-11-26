@@ -91,6 +91,7 @@
 		{ "id": "set5", "other": "Stop VPN on exit" },
 		{ "id": "set6", "other": "Apply last profile on startup" },
 		{ "id": "set7", "other": "Connect on startup" },
+		{ "id": "set8", "other": "Hide when connected" },
 		// SETTINGS ERRORS
 		{ "id": "err.set0", "other": "unable to create/overwrite file '{{.FileName}}'. Error: " },
 		{ "id": "err.set1", "other": "settings file '{{.FileName}}' does not exist or is unreachable: " },

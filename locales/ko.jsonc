@@ -91,6 +91,7 @@
 		{ "id": "set5", "other": "종료 시 VPN 중지" },
 		{ "id": "set6", "other": "시작 시 마지막 프로필 적용" },
 		{ "id": "set7", "other": "시작 시 연결" },
+		{ "id": "set8", "other": "연결 시 숨기기" },
 		// SETTINGS ERRORS
 		{ "id": "err.set0", "other": "파일 '{{.FileName}}'을(를) 생성/덮어쓸 수 없습니다. 오류:" },
 		{ "id": "err.set1", "other": "설정 파일 '{{.FileName}}'이(가) 존재하지 않거나 접근할 수 없습니다:" },

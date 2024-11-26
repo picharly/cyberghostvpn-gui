@@ -91,6 +91,7 @@
 		{ "id": "set5", "other": "Arrêter le VPN à la sortie" },
 		{ "id": "set6", "other": "Appliquer le dernier profil au démarrage" },
 		{ "id": "set7", "other": "Connecter au démarrage" },
+		{ "id": "set8", "other": "Masquer quand connecté" },
 		// SETTINGS ERRORS
 		{ "id": "err.set0", "other": "impossible de créer/écraser le fichier '{{.FileName}}'. Erreur : " },
 		{ "id": "err.set1", "other": "le fichier de paramètres '{{.FileName}}' n'existe pas ou est inatteignable :" },

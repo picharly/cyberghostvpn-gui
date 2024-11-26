@@ -15,6 +15,7 @@ var settingsBox *fyne.Container
 // Components with text
 var checkboxConnectStartup *widget.Check
 var checkboxHideOnTray *widget.Check
+var checkboxHideWhenConnected *widget.Check
 var checkboxLoadLastProfile *widget.Check
 var checkboxStartOnTray *widget.Check
 var checkboxStopVPN *widget.Check
@@ -22,6 +23,7 @@ var checkboxTrayIcon *widget.Check
 
 var lblConnectStartup *widget.Label
 var lblHideOnTray *widget.Label
+var lblHideWhenConnected *widget.Label
 var lblLanguage *widget.Label
 var lblLoadLastProfile *widget.Label
 var lblStartOnTray *widget.Label
@@ -113,6 +115,15 @@ func getSettingsBox() *fyne.Container {
 			checkboxHideOnTray.Disable()
 		}
 
+		// Hide when connected
+		lblHideWhenConnected = widget.NewLabel(locales.Text("set8"))
+		checkboxHideWhenConnected = widget.NewCheck("", func(b bool) {
+			cfg, _ := settings.GetCurrentSettings()
+			cfg.HideWhenConnected = b
+			settings.WriteCurrentSettings()
+		})
+		checkboxHideWhenConnected.SetChecked(cfg.HideWhenConnected)
+
 		// Stop VPN on exit
 		lblStopVPN = widget.NewLabel(locales.Text("set5"))
 		checkboxStopVPN = widget.NewCheck("", func(b bool) {
@@ -164,6 +175,8 @@ func getSettingsBox() *fyne.Container {
 			checkboxStartOnTray,
 			lblHideOnTray,
 			checkboxHideOnTray,
+			lblHideWhenConnected,
+			checkboxHideWhenConnected,
 			// lblLoadLastProfile,
 			// checkboxLoadLastProfile,
 			lblConnectStartup,
@@ -193,4 +206,5 @@ func updateLanguageSettings() {
 	lblStopVPN.SetText(locales.Text("set5"))
 	lblLoadLastProfile.SetText(locales.Text("set6"))
 	lblConnectStartup.SetText(locales.Text("set7"))
+	lblHideWhenConnected.SetText(locales.Text("set8"))
 }

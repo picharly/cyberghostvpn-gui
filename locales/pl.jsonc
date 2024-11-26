@@ -91,6 +91,7 @@
 		{ "id": "set5", "other": "Zatrzymaj VPN przy wyjściu" },
 		{ "id": "set6", "other": "Zastosuj ostatni profil przy uruchomieniu" },
 		{ "id": "set7", "other": "Połącz przy uruchomieniu" },
+		{ "id": "set8", "other": "Ukryj po połączeniu" },
 		// SETTINGS ERRORS
 		{ "id": "err.set0", "other": "nie można utworzyć/nadpisać pliku '{{.FileName}}'. Błąd:" },
 		{ "id": "err.set1", "other": "plik ustawień '{{.FileName}}' nie istnieje lub jest niedostępny:" },

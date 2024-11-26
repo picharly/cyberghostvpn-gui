@@ -91,6 +91,7 @@
 		{ "id": "set5", "other": "VPN beim Beenden stoppen" },
 		{ "id": "set6", "other": "Letztes Profil beim Start anwenden" },
 		{ "id": "set7", "other": "Beim Start verbinden" },
+        { "id": "set8", "other": "Ausblenden, wenn verbunden" },
 		// SETTINGS ERRORS
 		{ "id": "err.set0", "other": "Datei '{{.FileName}}' kann nicht erstellt/überschrieben werden. Fehler:" },
 		{ "id": "err.set1", "other": "Einstellungsdatei '{{.FileName}}' existiert nicht oder ist nicht erreichbar:" },

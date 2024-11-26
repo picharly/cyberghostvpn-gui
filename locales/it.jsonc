@@ -91,6 +91,7 @@
 		{ "id": "set5", "other": "Ferma VPN all'uscita" },
 		{ "id": "set6", "other": "Applica l'ultimo profilo all'avvio" },
 		{ "id": "set7", "other": "Connetti all'avvio" },
+		{ "id": "set8", "other": "Nascondi quando connesso" },
 		// SETTINGS ERRORS
 		{ "id": "err.set0", "other": "impossibile creare/sovrascrivere il file '{{.FileName}}'. Errore:" },
 		{ "id": "err.set1", "other": "il file di impostazioni '{{.FileName}}' non esiste o non è raggiungibile:" },

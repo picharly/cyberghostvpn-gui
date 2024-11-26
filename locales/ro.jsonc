@@ -91,6 +91,7 @@
 		{ "id": "set5", "other": "Oprește VPN la ieșire" },
 		{ "id": "set6", "other": "Aplică ultimul profil la pornire" },
 		{ "id": "set7", "other": "Conectează la pornire" },
+		{ "id": "set8", "other": "Ascunde când este conectat" },
 		// SETTINGS ERRORS
 		{ "id": "err.set0", "other": "Nu se poate crea/suprascrie fișierul '{{.FileName}}'. Eroare:" },
 		{ "id": "err.set1", "other": "Fișierul de setări '{{.FileName}}' nu există sau nu este accesibil:" },
