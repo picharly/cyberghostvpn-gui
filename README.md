@@ -28,17 +28,46 @@ Before you can use Cyberghost VPN Linux GUI, you need to have the following prer
 
 ## Installation
 
-To install Cyberghost VPN Linux GUI, you can use the latest release available or build it:
+### Release
 
-### 1. Clone the repository
+To install Cyberghost VPN Linux GUI, you can download the latest release available on github.
 
+Or, for Arch Linux users, you can use AUR:
 ```bash
-git clone https://github.com/yourusername/cyberghost-vpn-linux-gui.git
+yay -S cyberghostvpn-gui # or paru, yaourt, etc.
 ```
 
-### 2. Build the application using the build script
+### Build
+
+#### 1. Prerequisites
+
+Go 1.23 or higher is required to compile.
+
+#### 2. Clone the repository
+
+```bash
+git clone https://github.com/picharly/cyberghostvpn-gui.git
+```
+
+#### 3. Install Go dependencies (check <i>go.mod</i> file)
+
+```bash
+cd cyberghostvpn-gui
+go mod tidy
+```
+
+#### 2. Build the application
+
+**Using build script**
 ```bash
 ./build -l # Build for Linux.
+```
+
+This script will generate an executable file into <i>{src}/bin</i> folder.
+
+**Or manual build**
+```bash
+go build .
 ```
 
 # License
