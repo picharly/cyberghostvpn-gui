@@ -91,6 +91,7 @@
 		{ "id": "set5", "other": "終了時にVPNを停止" },
 		{ "id": "set6", "other": "起動時に最後のプロファイルを適用" },
 		{ "id": "set7", "other": "起動時に接続" },
+		{ "id": "set8", "other": "接続時に非表示" },
 		// SETTINGS ERRORS
 		{ "id": "err.set0", "other": "ファイル '{{.FileName}}' を作成/上書きできません。エラー:" },
 		{ "id": "err.set1", "other": "設定ファイル '{{.FileName}}' が存在しないか、アクセスできません:" },

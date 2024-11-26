@@ -91,6 +91,7 @@
 		{ "id": "set5", "other": "Parar VPN ao sair" },
 		{ "id": "set6", "other": "Aplicar o último perfil na inicialização" },
 		{ "id": "set7", "other": "Conectar na inicialização" },
+		{ "id": "set8", "other": "Ocultar quando conectado" },
 		// SETTINGS ERRORS
 		{ "id": "err.set0", "other": "não foi possível criar/substituir o arquivo '{{.FileName}}'. Erro:" },
 		{ "id": "err.set1", "other": "o arquivo de configurações '{{.FileName}}' não existe ou está inacessível:" },

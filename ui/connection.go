@@ -3,6 +3,7 @@ package ui
 import (
 	"cyberghostvpn-gui/cg"
 	"cyberghostvpn-gui/locales"
+	"cyberghostvpn-gui/settings"
 	"time"
 
 	"fyne.io/fyne/v2"
@@ -24,11 +25,10 @@ func getConnectComponents() *fyne.Container {
 		btnConnect = widget.NewButton(
 			locales.Text("gen9"),
 			func() {
+				go hideAfterStatusChange()
 				if actionConnect {
-					// ShowPopupSudo_Test(cg.Connect()...)
 					ShowPopupSudo(cg.Connect()...)
 				} else {
-					// ShowPopupSudo_Test(cg.Disconnect()...)
 					ShowPopupSudo(cg.Disconnect()...)
 				}
 			},
@@ -36,6 +36,31 @@ func getConnectComponents() *fyne.Container {
 		connectContainer = container.NewCenter(btnConnect)
 	}
 	return connectContainer
+}
+
+// hideAfterStatusChange hides the main window after the VPN status changes or after 30 seconds maximum.
+// It is used when the user clicks the "Connect" button to hide the window after the VPN is connected or disconnected.
+func hideAfterStatusChange() {
+
+	// Get current settings
+	cfg, _ := settings.GetCurrentSettings()
+	// Check if HideWhenConnected is enabled
+	if !cfg.HideWhenConnected {
+		return
+	}
+
+	currentState := cg.CurrentState
+	start := time.Now()
+	for {
+		if cg.CurrentState != currentState {
+			GetMainWindow().Hide()
+			break
+		}
+		if time.Since(start).Seconds() > 30 {
+			break
+		}
+		time.Sleep(time.Millisecond * 100)
+	}
 }
 
 // updateConnectButtonStatus updates the connect button status based on the current

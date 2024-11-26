@@ -91,6 +91,7 @@
 		{ "id": "set5", "other": "Zastavit VPN při ukončení" },
 		{ "id": "set6", "other": "Použít poslední profil při spuštění" },
 		{ "id": "set7", "other": "Připojit při spuštění" },
+		{ "id": "set8", "other": "Skrýt při připojení" },
 		// SETTINGS ERRORS
 		{ "id": "err.set0", "other": "nelze vytvořit/přepsat soubor '{{.FileName}}'. Chyba:" },
 		{ "id": "err.set1", "other": "soubor s nastavením '{{.FileName}}' neexistuje nebo není dosažitelný:" },
