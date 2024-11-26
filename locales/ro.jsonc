@@ -1,0 +1,105 @@
+{
+	// LOCALE: ro
+	// TRANSLATION: Romanian
+	// CODE: ro
+
+	"messages": [
+		{ "id": "name", "other": "Română" },
+		{ "id": "code", "other": "ro" },
+		{ "id": "date", "other": "01.02.2006" },
+		{ "id": "time", "other": "15:04:05.000" },
+		// _GENERIC
+		{ "id": "gen0", "other": "Salvează" },
+		{ "id": "gen1", "other": "Anulează" },
+		{ "id": "gen2", "other": "Adaugă" },
+		{ "id": "gen3", "other": "Editează" },
+		{ "id": "gen4", "other": "Șterge" },
+		{ "id": "gen5", "other": "Actualizează" },
+		{ "id": "gen6", "other": "Confirmă" },
+		{ "id": "gen7", "other": "Ok" },
+		{ "id": "gen8", "other": "Fișier" },
+		{ "id": "gen9", "other": "Conectează" },
+		{ "id": "gen10", "other": "Încărcare {{.Object}}" },
+		{ "id": "gen11", "other": "Da" },
+		{ "id": "gen12", "other": "Nu" },
+		{ "id": "gen13", "other": "Încărcare" },
+		{ "id": "gen14", "other": "Deconectează" },
+		{ "id": "gen15", "other": "Ieșire" },
+		{ "id": "gen16", "other": "Eroare" },
+		{ "id": "gen17", "other": "Expirare timp" },
+		// CG
+		{ "id": "cg0", "other": "Conexiune VPN găsită." },
+		{ "id": "cg1", "other": "Nicio conexiune VPN găsită." },
+		// CONNECTION
+		{ "id": "con0", "other": "Conexiune" },
+		{ "id": "con1", "other": "Profil" },
+		{ "id": "con2", "other": "Implicit" },
+		{ "id": "con3", "other": "Nou" },
+		{ "id": "con4", "other": "Protocol VPN" },
+		{ "id": "con5", "other": "Serviciu" },
+		{ "id": "con6", "other": "Protocol de rețea" },
+		{ "id": "con7", "other": "Țară" },
+		{ "id": "con8", "other": "Oraș" },
+		{ "id": "con9", "other": "Server" },
+		{ "id": "con10", "other": "Serviciu de streaming" },
+		// INFO
+		{ "id": "inf0", "other": "Versiune:" },
+		{ "id": "inf1", "other": "Status:" },
+		{ "id": "inf2", "other": "conectat" },
+		{ "id": "inf3", "other": "deconectat" },
+		{ "id": "inf4", "other": "conectare..." },
+		{ "id": "inf5", "other": "deconectare..." },
+		{ "id": "inf6", "other": "neinstalat" },
+		{ "id": "inf7", "other": "necunoscut" },
+		{ "id": "inf8", "other": "Rețea:" },
+		// INFO ERRORS
+		{ "id": "err.inf0", "other": "Nu se poate obține versiunea:" },
+		{ "id": "err.inf1", "other": "Nu se poate obține IP-ul local:" },
+		// POPUP SUDO
+		{ "id": "sud0", "other": "Parolă" },
+		{ "id": "sud1", "other": "Ține minte parola (doar pentru această sesiune)" },
+		// PROFILE
+		{ "id": "pro0", "other": "Salvează profilul" },
+		{ "id": "pro1", "other": "Nume:" },
+		{ "id": "pro2", "other": "Trebuie să introduceți un nume pentru profil" },
+		{ "id": "pro3", "other": "Introduceți un nume..." },
+		{ "id": "pro4", "other": "Șterge profilul" },
+		{ "id": "pro5", "other": "Sigur doriți să ștergeți profilul '{{.Name}}'?" },
+		{ "id": "pro6", "other": "Încărcare țară '{{.Name}}'..." },
+		{ "id": "pro7", "other": "Încărcare oraș '{{.Name}}'..." },
+		{ "id": "pro8", "other": "Încărcare server '{{.Name}}'..." },
+		// REQUIREMENTS
+		{ "id": "req0", "other": "Cerințe" },
+		{ "id": "req1", "other": "Vă rugăm să instalați următoarele pachete:" },
+		// RESOURCES ERRORS
+		{ "id": "err.res0", "other": "Nu se pot citi fișierele de flag:" },
+		{ "id": "err.res1", "other": "Nu se poate încărca fișierul '{{.FileName}}'. Eroare:" },
+		// SECURITY.ERRORS
+		{ "id": "err.sec0", "other": "Eroare de criptare la crearea unui nou bloc de cifru" },
+		{ "id": "err.sec1", "other": "Eroare de criptare la crearea unui nou GCM" },
+		{ "id": "err.sec2", "other": "Eroare de criptare la citirea unui cititor aleatoriu" },
+		{ "id": "err.sec3", "other": "Eroare de decriptare la crearea unei noi cifruri" },
+		{ "id": "err.sec4", "other": "Eroare de decriptare la crearea unui nou GCM" },
+		{ "id": "err.sec5", "other": "Eroare de decriptare la extragerea datelor criptate" },
+		{ "id": "err.sec6", "other": "Șirul probabil nu este criptat" },
+		// SETTINGS
+		{ "id": "set0", "other": "Setări" },
+		{ "id": "set1", "other": "Limbă" },
+		{ "id": "set2", "other": "Activează pictograma din bara de sistem" },
+		{ "id": "set3", "other": "Ascunde la pornire" },
+		{ "id": "set4", "other": "Ascunde la închidere" },
+		{ "id": "set5", "other": "Oprește VPN la ieșire" },
+		{ "id": "set6", "other": "Aplică ultimul profil la pornire" },
+		{ "id": "set7", "other": "Conectează la pornire" },
+		// SETTINGS ERRORS
+		{ "id": "err.set0", "other": "Nu se poate crea/suprascrie fișierul '{{.FileName}}'. Eroare:" },
+		{ "id": "err.set1", "other": "Fișierul de setări '{{.FileName}}' nu există sau nu este accesibil:" },
+		{ "id": "err.set2", "other": "Nu se poate decoda fișierul de setări '{{.FileName}}':" },
+		// TOOLS
+		// TOOLS ERRORS
+		{ "id": "err.too0", "other": "Această metodă este suportată momentan doar pe sistemele Linux" },
+		{ "id": "err.too1", "other": "Executarea comenzii a eșuat:" },
+		{ "id": "err.too2", "other": "Eroare la obținerea interfețelor de rețea" },
+		{ "id": "err.too3", "other": "Eroare la citirea adresei IP din interfața '{{.Interface}}'" }
+	]
+}
