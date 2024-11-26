@@ -2,6 +2,8 @@
 
 A simple and intuitive graphical user interface for managing Cyberghost VPN connections on Linux systems. It allows users to easily connect and disconnect from VPN servers, manage their VPN profiles, and monitor the status of their VPN connections.
 
+It has been developed in Go using the Fyne.io graphical libraries.
+
 ## Features
 
 * Connect and disconnect from Cyberghost VPN servers
@@ -11,13 +13,17 @@ A simple and intuitive graphical user interface for managing Cyberghost VPN conn
 
 ## Screenshots
 
+### Tray icon
+
+![Tray icon](doc/tray_icon.png)
+
 ### Connection
 
-![Connection tab](doc/1.png) ![Connected](doc/2.png)
+![Connection](doc/connection.png) ![Connecting](doc/connecting.png) ![Connected](doc/connected.png)
 
 ### Settings
 
-![Settings](doc/3.png)
+![Settings](doc/settings.png)
 
 ## Prerequisites
 
@@ -56,7 +62,7 @@ cd cyberghostvpn-gui
 go mod tidy
 ```
 
-#### 2. Build the application
+#### 4. Build the application
 
 **Using build script**
 ```bash

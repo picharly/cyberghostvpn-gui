@@ -147,6 +147,8 @@ buildCmd() {
     if [ $useCompression -eq 1 ]; then
       echo -e "${fontBold}${fontGreen}[INFO]${fontReset} Compressing using lrzip..."
       lrzip -f -z bin/${BINFILE}
+      echo -e "${fontBold}${fontGreen}[INFO]${fontReset} Compressing using tar.gz..."
+      tar -czf bin/${BINFILE}.tar.gz bin/${BINFILE}
       if [ "$?" -gt 0 ]; then
         echo -e "${fontBold}${fontRed}[ERROR]${fontReset} Failed to compress bin/${BINFILE}."
         return 1
