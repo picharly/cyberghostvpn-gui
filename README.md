@@ -90,8 +90,11 @@ This application is available in the following languages:
 - Czech: Česká republika
 - English: English
 - French: Français
+- German: Deutsch
 - Italian: Italiano
 - Japanese: 日本語
+- Korean: 한국어
 - Polish: Polski
 - Portuguese: Português
+- Romanian: Română
 - Spanish: Español
