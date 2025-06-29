@@ -104,7 +104,11 @@ func updateConnectButtonStatus() {
 		disableForm()
 	}
 
-	btnConnect.Refresh()
+	// go func() {
+	fyne.DoAndWait(func() {
+		btnConnect.Refresh()
+	})
+	// }()
 }
 
 // disableForm disables all the form elements so that the user can't make changes when the VPN is connected.

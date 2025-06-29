@@ -12,7 +12,7 @@ pkgver=1.4.1
 pkgrel=12
 pkgdesc="CyberGhost VPN"
 url="https://www.cyberghostvpn.com"
-_variant=fedora-32 #ubuntu-20.04 #
+_variant=ubuntu-20.04 #fedora-32 #
 source=(	"https://download.cyberghostvpn.com/linux/cyberghostvpn-${_variant}-${pkgver}.zip"
 		      "http://crt.sectigo.com/SectigoRSAOrganizationValidationSecureServerCA.crt"
 )
