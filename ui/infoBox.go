@@ -160,7 +160,11 @@ func updateNetwork() {
 			GetApp().SetIcon(resources.GetCyberGhostIcon())
 		}
 
-		textNet.Refresh()
+		go func() {
+			fyne.DoAndWait(func() {
+				textNet.Refresh()
+			})
+		}()
 	}
 }
 
@@ -201,5 +205,9 @@ func updateStatus() {
 		}
 	}
 
-	textStatus.Refresh()
+	go func() {
+		fyne.DoAndWait(func() {
+			textStatus.Refresh()
+		})
+	}()
 }

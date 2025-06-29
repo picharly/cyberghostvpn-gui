@@ -141,8 +141,8 @@ buildCmd() {
   # Build
   built=1
   BINFILE=${projectName}_${1}_${2}${version}
-  echo "Command => GOOS=${1} GOARCH=${2} ${GOCMD} build -o ./bin/${BINFILE}"
-  GOOS=${1} GOARCH=${2} ${GOCMD} build -o ./bin/${BINFILE} .
+  echo "Command => GOOS=${1} GOARCH=${2} ${GOCMD} build -ldflags '-s -w' -o ./bin/${BINFILE} ."
+  GOOS=${1} GOARCH=${2} ${GOCMD} build -ldflags "-s -w" -o ./bin/${BINFILE} .
   if [ "$?" -eq 0 ]; then
     if [ $useCompression -eq 1 ]; then
       echo -e "${fontBold}${fontGreen}[INFO]${fontReset} Compressing using lrzip..."
