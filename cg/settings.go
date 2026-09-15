@@ -145,7 +145,8 @@ func SetSelectedServiceType(serverType string) {
 
 // SetSelectedVPNService sets the currently selected VPN service in the settings and writes the updated list of profiles to the settings file.
 func SetSelectedVPNService(vpnService string) {
-	GetOptionVPNService(vpnService)
+	//GetOptionVPNService(vpnService)
+	SelectedVPNService = vpnService
 	p := settings.GetCurrentProfile()
 	p.VPNService = vpnService
 	settings.WriteCurrentSettings()

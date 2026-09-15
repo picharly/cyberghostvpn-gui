@@ -5,6 +5,7 @@ import (
 	"cyberghostvpn-gui/logger"
 	"cyberghostvpn-gui/tools"
 	"strings"
+	"os"
 )
 
 var CurrentState Status
@@ -26,6 +27,7 @@ type cgMessage string
 const (
 	cgConnected    cgMessage = "VPN connection found."
 	cgNotConnected cgMessage = "No VPN connections found."
+	cgWireguardConnected cgMessage = "Wireguard connection found."
 )
 
 // GetCurrentState returns the current state of the CyberGhost VPN client.
@@ -44,11 +46,12 @@ func GetCurrentState() Status {
 			CurrentState = Connected
 		case string(cgNotConnected):
 			CurrentState = Disconnected
+		case string(cgWireguardConnected):
+			CurrentState = Connected
 		default:
 			CurrentState = Unknown
 		}
 	}
-
 	return CurrentState
 }
 
@@ -89,6 +92,12 @@ func refreshStatus() string {
 		string(CG_EXECUTABLE),
 		string(CG_OTHER_STATUS),
 	}
+	//The cgWireguardConnected message only shows up when running the status command as sudo
+	//checking for the cyberghost interface to detect active wireguard connection requires no sudo
+	if _, err := os.Stat("/sys/class/net/cyberghost"); err == nil {
+		return string(cgWireguardConnected)
+	}
+
 	out, err := tools.RunCommand(args, true, false, "")
 	if err == nil && len(out) > 0 {
 		return out[0]
