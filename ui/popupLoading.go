@@ -143,6 +143,7 @@ func showPopupLoading() {
 				break
 			}
 		}
+		gif.Stop()
 		fyne.Do(func() {
 			p.Hide()
 			popupLoading = nil
