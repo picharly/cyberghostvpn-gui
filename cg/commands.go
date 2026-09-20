@@ -29,6 +29,9 @@ const (
 	CG_OTHER_STOP         cgCommand = "--stop"
 	CG_OTHER_SETUP        cgCommand = "--setup"
 	CG_OTHER_UNINSTALL    cgCommand = "--uninstall"
+
+	// Network interface created by the CLI for WireGuard connections
+	CG_WIREGUARD_INTERFACE cgCommand = "/sys/class/net/cyberghost"
 )
 
 type cgServiceType string

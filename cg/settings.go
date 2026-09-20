@@ -37,17 +37,6 @@ func GetOptionServerType(serverType string) string {
 	return string(CG_SERVER_TYPE_TRAFFIC)
 }
 
-// GetOptionVPNService returns the key for the given VPN service option.
-// If the VPN service is not found, it defaults to returning the key for OpenVPN.
-func GetOptionVPNService(vpnService string) string {
-	for k, v := range VPNServiceOptions {
-		if v == vpnService {
-			return k
-		}
-	}
-	return string(CG_SERVICE_TYPE_OPENVPN)
-}
-
 // DeleteProfile deletes the profile with the given name from the list of profiles and writes the updated
 // list of profiles to the settings file.
 func DeleteProfile(name string) {
@@ -145,7 +134,7 @@ func SetSelectedServiceType(serverType string) {
 
 // SetSelectedVPNService sets the currently selected VPN service in the settings and writes the updated list of profiles to the settings file.
 func SetSelectedVPNService(vpnService string) {
-	GetOptionVPNService(vpnService)
+	SelectedVPNService = vpnService
 	p := settings.GetCurrentProfile()
 	p.VPNService = vpnService
 	settings.WriteCurrentSettings()
