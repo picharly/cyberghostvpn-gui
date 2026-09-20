@@ -101,13 +101,11 @@ func updateProfiles() {
 	for _, p := range *settings.GetProfiles() {
 		profiles = append(profiles, p.Name)
 	}
-	fyne.DoAndWait(func() {
-		currentProfileName := selectProfile.Selected
-		selectProfile.SetOptions(profiles)
-		if len(currentProfileName) > 0 {
-			selectProfile.SetSelected(currentProfileName)
-		} else {
-			selectProfile.SetSelected("")
-		}
-	})
+	currentProfileName := selectProfile.Selected
+	selectProfile.SetOptions(profiles)
+	if len(currentProfileName) > 0 {
+		selectProfile.SetSelected(currentProfileName)
+	} else {
+		selectProfile.SetSelected("")
+	}
 }

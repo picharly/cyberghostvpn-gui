@@ -5,7 +5,6 @@ import (
 	"cyberghostvpn-gui/locales"
 	"cyberghostvpn-gui/resources"
 
-	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -14,10 +13,8 @@ var selectCity *widget.Select
 
 // emptyCitySelect empties the city select widget and selects the first option (empty string).
 func emptyCitySelect() {
-	fyne.DoAndWait(func() {
-		selectCity.SetOptions([]string{""})
-		selectCity.SetSelected("")
-	})
+	selectCity.SetOptions([]string{""})
+	selectCity.SetSelected("")
 }
 
 // getCityComponents returns a Label and a Select widget to select a city for CyberGhost.
@@ -72,15 +69,13 @@ func updateCities(selCountry *resources.Country) {
 	for _, c := range *cg.GetCities(cg.CgServerType(selectServerType.Selected), selCountry.Code) {
 		cities = append(cities, c.Name)
 	}
-	fyne.DoAndWait(func() {
-		selectCity.SetOptions(cities)
-		if len(loadingCity) > 0 {
-			selectCity.SetSelected(loadingCity)
-		} else {
-			selectCity.SetSelected("")
-		}
-		loadingCity = ""
-	})
+	selectCity.SetOptions(cities)
+	if len(loadingCity) > 0 {
+		selectCity.SetSelected(loadingCity)
+	} else {
+		selectCity.SetSelected("")
+	}
+	loadingCity = ""
 }
 
 // updateLanguageCity updates the label of the city select with the current language.

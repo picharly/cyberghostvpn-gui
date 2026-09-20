@@ -6,7 +6,6 @@ import (
 	"cyberghostvpn-gui/resources"
 	"fmt"
 
-	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -49,10 +48,8 @@ func getServerInstanceComponents() (*widget.Label, *widget.Select) {
 // emptyServerInstanceSelect resets the server instance select to its default state.
 // It is called when the country or city selection changes.
 func emptyServerInstanceSelect() {
-	fyne.DoAndWait(func() {
-		selectServerInstance.SetOptions([]string{""})
-		selectServerInstance.SetSelected("")
-	})
+	selectServerInstance.SetOptions([]string{""})
+	selectServerInstance.SetSelected("")
 }
 
 // updateLanguageServerInstance updates the label of the server instance select with the current language
@@ -77,13 +74,11 @@ func updateServerInstances(selCountry *resources.Country, selCity *resources.Cit
 			selection = fmt.Sprintf("%s (%s)", c.Instance, c.Load)
 		}
 	}
-	fyne.DoAndWait(func() {
-		selectServerInstance.SetOptions(srv)
-		if len(selection) > 0 {
-			selectServerInstance.SetSelected(selection)
-		} else {
-			selectServerInstance.SetSelected("")
-		}
-		loadingServerInstance = ""
-	})
+	selectServerInstance.SetOptions(srv)
+	if len(selection) > 0 {
+		selectServerInstance.SetSelected(selection)
+	} else {
+		selectServerInstance.SetSelected("")
+	}
+	loadingServerInstance = ""
 }

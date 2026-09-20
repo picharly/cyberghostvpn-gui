@@ -32,25 +32,29 @@ func ShowPopupSudo(args ...string) {
 
 	// Action
 	action := func(args []string, pwd string) {
-		// Keep password into memory
-		if cfg.KeepPassMem {
-			Password, _ = security.Encrypt(pwd)
-		} else {
-			Password = ""
-		}
-		// Show loading popup
-		fyne.Do(func() {
-			p.Hide()
-		})
-		showPopupLoading()
-		defer removeLoadingWait()
-		output, err := tools.RunCommand(args, true, true, pwd)
-		if err != nil {
-			go func(o string, e error) {
-				time.Sleep(time.Millisecond * 25)
-				showPopupError(fmt.Errorf("%v\n%s", e, o))
-			}(strings.Join(output, "\n"), err)
-		}
+		go func() {
+			// Keep password into memory
+			if cfg.KeepPassMem {
+				Password, _ = security.Encrypt(pwd)
+			} else {
+				Password = ""
+			}
+			// Show loading popup
+			fyne.DoAndWait(func() {
+				p.Hide()
+				showPopupLoading()
+			})
+			defer removeLoadingWait()
+			output, err := tools.RunCommand(args, true, true, pwd)
+			if err != nil {
+				go func(o string, e error) {
+					time.Sleep(time.Millisecond * 25)
+					fyne.Do(func() {
+						showPopupError(fmt.Errorf("%v\n%s", e, o))
+					})
+				}(strings.Join(output, "\n"), err)
+			}
+		}()
 	}
 
 	// Text

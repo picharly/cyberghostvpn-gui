@@ -121,9 +121,11 @@ func refresh() {
 		}
 
 		// Update InfoBox
-		updateNetwork()
-		updateStatus()
-		updateConnectButtonStatus()
+		fyne.DoAndWait(func() {
+			updateNetwork()
+			updateStatus()
+			updateConnectButtonStatus()
+		})
 
 		time.Sleep(time.Millisecond * 100)
 	}
@@ -142,15 +144,13 @@ func showCLIStatusError() {
 // If the given code is empty, the flag is hidden by setting its transparency to 100.
 // Otherwise, the flag is updated with the given code and its transparency is set to 0.
 func setFlag(countryCode string) {
-	fyne.DoAndWait(func() {
-		if len(countryCode) < 1 {
-			imgFlag.Translucency = 100
-		} else {
-			imgFlag.Resource = fyne.NewStaticResource(countryCode+".svg", resources.GetFlag(countryCode))
-			imgFlag.Translucency = 0
-		}
-		imgFlag.Refresh()
-	})
+	if len(countryCode) < 1 {
+		imgFlag.Translucency = 100
+	} else {
+		imgFlag.Resource = fyne.NewStaticResource(countryCode+".svg", resources.GetFlag(countryCode))
+		imgFlag.Translucency = 0
+	}
+	imgFlag.Refresh()
 }
 
 // updatelanguageInfoBox is a function that updates the labels of the main
@@ -168,22 +168,18 @@ func updateNetwork() {
 		ip, err := tools.GetLocalIPAddresses(net.FlagPointToPoint)
 		if err != nil {
 			logger.Errorf("%s %v", locales.Text("err.inf1"), err)
+			textNet.Text = locales.Text("inf7")
+			textNet.Color = resources.ColorOrange
+		} else if len(ip) > 0 {
+			textNet.Text = ip[0].String()
+			textNet.Color = resources.ColorGreen
+			GetApp().SetIcon(resources.GetCyberGhostIcon())
+		} else {
+			textNet.Text = "-" //locales.Text("inf3")
+			textNet.Color = resources.ColorRed
+			GetApp().SetIcon(resources.GetCyberGhostIcon())
 		}
-		fyne.DoAndWait(func() {
-			if err != nil {
-				textNet.Text = locales.Text("inf7")
-				textNet.Color = resources.ColorOrange
-			} else if len(ip) > 0 {
-				textNet.Text = ip[0].String()
-				textNet.Color = resources.ColorGreen
-				GetApp().SetIcon(resources.GetCyberGhostIcon())
-			} else {
-				textNet.Text = "-" //locales.Text("inf3")
-				textNet.Color = resources.ColorRed
-				GetApp().SetIcon(resources.GetCyberGhostIcon())
-			}
-			textNet.Refresh()
-		})
+		textNet.Refresh()
 	}
 }
 
@@ -191,44 +187,41 @@ func updateNetwork() {
 // the VPN (connected, disconnected, connecting, disconnecting, not installed).
 func updateStatus() {
 	status := cg.CurrentState
-	version := ""
-	if status != cg.NotInstalled {
-		version = cg.GetVersion()
+
+	switch status {
+	case cg.Connected:
+		textStatus.Text = locales.Text("inf2")
+		textStatus.Color = resources.ColorGreen
+	case cg.Disconnected:
+		textStatus.Text = locales.Text("inf3")
+		textStatus.Color = resources.ColorRed
+	case cg.Connecting:
+		textStatus.Text = locales.Text("inf4")
+		textStatus.Color = resources.ColorOrange
+	case cg.Disconnecting:
+		textStatus.Text = locales.Text("inf5")
+		textStatus.Color = resources.ColorOrange
+	case cg.NotInstalled:
+		textStatus.Text = locales.Text("inf6")
+		textStatus.Color = resources.ColorRed
+	case cg.Unknown:
+		textStatus.Text = locales.Text("inf9")
+		textStatus.Color = resources.ColorRed
+	default:
+		textStatus.Text = locales.Text("inf7")
+		textStatus.Color = resources.ColorWhite
 	}
 
-	fyne.DoAndWait(func() {
-		switch status {
-		case cg.Connected:
-			textStatus.Text = locales.Text("inf2")
-			textStatus.Color = resources.ColorGreen
-		case cg.Disconnected:
-			textStatus.Text = locales.Text("inf3")
-			textStatus.Color = resources.ColorRed
-		case cg.Connecting:
-			textStatus.Text = locales.Text("inf4")
-			textStatus.Color = resources.ColorOrange
-		case cg.Disconnecting:
-			textStatus.Text = locales.Text("inf5")
-			textStatus.Color = resources.ColorOrange
-		case cg.NotInstalled:
-			textStatus.Text = locales.Text("inf6")
-			textStatus.Color = resources.ColorRed
-		case cg.Unknown:
-			textStatus.Text = locales.Text("inf9")
-			textStatus.Color = resources.ColorRed
-		default:
-			textStatus.Text = locales.Text("inf7")
-			textStatus.Color = resources.ColorWhite
-		}
-
-		if status == cg.NotInstalled {
-			textVersion.Text = locales.Text("inf7")
-		} else if tools.StringContainsNumber(version) {
+	if status == cg.NotInstalled {
+		textVersion.Text = locales.Text("inf7")
+	} else {
+		version := cg.GetVersion()
+		if tools.StringContainsNumber(version) {
 			textVersion.Text = version
 		} else {
 			textVersion.Text = locales.Text("inf7")
 		}
+	}
 
-		textStatus.Refresh()
-	})
+	textStatus.Refresh()
 }

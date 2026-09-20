@@ -4,7 +4,6 @@ import (
 	"cyberghostvpn-gui/cg"
 	"cyberghostvpn-gui/locales"
 
-	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -13,10 +12,8 @@ var selectCountry *widget.Select
 
 // emptyCountrySelect empties the country select widget and sets the selected item to an empty string.
 func emptyCountrySelect() {
-	fyne.DoAndWait(func() {
-		selectCountry.SetOptions([]string{""})
-		selectCountry.Selected = ""
-	})
+	selectCountry.SetOptions([]string{""})
+	selectCountry.Selected = ""
 }
 
 // getCountryComponents returns a label and a select widget to select the country for CyberGhost.
@@ -118,11 +115,9 @@ func updateCountries(serverType cg.CgServerType) {
 	for _, c := range *cg.GetCountries(serverType) {
 		countries = append(countries, c.Name)
 	}
-	fyne.DoAndWait(func() {
-		selectCountry.SetOptions(countries)
-		selectCountry.Selected = ""
-		selectCountry.Enable()
-	})
+	selectCountry.SetOptions(countries)
+	selectCountry.Selected = ""
+	selectCountry.Enable()
 }
 
 // updateLanguageCountry updates the label of the country select widget

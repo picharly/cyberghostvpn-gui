@@ -112,41 +112,41 @@ func showPopupLoading() {
 	// Add a new task to the wait group
 	addLoadingWait()
 
-	fyne.DoAndWait(func() {
-		// Only one popup at a time
-		if popupLoading != nil {
-			return
-		}
+	// Only one popup at a time
+	if popupLoading != nil {
+		return
+	}
 
-		// Content
-		gif := getLoadingAnimatedGIF()
-		popupContainer := container.NewStack(gif)
+	// Content
+	gif := getLoadingAnimatedGIF()
+	popupContainer := container.NewStack(gif)
 
-		// Build popup
-		popup := newLoadingPopUp(popupContainer, GetMainWindow().Canvas())
-		popup.Resize(fyne.NewSize(GetMainWindow().Canvas().Size().Width, 90))
-		popup.Center()
-		popup.Show()
+	// Build popup
+	popup := newLoadingPopUp(popupContainer, GetMainWindow().Canvas())
+	popup.Resize(fyne.NewSize(GetMainWindow().Canvas().Size().Width, 90))
+	popup.Center()
+	popup.Show()
 
-		// Start animation
-		gif.Start()
+	// Start animation
+	gif.Start()
 
-		// Wait for end of loading
-		go func(p *loadingPopup) {
-			start := time.Now()
-			for getWaitFor() > 0 {
-				time.Sleep(time.Millisecond * 50)
-				if time.Since(start) > (time.Second * 30) {
+	// Wait for end of loading
+	go func(p *loadingPopup) {
+		start := time.Now()
+		for getWaitFor() > 0 {
+			time.Sleep(time.Millisecond * 50)
+			if time.Since(start) > (time.Second * 30) {
+				fyne.Do(func() {
 					showPopupError(errors.New(locales.Text("gen17")))
-					resetLoadingWait()
-					break
-				}
+				})
+				resetLoadingWait()
+				break
 			}
-			fyne.Do(func() {
-				p.Hide()
-				popupLoading = nil
-			})
-		}(popup)
-	})
+		}
+		fyne.Do(func() {
+			p.Hide()
+			popupLoading = nil
+		})
+	}(popup)
 
 }

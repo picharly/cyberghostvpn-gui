@@ -75,43 +75,41 @@ func updateConnectButtonStatus() {
 		return
 	}
 
-	fyne.DoAndWait(func() {
-		if len(cg.SelectedCountry.Name) == 0 && cg.CurrentState != cg.Connected {
-			if cg.CurrentState != cg.Disconnected {
-				disableForm()
-			}
-			if !btnConnect.Disabled() {
-				btnConnect.Disable()
-			}
-			return
-		}
-
-		switch cg.CurrentState {
-
-		case cg.Connected:
-			btnConnect.Text = locales.Text("gen14")
-			actionConnect = false
-			btnConnect.Enable()
-			disableForm()
-		case cg.Disconnected:
-			btnConnect.Text = locales.Text("gen9")
-			actionConnect = true
-			btnConnect.Enable()
-			enableForm()
-		case cg.Unknown:
-			btnConnect.Text = locales.Text("gen9")
-			actionConnect = true
-			btnConnect.Disable()
-			disableForm()
-		default:
-			btnConnect.Text = locales.Text("gen9")
-			actionConnect = true
-			btnConnect.Disable()
+	if len(cg.SelectedCountry.Name) == 0 && cg.CurrentState != cg.Connected {
+		if cg.CurrentState != cg.Disconnected {
 			disableForm()
 		}
+		if !btnConnect.Disabled() {
+			btnConnect.Disable()
+		}
+		return
+	}
 
-		btnConnect.Refresh()
-	})
+	switch cg.CurrentState {
+
+	case cg.Connected:
+		btnConnect.Text = locales.Text("gen14")
+		actionConnect = false
+		btnConnect.Enable()
+		disableForm()
+	case cg.Disconnected:
+		btnConnect.Text = locales.Text("gen9")
+		actionConnect = true
+		btnConnect.Enable()
+		enableForm()
+	case cg.Unknown:
+		btnConnect.Text = locales.Text("gen9")
+		actionConnect = true
+		btnConnect.Disable()
+		disableForm()
+	default:
+		btnConnect.Text = locales.Text("gen9")
+		actionConnect = true
+		btnConnect.Disable()
+		disableForm()
+	}
+
+	btnConnect.Refresh()
 }
 
 // disableForm disables all the form elements so that the user can't make changes when the VPN is connected.
