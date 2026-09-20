@@ -29,6 +29,9 @@ func GetApp() fyne.App {
 		mainApp = app.NewWithID(about.AppID)
 		mainApp.Settings().SetTheme(&resources.DarkTheme{Theme: theme.DefaultTheme()})
 		mainApp.SetIcon(resources.GetCyberGhostIcon())
+		mainApp.Lifecycle().SetOnStopped(func() {
+			shuttingDown.Store(true)
+		})
 	}
 	return mainApp
 }
@@ -82,7 +85,12 @@ func GetMainWindow() fyne.Window {
 // methods in goroutines, so widget updates must be wrapped in fyne.DoAndWait.
 func addLocaleUpdateMethod(f func()) {
 	locales.GetTrigger().AddMethod(func() {
-		fyne.DoAndWait(f)
+		fyne.DoAndWait(func() {
+			if isShuttingDown() {
+				return
+			}
+			f()
+		})
 	})
 }
 

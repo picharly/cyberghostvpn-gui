@@ -133,11 +133,13 @@ func showPopupLoading() {
 	// Wait for end of loading
 	go func(p *loadingPopup) {
 		start := time.Now()
-		for getWaitFor() > 0 {
+		for getWaitFor() > 0 && !isShuttingDown() {
 			time.Sleep(time.Millisecond * 50)
 			if time.Since(start) > (time.Second * 30) {
 				fyne.Do(func() {
-					showPopupError(errors.New(locales.Text("gen17")))
+					if !isShuttingDown() {
+						showPopupError(errors.New(locales.Text("gen17")))
+					}
 				})
 				resetLoadingWait()
 				break
@@ -145,6 +147,9 @@ func showPopupLoading() {
 		}
 		gif.Stop()
 		fyne.Do(func() {
+			if isShuttingDown() {
+				return
+			}
 			p.Hide()
 			popupLoading = nil
 		})

@@ -108,12 +108,20 @@ func getInfoBox() *fyne.Container {
 func refresh() {
 	lastUpdate := time.Now()
 	for {
+		if isShuttingDown() {
+			return
+		}
+
 		// Refresh CgVPN stateevery second
 		if time.Since(lastUpdate) > time.Millisecond*1000 {
 			state := cg.GetCurrentState()
 			if state == cg.Unknown && !cliErrorShown {
 				cliErrorShown = true
-				fyne.Do(showCLIStatusError)
+				fyne.Do(func() {
+					if !isShuttingDown() {
+						showCLIStatusError()
+					}
+				})
 			} else if state != cg.Unknown {
 				cliErrorShown = false
 			}
@@ -122,6 +130,9 @@ func refresh() {
 
 		// Update InfoBox
 		fyne.DoAndWait(func() {
+			if isShuttingDown() {
+				return
+			}
 			updateNetwork()
 			updateStatus()
 			updateConnectButtonStatus()

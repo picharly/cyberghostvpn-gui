@@ -46,8 +46,14 @@ func showPopupLoadingProfile() {
 	go func(lc *widget.Label, lsi *widget.Label, pr *widget.ProgressBar, p *widget.PopUp) {
 		start := time.Now()
 		for {
+			if isShuttingDown() {
+				return
+			}
 			done := false
 			fyne.DoAndWait(func() {
+				if isShuttingDown() {
+					return
+				}
 				if loadingCountry == "" {
 					lc.Show()
 					pr.SetValue(33.3)
@@ -75,7 +81,9 @@ func showPopupLoadingProfile() {
 			time.Sleep(time.Millisecond * 50)
 		}
 		fyne.Do(func() {
-			p.Hide()
+			if !isShuttingDown() {
+				p.Hide()
+			}
 		})
 
 	}(lblCity, lblServerInstance, prg, popup)

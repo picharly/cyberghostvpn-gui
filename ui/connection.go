@@ -52,9 +52,14 @@ func hideAfterStatusChange() {
 	currentState := cg.CurrentState
 	start := time.Now()
 	for {
+		if isShuttingDown() {
+			return
+		}
 		if cg.CurrentState != currentState {
 			fyne.Do(func() {
-				GetMainWindow().Hide()
+				if !isShuttingDown() {
+					GetMainWindow().Hide()
+				}
 			})
 			break
 		}
@@ -187,7 +192,13 @@ func _automaticEnableDisable(selectComponent *widget.Select) {
 	// Automatic Enable/Disable
 	go func(s *widget.Select) {
 		for {
+			if isShuttingDown() {
+				return
+			}
 			fyne.DoAndWait(func() {
+				if isShuttingDown() {
+					return
+				}
 				if cg.CurrentState == cg.Disconnected {
 					if len(s.Options) < 2 {
 						if !s.Disabled() {

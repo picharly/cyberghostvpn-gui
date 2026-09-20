@@ -41,6 +41,9 @@ func ShowPopupSudo(args ...string) {
 			}
 			// Show loading popup
 			fyne.DoAndWait(func() {
+				if isShuttingDown() {
+					return
+				}
 				p.Hide()
 				showPopupLoading()
 			})
@@ -50,7 +53,9 @@ func ShowPopupSudo(args ...string) {
 				go func(o string, e error) {
 					time.Sleep(time.Millisecond * 25)
 					fyne.Do(func() {
-						showPopupError(fmt.Errorf("%v\n%s", e, o))
+						if !isShuttingDown() {
+							showPopupError(fmt.Errorf("%v\n%s", e, o))
+						}
 					})
 				}(strings.Join(output, "\n"), err)
 			}
