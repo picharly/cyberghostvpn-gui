@@ -39,7 +39,9 @@ func ShowPopupSudo(args ...string) {
 			Password = ""
 		}
 		// Show loading popup
-		p.Hide()
+		fyne.Do(func() {
+			p.Hide()
+		})
 		showPopupLoading()
 		defer removeLoadingWait()
 		output, err := tools.RunCommand(args, true, true, pwd)

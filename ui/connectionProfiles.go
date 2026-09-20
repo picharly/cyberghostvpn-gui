@@ -82,7 +82,7 @@ func getConnectionProfilesComponents() (*widget.Label, *fyne.Container) {
 		containerProfiles = container.NewHBox(selectProfile, btnSaveProfile, btnDelProfile)
 
 		// Add update method to current trigger
-		locales.GetTrigger().AddMethod(updateLanguageProfiles)
+		addLocaleUpdateMethod(updateLanguageProfiles)
 	}
 	return lblProfile, containerProfiles
 }
@@ -96,16 +96,18 @@ func updateLanguageProfiles() {
 // updateProfiles updates the options of the select widget of the profiles component with the names of the profiles
 // that are currently in the settings and selects the first option (empty string)
 func updateProfiles() {
-	currentProfileName := selectProfile.Selected
 	profiles := make([]string, 0)
 	profiles = append(profiles, "")
 	for _, p := range *settings.GetProfiles() {
 		profiles = append(profiles, p.Name)
 	}
-	selectProfile.SetOptions(profiles)
-	if len(currentProfileName) > 0 {
-		selectProfile.SetSelected(currentProfileName)
-	} else {
-		selectProfile.SetSelected("")
-	}
+	fyne.DoAndWait(func() {
+		currentProfileName := selectProfile.Selected
+		selectProfile.SetOptions(profiles)
+		if len(currentProfileName) > 0 {
+			selectProfile.SetSelected(currentProfileName)
+		} else {
+			selectProfile.SetSelected("")
+		}
+	})
 }

@@ -25,7 +25,7 @@ func getTabs() *container.AppTabs {
 		)
 
 		// Add update method to current trigger
-		locales.GetTrigger().AddMethod(updateLanguageTabs)
+		addLocaleUpdateMethod(updateLanguageTabs)
 	}
 
 	return tabs

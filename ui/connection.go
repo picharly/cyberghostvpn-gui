@@ -53,7 +53,9 @@ func hideAfterStatusChange() {
 	start := time.Now()
 	for {
 		if cg.CurrentState != currentState {
-			GetMainWindow().Hide()
+			fyne.Do(func() {
+				GetMainWindow().Hide()
+			})
 			break
 		}
 		if time.Since(start).Seconds() > 30 {
@@ -73,45 +75,43 @@ func updateConnectButtonStatus() {
 		return
 	}
 
-	if len(cg.SelectedCountry.Name) == 0 && cg.CurrentState != cg.Connected {
-		if cg.CurrentState != cg.Disconnected {
+	fyne.DoAndWait(func() {
+		if len(cg.SelectedCountry.Name) == 0 && cg.CurrentState != cg.Connected {
+			if cg.CurrentState != cg.Disconnected {
+				disableForm()
+			}
+			if !btnConnect.Disabled() {
+				btnConnect.Disable()
+			}
+			return
+		}
+
+		switch cg.CurrentState {
+
+		case cg.Connected:
+			btnConnect.Text = locales.Text("gen14")
+			actionConnect = false
+			btnConnect.Enable()
+			disableForm()
+		case cg.Disconnected:
+			btnConnect.Text = locales.Text("gen9")
+			actionConnect = true
+			btnConnect.Enable()
+			enableForm()
+		case cg.Unknown:
+			btnConnect.Text = locales.Text("gen9")
+			actionConnect = true
+			btnConnect.Disable()
+			disableForm()
+		default:
+			btnConnect.Text = locales.Text("gen9")
+			actionConnect = true
+			btnConnect.Disable()
 			disableForm()
 		}
-		if !btnConnect.Disabled() {
-			btnConnect.Disable()
-		}
-		return
-	}
 
-	switch cg.CurrentState {
-
-	case cg.Connected:
-		btnConnect.Text = locales.Text("gen14")
-		actionConnect = false
-		btnConnect.Enable()
-		disableForm()
-	case cg.Disconnected:
-		btnConnect.Text = locales.Text("gen9")
-		actionConnect = true
-		btnConnect.Enable()
-		enableForm()
-	case cg.Unknown:
-		btnConnect.Text = locales.Text("gen9")
-		actionConnect = true
-		btnConnect.Disable()
-		disableForm()
-	default:
-		btnConnect.Text = locales.Text("gen9")
-		actionConnect = true
-		btnConnect.Disable()
-		disableForm()
-	}
-
-	// go func() {
-	fyne.DoAndWait(func() {
 		btnConnect.Refresh()
 	})
-	// }()
 }
 
 // disableForm disables all the form elements so that the user can't make changes when the VPN is connected.
@@ -189,17 +189,19 @@ func _automaticEnableDisable(selectComponent *widget.Select) {
 	// Automatic Enable/Disable
 	go func(s *widget.Select) {
 		for {
-			if cg.CurrentState == cg.Disconnected {
-				if len(s.Options) < 2 {
-					if !s.Disabled() {
-						s.Disable()
-					}
-				} else {
-					if s.Disabled() {
-						s.Enable()
+			fyne.DoAndWait(func() {
+				if cg.CurrentState == cg.Disconnected {
+					if len(s.Options) < 2 {
+						if !s.Disabled() {
+							s.Disable()
+						}
+					} else {
+						if s.Disabled() {
+							s.Enable()
+						}
 					}
 				}
-			}
+			})
 			time.Sleep(time.Millisecond * 100)
 		}
 	}(selectComponent)

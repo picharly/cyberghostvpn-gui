@@ -4,6 +4,7 @@ import (
 	"cyberghostvpn-gui/cg"
 	"cyberghostvpn-gui/locales"
 
+	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -13,8 +14,10 @@ var selectStreamingService *widget.Select
 // emptyStreamingServiceSelect clears the options of the select widget for the streaming service
 // and resets the selected option to an empty string.
 func emptyStreamingServiceSelect() {
-	selectStreamingService.SetOptions([]string{""})
-	selectStreamingService.SetSelected("")
+	fyne.DoAndWait(func() {
+		selectStreamingService.SetOptions([]string{""})
+		selectStreamingService.SetSelected("")
+	})
 }
 
 // getStreamingServiceComponents returns a Label and a Select widget to select
@@ -55,7 +58,7 @@ func getStreamingServiceComponents() (*widget.Label, *widget.Select) {
 		go _automaticEnableDisable(selectStreamingService)
 
 		// Add update method to current trigger
-		locales.GetTrigger().AddMethod(updateLanguageStreamingService)
+		addLocaleUpdateMethod(updateLanguageStreamingService)
 
 	}
 	return lblStreamingService, selectStreamingService
@@ -87,13 +90,15 @@ func updateStreamingServices(popup bool) {
 	for _, s := range *cg.GetStreamingServices(countryCode) {
 		services = append(services, s.Service)
 	}
-	selectStreamingService.SetOptions(services)
+	fyne.DoAndWait(func() {
+		selectStreamingService.SetOptions(services)
 
-	if cg.SelectedServiceType == string(cg.CG_SERVER_TYPE_STREAMING) {
-		selectStreamingService.SetSelected(loadingStreamingService)
-	} else {
-		selectStreamingService.SetSelected("")
-	}
-	loadingStreamingService = ""
-	loadingCountryCode = ""
+		if cg.SelectedServiceType == string(cg.CG_SERVER_TYPE_STREAMING) {
+			selectStreamingService.SetSelected(loadingStreamingService)
+		} else {
+			selectStreamingService.SetSelected("")
+		}
+		loadingStreamingService = ""
+		loadingCountryCode = ""
+	})
 }

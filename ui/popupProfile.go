@@ -46,28 +46,37 @@ func showPopupLoadingProfile() {
 	go func(lc *widget.Label, lsi *widget.Label, pr *widget.ProgressBar, p *widget.PopUp) {
 		start := time.Now()
 		for {
-			if loadingCountry == "" {
-				lc.Show()
-				prg.SetValue(33.3)
-			}
-			if loadingCity == "" {
-				lc.Show()
-				lsi.Show()
-				prg.SetValue(66.6)
-			}
-			if loadingServerInstance == "" {
-				lc.Show()
-				lsi.Show()
-				prg.SetValue(100.0)
+			done := false
+			fyne.DoAndWait(func() {
+				if loadingCountry == "" {
+					lc.Show()
+					pr.SetValue(33.3)
+				}
+				if loadingCity == "" {
+					lc.Show()
+					lsi.Show()
+					pr.SetValue(66.6)
+				}
+				if loadingServerInstance == "" {
+					lc.Show()
+					lsi.Show()
+					pr.SetValue(100.0)
+					done = true
+				}
+				p.Refresh()
+			})
+			if done {
 				break
 			}
 			if time.Since(start) > 6*time.Second {
 				logger.Errorf("timeout while loading profile %v", name)
 				break
 			}
-			popup.Refresh()
+			time.Sleep(time.Millisecond * 50)
 		}
-		p.Hide()
+		fyne.Do(func() {
+			p.Hide()
+		})
 
 	}(lblCity, lblServerInstance, prg, popup)
 }

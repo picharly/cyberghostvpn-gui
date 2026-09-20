@@ -38,7 +38,7 @@ func getConnectionVPNServiceComponents() (*widget.Label, *widget.Select) {
 		cg.SetSelectedVPNService(defaultValue)
 
 		// Add update method to current trigger
-		locales.GetTrigger().AddMethod(updateLanguageVPNService)
+		addLocaleUpdateMethod(updateLanguageVPNService)
 	}
 	return lblService, selectService
 }

@@ -59,7 +59,7 @@ func getServerTypeComponents() (*widget.Label, *widget.Select) {
 		cg.SetSelectedServiceType(string(defaultOption))
 
 		// Add update method to current trigger
-		locales.GetTrigger().AddMethod(updateLanguageServerType)
+		addLocaleUpdateMethod(updateLanguageServerType)
 	}
 	return lblServerType, selectServerType
 }

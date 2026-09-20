@@ -43,6 +43,20 @@ func removeLoadingWait() {
 	}
 }
 
+// getWaitFor returns the current wait counter for the loading popup.
+func getWaitFor() int {
+	mu.Lock()
+	defer mu.Unlock()
+	return waitFor
+}
+
+// resetLoadingWait resets the wait counter to zero, forcing the loading popup to close.
+func resetLoadingWait() {
+	mu.Lock()
+	defer mu.Unlock()
+	waitFor = 0
+}
+
 // newLoadingPopUp creates a new loading popup.
 // The popup is centered on the canvas and is closed automatically when the wait for counter is zero.
 // The content of the popup is the provided CanvasObject.
@@ -98,40 +112,41 @@ func showPopupLoading() {
 	// Add a new task to the wait group
 	addLoadingWait()
 
-	// Only one popup at a time
-	if popupLoading != nil {
-		return
-	}
-
-	// Content
-	gif := getLoadingAnimatedGIF()
-	popupContainer := container.NewStack(gif)
-
-	// Build popup
-	popup := newLoadingPopUp(popupContainer, GetMainWindow().Canvas())
-	popup.Resize(fyne.NewSize(GetMainWindow().Canvas().Size().Width, 90))
-	popup.Center()
-	popup.Show()
-
-	// Start animation
-	gif.Start()
-
-	// Wait for end of loading
-	go func(p *loadingPopup) {
-		start := time.Now()
-		for waitFor > 0 {
-			// time.Sleep(time.Millisecond * 50)
-			if time.Since(start) > (time.Second * 30) {
-				go func() {
-					time.Sleep(time.Millisecond * 50)
-					showPopupError(errors.New(locales.Text("gen17")))
-				}()
-				waitFor = 0
-				break
-			}
+	fyne.DoAndWait(func() {
+		// Only one popup at a time
+		if popupLoading != nil {
+			return
 		}
-		p.Hide()
-		popupLoading = nil
-	}(popup)
+
+		// Content
+		gif := getLoadingAnimatedGIF()
+		popupContainer := container.NewStack(gif)
+
+		// Build popup
+		popup := newLoadingPopUp(popupContainer, GetMainWindow().Canvas())
+		popup.Resize(fyne.NewSize(GetMainWindow().Canvas().Size().Width, 90))
+		popup.Center()
+		popup.Show()
+
+		// Start animation
+		gif.Start()
+
+		// Wait for end of loading
+		go func(p *loadingPopup) {
+			start := time.Now()
+			for getWaitFor() > 0 {
+				time.Sleep(time.Millisecond * 50)
+				if time.Since(start) > (time.Second * 30) {
+					showPopupError(errors.New(locales.Text("gen17")))
+					resetLoadingWait()
+					break
+				}
+			}
+			fyne.Do(func() {
+				p.Hide()
+				popupLoading = nil
+			})
+		}(popup)
+	})
 
 }

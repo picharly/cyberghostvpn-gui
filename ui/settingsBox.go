@@ -189,7 +189,7 @@ func getSettingsBox() *fyne.Container {
 		building = false
 
 		// Add update method to current trigger
-		locales.GetTrigger().AddMethod(updateLanguageSettings)
+		addLocaleUpdateMethod(updateLanguageSettings)
 	}
 
 	return settingsBox

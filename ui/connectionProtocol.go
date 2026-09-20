@@ -32,7 +32,7 @@ func getConnectionProtocolComponents() (*widget.Label, *widget.Select) {
 		cg.SetSelectedProtocol(defaultValue)
 
 		// Add update method to current trigger
-		locales.GetTrigger().AddMethod(updateLanguageConnectionProtocol)
+		addLocaleUpdateMethod(updateLanguageConnectionProtocol)
 	}
 	return lblConnection, selectConnection
 }

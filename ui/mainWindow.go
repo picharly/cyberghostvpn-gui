@@ -3,6 +3,7 @@ package ui
 import (
 	"cyberghostvpn-gui/about"
 	"cyberghostvpn-gui/cg"
+	"cyberghostvpn-gui/locales"
 	"cyberghostvpn-gui/resources"
 	"cyberghostvpn-gui/settings"
 	"fmt"
@@ -74,6 +75,15 @@ func GetMainWindow() fyne.Window {
 	}
 
 	return mainWindow
+}
+
+// addLocaleUpdateMethod registers a method to be executed on the Fyne main
+// thread when the locale changes. The locales trigger executes registered
+// methods in goroutines, so widget updates must be wrapped in fyne.DoAndWait.
+func addLocaleUpdateMethod(f func()) {
+	locales.GetTrigger().AddMethod(func() {
+		fyne.DoAndWait(f)
+	})
 }
 
 /* Private Functions */
