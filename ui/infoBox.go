@@ -9,6 +9,7 @@ import (
 	"cyberghostvpn-gui/tools"
 	"fmt"
 	"net"
+	"strings"
 	"time"
 
 	"fyne.io/fyne/v2"
@@ -25,6 +26,7 @@ var textDefVersion *canvas.Text
 var textNet *canvas.Text
 var textStatus *canvas.Text
 var textVersion *canvas.Text
+var cliErrorShown bool
 
 // getInfoBox returns the main information box of the application, which
 // contains the application title, the current version of CyberGhost VPN,
@@ -108,7 +110,13 @@ func refresh() {
 	for {
 		// Refresh CgVPN stateevery second
 		if time.Since(lastUpdate) > time.Millisecond*1000 {
-			cg.GetCurrentState()
+			state := cg.GetCurrentState()
+			if state == cg.Unknown && !cliErrorShown {
+				cliErrorShown = true
+				fyne.Do(showCLIStatusError)
+			} else if state != cg.Unknown {
+				cliErrorShown = false
+			}
 			lastUpdate = time.Now()
 		}
 
@@ -119,6 +127,15 @@ func refresh() {
 
 		time.Sleep(time.Millisecond * 100)
 	}
+}
+
+// showCLIStatusError displays an error popup when the cyberghostvpn CLI status check fails.
+// It shows the error, the raw output of the command and a hint to fix the CLI
+// (e.g. running "cyberghostvpn --setup" to re-enter credentials).
+// It is meant to be called once per failure episode via fyne.Do.
+func showCLIStatusError() {
+	err := fmt.Errorf("%v\n%s\n\n%s", cg.LastStatusError, strings.TrimSpace(cg.LastStatusOutput), locales.Text("err.inf4"))
+	showPopupError(err)
 }
 
 // setFlag sets the flag of the country with the given code in the main information box of the application.
@@ -188,6 +205,9 @@ func updateStatus() {
 		textStatus.Color = resources.ColorOrange
 	case cg.NotInstalled:
 		textStatus.Text = locales.Text("inf6")
+		textStatus.Color = resources.ColorRed
+	case cg.Unknown:
+		textStatus.Text = locales.Text("inf9")
 		textStatus.Color = resources.ColorRed
 	default:
 		textStatus.Text = locales.Text("inf7")

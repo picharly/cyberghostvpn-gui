@@ -74,6 +74,9 @@ func updateConnectButtonStatus() {
 	}
 
 	if len(cg.SelectedCountry.Name) == 0 && cg.CurrentState != cg.Connected {
+		if cg.CurrentState != cg.Disconnected {
+			disableForm()
+		}
 		if !btnConnect.Disabled() {
 			btnConnect.Disable()
 		}
@@ -186,7 +189,7 @@ func _automaticEnableDisable(selectComponent *widget.Select) {
 	// Automatic Enable/Disable
 	go func(s *widget.Select) {
 		for {
-			if cg.CurrentState != cg.Connected {
+			if cg.CurrentState == cg.Disconnected {
 				if len(s.Options) < 2 {
 					if !s.Disabled() {
 						s.Disable()

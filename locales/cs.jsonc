@@ -52,9 +52,13 @@
 		{ "id": "inf6", "other": "nenainstalováno" },
 		{ "id": "inf7", "other": "neznámé" },
 		{ "id": "inf8", "other": "Síť:" },
+		{ "id": "inf9", "other": "chyba CLI" },
 		// INFO ERRORS
 		{ "id": "err.inf0", "other": "nelze získat verzi:" },
 		{ "id": "err.inf1", "other": "nelze získat lokální IP:" },
+		{ "id": "err.inf2", "other": "nelze získat stav VPN:" },
+		{ "id": "err.inf3", "other": "neočekávaná odpověď příkazu cyberghostvpn" },
+		{ "id": "err.inf4", "other": "Zkontrolujte, zda CLI cyberghostvpn funguje - spusťte 'cyberghostvpn --status' nebo znovu zadejte přihlašovací údaje pomocí 'cyberghostvpn --setup'." },
 		// POPUP SUDO
 		{ "id": "sud0", "other": "Heslo" },
 		{ "id": "sud1", "other": "Zapamatovat heslo (pouze pro tuto relaci)" },

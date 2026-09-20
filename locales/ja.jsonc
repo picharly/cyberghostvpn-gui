@@ -52,9 +52,13 @@
 		{ "id": "inf6", "other": "未インストール" },
 		{ "id": "inf7", "other": "不明" },
 		{ "id": "inf8", "other": "ネットワーク:" },
+		{ "id": "inf9", "other": "CLIエラー" },
 		// INFO ERRORS
 		{ "id": "err.inf0", "other": "バージョンを取得できません:" },
 		{ "id": "err.inf1", "other": "ローカルIPを取得できません:" },
+		{ "id": "err.inf2", "other": "VPNステータスを取得できません:" },
+		{ "id": "err.inf3", "other": "cyberghostvpnコマンドからの予期しない応答" },
+		{ "id": "err.inf4", "other": "cyberghostvpn CLIが動作しているか確認してください - 'cyberghostvpn --status' を実行するか、'cyberghostvpn --setup' で認証情報を再入力してください。" },
 		// POPUP SUDO
 		{ "id": "sud0", "other": "パスワード" },
 		{ "id": "sud1", "other": "パスワードを記憶する（このセッションのみ）" },

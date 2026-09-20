@@ -52,9 +52,13 @@
 		{ "id": "inf6", "other": "neinstalat" },
 		{ "id": "inf7", "other": "necunoscut" },
 		{ "id": "inf8", "other": "Rețea:" },
+		{ "id": "inf9", "other": "eroare CLI" },
 		// INFO ERRORS
 		{ "id": "err.inf0", "other": "Nu se poate obține versiunea:" },
 		{ "id": "err.inf1", "other": "Nu se poate obține IP-ul local:" },
+		{ "id": "err.inf2", "other": "Nu se poate obține starea VPN:" },
+		{ "id": "err.inf3", "other": "răspuns neașteptat de la comanda cyberghostvpn" },
+		{ "id": "err.inf4", "other": "Verificați dacă CLI-ul cyberghostvpn funcționează - rulați 'cyberghostvpn --status' sau reintroduceți acreditanțele cu 'cyberghostvpn --setup'." },
 		// POPUP SUDO
 		{ "id": "sud0", "other": "Parolă" },
 		{ "id": "sud1", "other": "Ține minte parola (doar pentru această sesiune)" },

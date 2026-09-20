@@ -52,9 +52,13 @@
 		{ "id": "inf6", "other": "niezainstalowane" },
 		{ "id": "inf7", "other": "nieznane" },
 		{ "id": "inf8", "other": "Sieć:" },
+		{ "id": "inf9", "other": "błąd CLI" },
 		// INFO ERRORS
 		{ "id": "err.inf0", "other": "nie można uzyskać wersji:" },
 		{ "id": "err.inf1", "other": "nie można uzyskać lokalnego IP:" },
+		{ "id": "err.inf2", "other": "nie można uzyskać statusu VPN:" },
+		{ "id": "err.inf3", "other": "nieoczekiwana odpowiedź polecenia cyberghostvpn" },
+		{ "id": "err.inf4", "other": "Sprawdź, czy CLI cyberghostvpn działa - uruchom 'cyberghostvpn --status' lub ponownie wprowadź dane logowania za pomocą 'cyberghostvpn --setup'." },
 		// POPUP SUDO
 		{ "id": "sud0", "other": "Hasło" },
 		{ "id": "sud1", "other": "Zapamiętaj hasło (tylko na tę sesję)" },

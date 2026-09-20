@@ -52,9 +52,13 @@
 		{ "id": "inf6", "other": "not installed" },
 		{ "id": "inf7", "other": "unknown" },
 		{ "id": "inf8", "other": "Network:" },
+		{ "id": "inf9", "other": "CLI error" },
 		// INFO ERRORS
 		{ "id": "err.inf0", "other": "unable to get version:" },
 		{ "id": "err.inf1", "other": "cannot get local IP:" },
+		{ "id": "err.inf2", "other": "unable to get VPN status:" },
+		{ "id": "err.inf3", "other": "unexpected response from the cyberghostvpn command" },
+		{ "id": "err.inf4", "other": "Check that the cyberghostvpn CLI is working - run 'cyberghostvpn --status' or re-enter your credentials with 'cyberghostvpn --setup'." },
 		// POPUP SUDO
 		{ "id": "sud0", "other": "Password" },
 		{ "id": "sud1", "other": "Remember password (session only) " },

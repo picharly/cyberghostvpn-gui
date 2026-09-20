@@ -52,9 +52,13 @@
 		{ "id": "inf6", "other": "설치되지 않음" },
 		{ "id": "inf7", "other": "알 수 없음" },
 		{ "id": "inf8", "other": "네트워크:" },
+		{ "id": "inf9", "other": "CLI 오류" },
 		// INFO ERRORS
 		{ "id": "err.inf0", "other": "버전을 가져올 수 없습니다:" },
 		{ "id": "err.inf1", "other": "로컬 IP를 가져올 수 없습니다:" },
+		{ "id": "err.inf2", "other": "VPN 상태를 가져올 수 없습니다:" },
+		{ "id": "err.inf3", "other": "cyberghostvpn 명령의 예상치 못한 응답" },
+		{ "id": "err.inf4", "other": "cyberghostvpn CLI가 작동하는지 확인하세요 - 'cyberghostvpn --status'를 실행하거나 'cyberghostvpn --setup'으로 자격 증명을 다시 입력하세요." },
 		// POPUP SUDO
 		{ "id": "sud0", "other": "비밀번호" },
 		{ "id": "sud1", "other": "비밀번호 기억하기 (이 세션만)" },

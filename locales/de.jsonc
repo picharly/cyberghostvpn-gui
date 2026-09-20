@@ -52,9 +52,13 @@
 		{ "id": "inf6", "other": "nicht installiert" },
 		{ "id": "inf7", "other": "unbekannt" },
 		{ "id": "inf8", "other": "Netzwerk:" },
+		{ "id": "inf9", "other": "CLI-Fehler" },
 		// INFO ERRORS
 		{ "id": "err.inf0", "other": "Version kann nicht abgerufen werden:" },
 		{ "id": "err.inf1", "other": "Lokale IP kann nicht abgerufen werden:" },
+		{ "id": "err.inf2", "other": "VPN-Status kann nicht abgerufen werden:" },
+		{ "id": "err.inf3", "other": "unerwartete Antwort des Befehls cyberghostvpn" },
+		{ "id": "err.inf4", "other": "Prüfen Sie, ob die cyberghostvpn-CLI funktioniert - führen Sie 'cyberghostvpn --status' aus oder geben Sie Ihre Zugangsdaten mit 'cyberghostvpn --setup' erneut ein." },
 		// POPUP SUDO
 		{ "id": "sud0", "other": "Passwort" },
 		{ "id": "sud1", "other": "Passwort merken (nur für diese Sitzung)" },
