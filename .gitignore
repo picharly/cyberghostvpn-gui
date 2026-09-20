@@ -30,6 +30,11 @@ bin/*
 bin
 cyberghostvpn-gui
 
+# fyne-cross build artifacts
+fyne-cross/
+/.cache/
+/.config/
+
 # Logs
 *.log
 logs/
